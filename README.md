@@ -1,6 +1,6 @@
 # dns_tools - Coming Soon -
 
-DNS server tools for DNSSEC etc
+DNS server tools - aka DNSSEC made easy.
 
 DNSSEC can be a little tricky especially rolling the keys. We procide the tools 
 to simplify and automate this as much as possible. 
@@ -46,7 +46,8 @@ to sign dns zone files.
 ### dns-prod-push
 
 This tool make it simple to push signed and unsigned dns zone files from the signing server to the
-production area for each primary dns server.
+production area for each primary dns server. the DNS primary server(s) should on same machine
+or reachable via ssh.
 
 ### dns-serial-bump
 
@@ -143,7 +144,7 @@ to the domain registrar. To generate a new set of keys simply run:
 All the keys will be under the *keys* directory. For each domain, the info needed 
 for the domain registrar will be found in the file:
 
-        keys/<domain>/ksk/curr.all.ds
+        <work_dir>/keys/<domain>/ksk/curr.all.ds
 
 ### testing
 
@@ -168,7 +169,7 @@ Actually these come in different hash types:
  - 4 : sha512  
  - g : gost (we do not generate this)  
 
-These are saved into *<work_dir>/keys/<domain>/ksk/* directory.
+These are saved into *\<work_dir\>/keys/\<domain\>/ksk/* directory.
 In addition to *curr.ds*, there is *curr.all.ds* which contains sha1, sha256 and sha512.
 Choose one or more of these to upload to your domain registrar.  
 
@@ -191,7 +192,6 @@ When you're done with the changes then to resign and push just run:
 
         /usr/bin/dns-tool --sign
         /usr/bin/dns-prod-push --dns_restart --to_production
-
 
 or use the convenience wrapper script for these 2 commands by running:
 
