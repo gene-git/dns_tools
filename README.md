@@ -2,7 +2,7 @@
 
 DNS server tools - aka DNSSEC made easy.
 
-DNSSEC can be a little tricky especially rolling the keys. We procide the tools 
+DNSSEC can be a little tricky especially rolling the keys. We provide the tools 
 to simplify and automate this as much as possible. 
 
 ## Installation
@@ -90,6 +90,9 @@ but uploading them to registrar must be done manually.
 
 ### Example Usage
 
+Note that the tools must be run on the signing server defined in the config file.
+To minimize chance of accidents, the code will refuse to run if that is not the case.
+
 The tool supports 2 primary servers - an internal DNS server and the external server. 
 The internal server may also serve additional unsigned zones, typically RFC1918 and 
 their reverse zones. The external prinary is how the outside world views DNS 
@@ -145,6 +148,10 @@ All the keys will be under the *keys* directory. For each domain, the info neede
 for the domain registrar will be found in the file:
 
         <work_dir>/keys/<domain>/ksk/curr.all.ds
+
+By default all the domains in the config are processed. To process a one or more specific
+domains just put them on the command line. Domains listed on command line will
+override the config file.
 
 ### testing
 
@@ -206,6 +213,9 @@ Handles key generation, zone signing and key rolls.
 While there are many options, majority are more for testing or speical needs. The main options
 are *test*, *print_keys*, *sign*, *zsk_toll_1*, *zsk_roll_2* 
 
+ - positional arguments:  
+   one or more domains here will override config file.
+
  - *-h, --help*   
    show this help message and exit
 
@@ -224,19 +234,10 @@ are *test*, *print_keys*, *sign*, *zsk_toll_1*, *zsk_roll_2*
  - *--sign*   
    Short hand for sign with curr keys (ksk and zsk)
 
- - *--print_keys*  
-   Print keys (curr and next)
-
- - *-skc, --sign_ksk_curr*   
-   Sign with curr ksk
-
- - *-skn, --sign_ksk_next*   
+ - *--sign_ksk_next*   
    Sign with next ksk
 
- - *-szc, --sign_zsk_curr*   
-   Sign with curr zsk
-
- - *-szn, --sign_zsk_next*  
+ - *--sign_zsk_next*  
    Sign with next zsk
 
  - *--gen_zsk_curru*  
@@ -263,15 +264,21 @@ are *test*, *print_keys*, *sign*, *zsk_toll_1*, *zsk_roll_2*
  - *--ksk_roll_2*    
    KSK Phase 2 roll - new only
 
+ - *--print_keys*  
+   Print keys (curr and next)
+
 ### dns-prod-push
 
 Tool to push signed and unsigned zones to the dns server(s)
 
+ - positional arguments:  
+   one or more domains here will override config file.
+
  - *-h, --help*  
    show this help message and exit
 
- - *-int_ext what*   
-   What to push. One of : internal, external or both (both)
+ - *--int_ext what*   
+   What to push. One of : internal, external or both (default is both)
 
  - *--to_production*   
    Copy zone files from work staging area to live production area
@@ -279,7 +286,7 @@ Tool to push signed and unsigned zones to the dns server(s)
  - *--dns_restart*  
    Restart the dns server after update zones using the config variable:  
    dns_restart_cmd. For example for nsd, set this to:
-    dns_restart_cmd = "/usr/bin/systemctl restart nsd"  
+   dns_restart_cmd = "/usr/bin/systemctl restart nsd"  
 
  - *-t, --test*   
    Test mode - print but dont do
