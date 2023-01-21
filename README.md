@@ -229,6 +229,9 @@ are *test*, *print_keys*, *sign*, *zsk_toll_1*, *zsk_roll_2*
  - *-h, --help*   
    show this help message and exit
 
+ - *--theme*  
+   Output color theme for tty. One of : dark, light or none
+
  - *-t, --test*    
    Test mode - print but dont do
 
@@ -237,6 +240,7 @@ are *test*, *print_keys*, *sign*, *zsk_toll_1*, *zsk_roll_2*
 
  - *--serial_bump*   
    Bump all serials. Not usually needed as happens auotmatically
+   This implies *--sign* so that signed zones stay consistent.
 
  - *--keep_include*   
    Keep temp file which has $INCLUDE expanded
@@ -286,6 +290,9 @@ Tool to push signed and unsigned zones to the dns server(s)
 
  - *-h, --help*  
    show this help message and exit
+
+ - *--theme*  
+   Output color theme for tty. One of : dark, light or none
 
  - *--int_ext what*   
    What to push. One of : internal, external or both (default is both)
