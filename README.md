@@ -46,7 +46,7 @@ to sign dns zone files.
 ### dns-prod-push
 
 This tool make it simple to push signed and unsigned dns zone files from the signing server to the
-production area for each primary dns server. the DNS primary server(s) should on same machine
+production area for each primary dns server. the DNS primary server(s) should be on same machine
 or reachable via ssh.
 
 ### dns-serial-bump
@@ -65,8 +65,8 @@ A standalone tool to bump the serial number in a dns zone file.
    the domain registrar for the root servers. The requirment ensures that there 
    is an appropriate chain of trust from the root dns servers on down. 
    Most, if not all registars now support DNSSEC - Google Domains does for example. 
-   This requirement means there is a manual step whenver the KSK changes, which is updating
-   the root server with the new information.  KSK should be rolled occasionally,
+   This requirement means there is a manual step whenever the KSK changes, which is updating
+   the root servers with the new information.  KSK should be rolled occasionally,
    in spite of the manual step, perhaps every 1-3 years, and the corresponding DS 
    (Delegation Signer) record for the new KSK should be uploaded to the domain registrar.
 
@@ -90,22 +90,34 @@ but uploading them to registrar must be done manually.
 
 ### Example Usage
 
-Note that the tools must be run on the signing server defined in the config file.
-To minimize chance of accidents, the code will refuse to run if that is not the case.
+N.B. :
+
+ - Must run on signing server.  
+   The tools must be run on the signing server which is defined in the config file.  
+   To minimize chance of an accident, the code will refuse to run if that is not the case.
+
+ - Run as root.    
+   2 operations require effective root user:
+   - Changing the ownership permisions of staging zones to *dns_user* and *dns_group*.
+   - Preserving ownership when files rsync --owner to dns server(s)
 
 The tool supports 2 primary servers - an internal DNS server and the external server. 
 The internal server may also serve additional unsigned zones, typically RFC1918 and 
-their reverse zones. The external prinary is how the outside world views DNS 
-for the domain.  As usual once a primary dns server is updated, it's secondaries
-will get updated as usual automatically via IXFR/AXFR.
+their reverse zones. There can be unsigned zones for external server too of course 
+and if there are, they will be pushed along with all the other signed zones.
 
-The tool is driven by a simple config file which is first looked for in 
+The external prinary is how the outside world views DNS for each domain.  
+As usual once a primary dns server is updated, it's secondaries
+will get updated automatically via IXFR/AXFR.
+
+The tool is driven by a straightforward config file which is first looked for in 
 current directory under *./conf.d/config* and if not available there it
 should be in */etc/dns_tools/conf.d/config*. 
-The config file holds the information about where all the relevant files are kept
-and the command to use to restart the dns servers. 
 
-Copy the config file and edit it for your new needs:
+The config file holds the information about where all the relevant files are kept
+and the command to use to restart the dns servers, the DNS server hosts and so on. 
+
+Copy the sample config file and edit it for your needs:
 
         cd /etc/dns_tools
         cp conf.d/config.sample conf.d/config
@@ -169,20 +181,18 @@ so as to skip restarting the dns servers - which is not needed obviously.
 When you create KSK keys there will also be DS keys generated automatically. 
 Actually these come in different hash types:
 
- - 1 : sha1   
-       shouldn't be used
- - 2 : sha256   
-       the default and saved in curr.ds
- - 4 : sha512  
+ - 1 : sha1   - deprecated and shouldn't be used
+ - 2 : sha256 - the default and saved in curr.ds
+ - 4 : sha512 - slower but somewhat more secure hash 
  - g : gost (we do not generate this)  
 
 These are saved into *\<work_dir\>/keys/\<domain\>/ksk/* directory.
-In addition to *curr.ds*, there is *curr.all.ds* which contains sha1, sha256 and sha512.
-Choose one or more of these to upload to your domain registrar.  
+In addition to *curr.ds*, *curr.all.ds* contains sha1, sha256 and sha512.
+Choose one or more of these to upload to your domain registrar.   
 
-Its good to get this uploaded and available from the root servers soon as you've your 
+Its good to get this uploaded and available from the root servers soon as your 
 KSK keys are ready and before you push any signed zones out. This is the only manual step.
-And if/when you roll your ksk, then it needs to be repeated with the new key info.
+And if/when you roll your ksk, then it needs to be repeated with the new DS key info.
 
 Everthing else should be handled automatically by the tool.
 
@@ -228,7 +238,7 @@ are *test*, *print_keys*, *sign*, *zsk_toll_1*, *zsk_roll_2*
  - *--serial_bump*   
    Bump all serials. Not usually needed as happens auotmatically
 
- - *-keep, --keep_include*   
+ - *--keep_include*   
    Keep temp file which has $INCLUDE expanded
 
  - *--sign*   
