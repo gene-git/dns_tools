@@ -1,4 +1,4 @@
-# dns_tools - Coming Soon -
+# dns_tools
 
 DNS server tools - aka DNSSEC made easy.
 
