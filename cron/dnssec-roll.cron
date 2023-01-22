@@ -1,0 +1,19 @@
+#
+# DNS Tools Config
+#
+# - Regen zone keys 
+# - resign zones in work_dir 
+# - push from work staging to production stagin (internal and external)
+# - puth from production staging to live production
+# - restart dns server
+#
+# When zones are pushed - the entire zone directory contents are pushed.
+# This  naturally includes signed zones and unsigned zones (such as local RFC1918
+# forward and reverse)
+#
+# Runs at 8:15 and 10:15 am on 1st of month
+# hour min day mon dow user cmd
+#
+15  8  1 * *  root /etc/dns_tools/scripts/zsk-roll-1.sh
+15  10  1 * *  root /etc/dns_tools/scripts/zsk-roll-2.sh
+

@@ -51,7 +51,7 @@ or reachable via ssh.
 
 ### dns-serial-bump
 
-A standalone tool to bump the serial number in a dns zone file.
+A standalone tool to check and bump the serial number in a dns zone file.
 
 ### Quick reminder that DNSSEC utilizes 2 kinds of keys
 
@@ -100,6 +100,14 @@ N.B. :
    2 operations require effective root user:
    - Changing the ownership permisions of staging zones to *dns_user* and *dns_group*.
    - Preserving ownership when files rsync --owner to dns server(s)
+
+ - Zone serial numbers should be in canonical format for serial bump to work properly.  
+   i.e. yyymmddnn where yyymmdd is date and nn is a 2 digit counter from 01 to 99
+   If not code will do best it can to migrate to canonical format if possible.
+   It will warn of non-standard or invalid serials and replace them with
+   valid serials. A valid serial is all numbers and must be expressable as 
+   32 bits. You can use the *dns-serial-bump --check zonefile* to check
+   for valid serial.
 
 The tool supports 2 primary servers - an internal DNS server and the external server. 
 The internal server may also serve additional unsigned zones, typically RFC1918 and 
@@ -169,6 +177,13 @@ override the config file.
 
 For convenience each tool supports a test mode engaged using the *-t, --test* option.
 When run in test mode, actions are printed instead of actually being done.
+
+When running in test mode nothing is done, which can lead to things seemingly 
+being strange. For example, when testing rolling or generation of *next* keys,
+the code later checks for any missing keys. Now in test mode they can be missing
+since they were not actually created when they would normally be. So
+now you can see messages about keys being generated a second time. 
+They wont be in non-test mode of course as nothing would be missing.
 
 For testing, I also find it convenient to change the production dns zone directores 
 to something like */tmp/dns* - and then run the tests without *-t*. This does everything 
@@ -289,7 +304,7 @@ Tool to push signed and unsigned zones to the dns server(s)
    one or more domains here will override config file.
 
  - *-h, --help*  
-   show this help message and exit
+   show help message and exit
 
  - *--theme*  
    Output color theme for tty. One of : dark, light or none
@@ -316,7 +331,17 @@ Tool to push signed and unsigned zones to the dns server(s)
 
 Tool to bump the serial number of a DNS zone file. To use it:
 
-        dne-searial-bump <zonefile>
+        dne-searial-bump [-c] <zonefile>
+
+ - positional arguments
+   One or more zonefiles with SOA containing serial number
+
+ - *-h, --help*  
+   show help message and exit
+
+ - *-c, --check*  
+   Check and show current and updated serial number for each zonefile. Do not update zonefiles
+   Without *check* option each zonefile will also be updated with new serial
 
 ## Contributing
 
