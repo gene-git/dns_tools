@@ -36,22 +36,27 @@ To build it manually, clone the repo and do:
 
 ### New
 
+ - Added FAQ to bottom of README
+
 ## Using the tools
+
+It provides the following set of tools.
 
 ### dns-tool
 
-This tool handles all key operations (create, roll etc) as well as using the keys
-to sign dns zone files.
+This tool handles all DNSSEC related operations including key creation and rolling, and 
+using those keys to sign the dns zone files. 
+
 
 ### dns-prod-push
 
-This tool make it simple to push signed and unsigned dns zone files from the signing server to the
+This tool make it simple to push signed and/or unsigned dns zone files from the signing server to the
 production area for each primary dns server. the DNS primary server(s) should be on same machine
-or reachable via ssh.
+or reachable via ssh. It also restarts those servers when appropriate.
 
 ### dns-serial-bump
 
-A standalone tool to check and bump the serial number in a dns zone file.
+A standalone tool to check the validity and bump the serial number in the SOA of a dns zone file.
 
 ### Quick reminder that DNSSEC utilizes 2 kinds of keys
 
@@ -368,6 +373,7 @@ There are three basic parts to the tools:
    restart them.
  - Generate and manage KSK and ZSK keys and use them to sign zones.
 
-The third item above is about DNSSEC. So I went with
+While all of them are needed to provide automation of key rolls, the first two items above are
+not specific to DNSSEC.
 
 
