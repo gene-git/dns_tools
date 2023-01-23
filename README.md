@@ -336,10 +336,10 @@ Tool to push signed and unsigned zones to the dns server(s)
 
 Tool to bump the serial number of a DNS zone file. To use it:
 
-        dne-searial-bump [-c] <zonefile>
+        dne-serial-bump [-c] <zonefile>
 
- - positional arguments
-   One or more zonefiles with SOA containing serial number
+ - positional arguments  
+   One or more zonefiles with SOA containing a serial number.
 
  - *-h, --help*  
    show help message and exit
