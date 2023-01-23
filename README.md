@@ -352,5 +352,22 @@ Tool to bump the serial number of a DNS zone file. To use it:
  - SPDX-License-Identifier: MIT
  - Copyright (c) 2023, Gene C
 
-## Credits
+## FAQ
+
+### Why is name not dnssec_tools?
+
+This is a good question. I did give some thought to this and ended up with the more generic name.
+
+My thinking is this. Since the tool is really about managing DNS zones in one place and 
+not just about keys/signing I went with the more generic name along with adding DNSSEC as a keyword.
+
+There are three basic parts to the tools:
+
+ - Check the validity and increment the serial number in the SOA section of zonefile.
+ - Push zone files to primary DNS servers (internal and external facing servers) and 
+   restart them.
+ - Generate and manage KSK and ZSK keys and use them to sign zones.
+
+The third item above is about DNSSEC. So I went with
+
 
