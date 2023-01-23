@@ -345,17 +345,9 @@ Tool to bump the serial number of a DNS zone file. To use it:
    show help message and exit
 
  - *-c, --check*  
-   Check and show current and updated serial number for each zonefile. Do not update zonefiles
-   Without *check* option each zonefile will also be updated with new serial
-
-## Contributing
-
-## License
-
-`dns_tools` was created by Gene C. It is licensed under the terms of the MIT license.
-
- - SPDX-License-Identifier: MIT
- - Copyright (c) 2023, Gene C
+   Check and show current and updated serial number for each zonefile. When check is enabled
+   zonefiles do not have their serial number updated.
+   Without *check* option each zonefile will also be updated with new serial.
 
 ## FAQ
 
@@ -376,4 +368,10 @@ There are three basic parts to the tools:
 While all of them are needed to provide automation of key rolls, the first two items above are
 not specific to DNSSEC.
 
+## License
+
+`dns_tools` was created by Gene C. It is licensed under the terms of the MIT license.
+
+ - SPDX-License-Identifier: MIT
+ - Copyright (c) 2023, Gene C
 
