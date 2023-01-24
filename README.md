@@ -67,7 +67,7 @@ A standalone tool to check the validity and bump the serial number in the SOA of
 
  - Key Signing Key (KSK)  
    This signs the zone signing key - and its this key that must be registered with
-   the domain registrar for the root servers. The requirment ensures that there 
+   the domain registrar for the root servers. The requirement ensures that there 
    is an appropriate chain of trust from the root dns servers on down. 
    Most, if not all registars now support DNSSEC - Google Domains does for example. 
    This requirement means there is a manual step whenever the KSK changes, which is updating
@@ -107,7 +107,7 @@ N.B. :
    - Preserving ownership when files rsync --owner to dns server(s)
 
  - Zone serial numbers should be in canonical format for serial bump to work properly.  
-   i.e. yyymmddnn where yyymmdd is date and nn is a 2 digit counter from 01 to 99
+   i.e. yyymmddnn where yyymmdd is date and nn is a 2 digit counter from 00 to 99
    If not code will do best it can to migrate to canonical format if possible.
    It will warn of non-standard or invalid serials and replace them with
    valid serials. A valid serial is all numbers and must be expressable as 
@@ -162,7 +162,9 @@ and after couple hours or similar time, the second phase would be accomplished u
         /usr/bin/dns-prod-push --dns_restart --to_production
 
 And of course in practice each of these would be run from cron - I run them monthly. 
-Sample crons are provided. 
+Sample crons are provided.  For convenience, each of these is available little shell
+scripts */etc/dns_tools/scripts/zsk-roll-1.sh* and *zsk-roll-2.sh* which are 
+used in the sample cron file in */etc/dns_tools/cron/dnssec-roll.cron*. 
 
 To get things started simply create the KSK and ZSK keys and then upload the DS key info
 to the domain registrar. To generate a new set of keys simply run:
@@ -322,8 +324,8 @@ Tool to push signed and unsigned zones to the dns server(s)
 
  - *--dns_restart*  
    Restart the dns server after update zones using the config variable:  
-   dns_restart_cmd. For example for nsd, set this to:
-   dns_restart_cmd = "/usr/bin/systemctl restart nsd"  
+   dns\_restart\_cmd. For example for nsd, set this to:
+   dns\_restart\_cmd = "/usr/bin/systemctl restart nsd"  
 
  - *-t, --test*   
    Test mode - print but dont do
