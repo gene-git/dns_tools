@@ -162,9 +162,14 @@ and after couple hours or similar time, the second phase would be accomplished u
         /usr/bin/dns-prod-push --dns_restart --to_production
 
 And of course in practice each of these would be run from cron - I run them monthly. 
-Sample crons are provided.  For convenience, each of these is available little shell
-scripts */etc/dns_tools/scripts/zsk-roll-1.sh* and *zsk-roll-2.sh* which are 
-used in the sample cron file in */etc/dns_tools/cron/dnssec-roll.cron*. 
+A sample cron file is provided in */etc/dns_tools/cron/dnssec-roll.cron*. And
+for convenience, it uses the above commands wrapped by the shell scripts:
+
+        */etc/dns_tools/scripts/zsk-roll-1.sh* 
+        */etc/dns_tools/scripts/zsk-roll-2.sh* 
+
+### Getting started
+
 
 To get things started simply create the KSK and ZSK keys and then upload the DS key info
 to the domain registrar. To generate a new set of keys simply run:
@@ -179,6 +184,9 @@ for the domain registrar will be found in the file:
 By default all the domains in the config are processed. To process a one or more specific
 domains just put them on the command line. Domains listed on command line will
 override the config file.
+
+All zone files for both internal and external dns should be available as specified
+in the config file. See the sample config for more details.
 
 ### testing
 
