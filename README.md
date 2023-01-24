@@ -349,6 +349,19 @@ Tool to bump the serial number of a DNS zone file. To use it:
    zonefiles do not have their serial number updated.
    Without *check* option each zonefile will also be updated with new serial.
 
+## Update your DNS to use signed zone file
+
+When you're ready to switch your dns to dnssec then all that's needed is change the 
+primary server config to point to the signed zone file rather than the unsigned.
+
+For nsd this would be of the form:
+
+        zone:
+            name:       example.com
+            #zonefile:  %s                      # unsigned
+            zonefile:   %s.signed/zone          # signed
+            include-pattern: "tosecondary"      # notify all secondary servers 
+
 ## FAQ
 
 ### Why is name not dnssec_tools?
@@ -366,7 +379,8 @@ There are three basic parts to the tools:
  - Generate and manage KSK and ZSK keys and use them to sign zones.
 
 While all of them are needed to provide automation of key rolls, the first two items above are
-not specific to DNSSEC.
+not specific to DNSSEC. That said the bulk of the code deals with the more complex
+DNSSEC tasks.
 
 ## License
 

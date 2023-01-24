@@ -138,6 +138,7 @@ def rel_from_abs_path(abs_path, lead_dir):
       - return xxx
     """
     if lead_dir in abs_path:
+        # change to: rel_path = os.path.relpath(abs_path, lead_dir)
         if lead_dir[-1] != '/':
             lead_dir = f'{lead_dir}/'
         rel_path = abs_path.replace(lead_dir,'')
