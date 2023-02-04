@@ -79,7 +79,7 @@ class DnsTool:
         Check any needed keys are available
          - make new key if missing
         """
-        self.prnt.msg('\nMisssing key check\n', fg_col='high')
+        self.prnt.msg('\nChecking that required keys are available\n', fg_col='high')
         if self.opts.test and self.opts.do_keys:
             self.prnt.msg('  Test mode - may have false positives\n')
 

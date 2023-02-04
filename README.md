@@ -114,12 +114,12 @@ N.B. :
    32 bits. You can use the *dns-serial-bump --check zonefile* to check
    for valid serial.
 
-The tool supports 2 primary servers - an internal DNS server and the external server. 
+The tool supports 2 primary servers - an internal DNS server and an external server. 
 The internal server may also serve additional unsigned zones, typically RFC1918 and 
 their reverse zones. There can be unsigned zones for external server too of course 
 and if there are, they will be pushed along with all the other signed zones.
 
-The external prinary is how the outside world views DNS for each domain.  
+The external primary is how the outside world views DNS for each domain.  
 As usual once a primary dns server is updated, it's secondaries
 will get updated automatically via IXFR/AXFR.
 
