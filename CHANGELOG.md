@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.1.0] ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 2023-02-04
+ - rel_from_abs_path now uses os.path.relpath() instead of our own function  
+   Improve message about checking to ensure required keys are available  
+   Small readme changes  
+ - more readme changes  
+ - readme tweaks  
+ - update CHANGELOG.md  
+
 ## [2.0.2] ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 2023-01-24
  - Add note to change primary to point to signed zone files  
  - readme whitespace markdown fix  
