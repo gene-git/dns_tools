@@ -182,7 +182,7 @@ def _construct_remote_call(host_src, src, opts, host_dst, dst):
 
     else:
         # src and target on different remote hosts
-        dst = f'host_dst:{dst}'
+        dst = f'{host_dst}:{dst}'
         pargs = ssh + [host_src] + rsync + [src, dst]
 
     return pargs
