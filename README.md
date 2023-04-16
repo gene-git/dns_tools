@@ -223,6 +223,12 @@ Choose one or more of these to upload to your domain registrar.
 Its good to get this uploaded and available from the root servers soon as your 
 KSK keys are ready and before you push any signed zones out. This is the only manual step.
 And if/when you roll your ksk, then it needs to be repeated with the new DS key info.
+I recommend uploading both sha256 (type 2) and sha512 (type 4) keys. Associated with each
+the *curr.all.ds* file will also have a numerical Id, which you'll need to share with
+your registrar. Note that it can take some time for the root servers to get updated
+with your new KSK - which is fine. Just means that your DNS will be non-dnssec until they 
+get the KSK pushed out to the world. Once that happens, then dns clients will see the KSK 
+and dnssec will be operational.
 
 Everthing else should be handled automatically by the tool.
 
