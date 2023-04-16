@@ -1,5 +1,10 @@
 # Changelog
 
+## [2.2.1] ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 2023-04-16
+ - update 2.2.1 with few more notes about KSK and root servers  
+ - Add few more lines about root servers and KSK  
+ - update CHANGELOG.md  
+
 ## [2.2.0] ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 2023-02-10
  - Fix typo in rsync - this case is not used here  
  - update CHANGELOG.md  
