@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.2.2] ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 2023-05-17
+ - Simplify Arch PKGBUILD and more closely follow arch guidelines  
+ - update CHANGELOG.md  
+
 ## [2.2.1] ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 2023-04-16
  - update 2.2.1 with few more notes about KSK and root servers  
  - Add few more lines about root servers and KSK  
