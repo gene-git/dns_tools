@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.2.4] ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 2023-05-18
+ - PKGBUILD: add python-build to makedepends  
+ - update CHANGELOG.md  
+
 ## [2.2.3] ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 2023-05-18
  - PKGBUILD: build wheel back to using python -m build instead of poetry  
  - update CHANGELOG.md  
