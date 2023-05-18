@@ -1,5 +1,9 @@
 # Changelog
 
+## [2.3.2] ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 2023-05-18
+ - Update build info in README  
+ - update CHANGELOG.md  
+
 ## [2.3.1] ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 2023-05-18
  - PKGBUILD - add dependency on python installer module  
  - update CHANGELOG.md  
