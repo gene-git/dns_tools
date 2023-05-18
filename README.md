@@ -12,7 +12,7 @@ On Arch can simply build using the PKGBUILD provided in packaging dir and availa
 To build it manually, clone the repo and do:
 
         rm -f dist/*
-        poetry build --format wheel
+        python -m build --wheel --no-isolation
         root_dest="/"
         ./scripts/do-install $root_dest
 
