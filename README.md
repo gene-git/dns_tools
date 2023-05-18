@@ -27,9 +27,10 @@ To build it manually, clone the repo and do:
 
 - Building Package:
   - git
-  - poetry (aka python-poetry)
   - wheel (aka python-wheel)
-  - pip (aka python-pip)
+  - build (aka python-build)
+  - installer (aka python-installer)
+  - poetry (aka python-poetry)
   - rsync
 
 ## Interesting, New or Coming Soon

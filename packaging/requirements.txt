@@ -10,6 +10,8 @@ ldns        # used to do actual zone signing
 # package building/installing
 git
 poetry
-pip
+build
+installer
+wheel
 
 
