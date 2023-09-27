@@ -10,13 +10,13 @@
 dest="$1"
 self="dns_tools"
 
-info="README.md CHANGELOG.md packaging"
+info="README.rst Docs packaging"
 infodir="/usr/share/${self}"
 
 etc="cron scripts conf.d"
 etcdir="/etc/dns_tools"
 
-license="LICENSE"
+license="Docs/License.rst"
 licensedir="/usr/share/licenses/${self}"
 
 # list apps without the ".py" or leave empty string
@@ -31,7 +31,7 @@ if [ ! -d "$dest" ] ; then
 else
     /usr/bin/rsync --mkpath -a ${etc} ${dest}${etcdir}
     /usr/bin/rsync --mkpath -a ${info} ${dest}${infodir}
-    /usr/bin/rsync --mkpath -a ${license} ${dest}/${licensedir}/${license}
+    /usr/bin/rsync --mkpath -a ${license} ${dest}/${licensedir}/
 
     /usr/bin/python -m installer --destdir="$dest" dist/*.whl
 
