@@ -1,7 +1,12 @@
 Changelog
 =========
 
-[head] ----- 2023-09-27
+[2.5.0] ----- 2023-11-06
+ * scripts/resign.sh now has optional argument --serial-bump  
+ * resign.sh now takes optional domain list.  
+ * If none provided then does all domeains in /etc/dns_tool/conf.d/config as previously  
+ * update readme for resign.sh changes  
+ * fix typo in comment  
  * update Docs/Changelog.rst  
 
 [2.4.0] ----- 2023-09-27
