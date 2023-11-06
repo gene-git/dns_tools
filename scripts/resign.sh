@@ -4,11 +4,32 @@
 # - resign zones with curr keys
 # - push staging zonefiles (internal and external) to production 
 # - restart dns server
+# Usage:
+#       resign.sh [--serial_bump] [domain1 domain2 ... ]
+# All args are optional:
+#   - --serial-bump : bumps serial before signing
+#   - Limit to domains given as arguments - 
+#     If no domains on command line, then all domains
+#     in /etc/dns_tool/conf.d/config are bumped/signed/
 #
 
-echo "Resign all" 
-/usr/bin/dns-tool --sign
+domains=()
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    -s|--serial_bump)
+      serial_bump="--serial_bump"
+      shift
+      ;;
+    *)
+      domains+=("$1")
+      shift
+      ;;
+  esac
+done
 
-echo "Push work staging zones to prduction - and restart dns server"
+echo "Signing all: $serial_bump ${domains[@]}" 
+/usr/bin/dns-tool $serial_bump --sign ${domains[@]}
+
+echo "Push staging zones to production - and restart dns server"
 /usr/bin/dns-prod-push --dns_restart --to_production
 

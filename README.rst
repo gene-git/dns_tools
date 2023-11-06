@@ -296,6 +296,10 @@ or use the convenience wrapper script for these 2 commands by running:
 
     /etc/dns_tool/resign.sh
         
+This also takes optional arguments::
+
+ * --serial_bump 
+ * list of domains. If none listed, then uses all domains in config file.
 
 ###################
 Overview of Options

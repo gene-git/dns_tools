@@ -1,6 +1,5 @@
 # 
 # requirements.txt
-# pip uses wheel and should have it as dependency 
 # Run time
 python >= 3.9
 tomli       # needed for python < 3.11

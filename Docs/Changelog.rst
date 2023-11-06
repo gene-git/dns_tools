@@ -1,6 +1,9 @@
 Changelog
 =========
 
+[head] ----- 2023-09-27
+ * update Docs/Changelog.rst  
+
 [2.4.0] ----- 2023-09-27
  * Reorg and rework documentation.  
  * Now simple to generate html and pdf docs using sphinx  
