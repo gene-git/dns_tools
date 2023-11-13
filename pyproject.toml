@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dns_tools"
-version = "2.5.0"
+version = "2.6.0"
 description = "DNS server tools for DNSSEC etc"
 authors = ["Gene C"]
 license = "MIT"

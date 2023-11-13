@@ -47,7 +47,8 @@ def zone_expand_includes(zone):
     #
     zone_new = []
     for row in zone:
-        if '$INCLUDE' in row:
+        # expand INCLUDE if not inside comment
+        if '$INCLUDE' in row and not row.startswith(';'):
             srow = row.split()
             file = srow[1]
             zone_new.append('\n; ** begin expanded ' + row + '\n')

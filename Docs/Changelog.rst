@@ -1,6 +1,9 @@
 Changelog
 =========
 
+[head] ----- 2023-11-06
+ * update Docs/Changelog.rst  
+
 [2.5.0] ----- 2023-11-06
  * scripts/resign.sh now has optional argument --serial-bump  
  * resign.sh now takes optional domain list.  
