@@ -1,7 +1,9 @@
 Changelog
 =========
 
-[head] ----- 2023-11-06
+[2.6.0] ----- 2023-11-12
+ * resign.sh accept --serial-bump, -s, --serial_bump  
+ * Do not expand $INCLUDE when in a comment line before signing  
  * update Docs/Changelog.rst  
 
 [2.5.0] ----- 2023-11-06
