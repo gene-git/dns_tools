@@ -1,6 +1,16 @@
 Changelog
 =========
 
+[3.0.0] ----- 2023-11-16
+ * Some lint cleanups.  
+ * Add lock to ensure only one dns-tool runs at a time.  
+ * NB The inotify code, used to wait on lock, uses inotify in libc  
+ * This returns a struct inotify_event and the size of this struct is important.  
+ * Best I know on every (linux) system the struct size is:  
+ * (int, uint_32_t, uint_32_t, uint_32_t, ...)  
+ * If you find a system where they are different (see man inotify) let me know!  
+ * update Docs/Changelog.rst Docs/dns_tools.pdf  
+
 [2.6.0] ----- 2023-11-12
  * resign.sh accept --serial-bump, -s, --serial_bump  
  * Do not expand $INCLUDE when in a comment line before signing  
