@@ -3,7 +3,7 @@
 """
 Handle generating keys
 """
-# pylint: disable=R0914
+# pylint: disable=invalid-name,too-many-locals
 import os
 from .run_prog import run_prog
 from .tools import make_dir_if_needed

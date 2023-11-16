@@ -7,6 +7,7 @@
  and a link is placed in signed/domain.signed -> actual file.
  datetime is 1 sec accuracy to permit multiple signs per day if needed - perhaps 1 min is ok
 """
+# pylint: disable=invalid-name, too-many-arguments
 import os
 import datetime
 import re

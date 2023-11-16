@@ -15,9 +15,13 @@ to simplify and automate this as much as possible.
 New / Interesting
 ==================
 
-* Reorganize docs
-* Change from markdown to restructered text
-* html and pdf docs now easily built using sphinx
+* pdf doc is now pre-build in Docs dir
+* Use lockfile to enforce only one dns-tool runs at a time
+* NB the locking code uses inotify to wait to acquire a lock if another process has it locked.
+  This uses *inotify* from standard C-library and our python code depends on the size 
+  of *struct inotify_event* that is returned. To best of my knowledge this is same 
+  on all versions of linux. i.e. (int, uint32_t, uint32_t, uint32_t, ...).
+  If anyone comes across anything different please let me know.
 
 ###############
 Getting Started

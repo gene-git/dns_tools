@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2023, Gene C
 """
-# run external program
-# args:  ['program_pat', 'arg1', 'arg2', ...]
+ run external program
+ args:  ['program_pat', 'arg1', 'arg2', ...]
 """
+# pylint: disable=too-many-arguments
 import subprocess
 
 def run_prog(pargs, input_str=None, stdout=subprocess.PIPE, stderr=subprocess.PIPE,

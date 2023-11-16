@@ -4,7 +4,8 @@
  Initialize for dns-tool
  All controls are command line arguments.
 """
-# pylint: disable=R0801,R0903,R0914
+# pylint: disable=too-many-instance-attributes,invalid-name,too-few-public-methods
+# pylint: disable=duplicate-code
 import os
 import argparse
 import datetime

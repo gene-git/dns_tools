@@ -4,12 +4,13 @@
 """
 Read zone file = bump serial and write to stdout
 """
+# pylint: disable=invalid-name
 import argparse
 from lib import zone_file_read
 from lib import zone_file_write
 from lib import zone_get_new_serial
 from lib import zone_update_serial
-#import pdb
+from lib import DnsLock
 
 def options():
     """
@@ -30,7 +31,11 @@ def main():
     """
     Standalone tool to check and/or bump zone file serial
     """
-    #pdb.set_trace()
+    lock = DnsLock()
+    got_lock = lock.acquire_lock()
+    if not got_lock:
+        return
+
     opts = options()
     zonepath_list = opts.zonefile
     check = opts.check

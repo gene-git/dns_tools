@@ -7,15 +7,24 @@
   - production staging to live production
  gc - 2022
 """
-#import pdb
+# pylint: disable=invalid-name
 from lib import DnsProd
+from lib import DnsLock
 
 def main():
     """
     - work staging to production staging
     - production staging to live production
     """
-    #pdb.set_trace()
+    #
+    # check no other dns-tool active
+    # If so, wait until we an get the lock
+    #
+    lock = DnsLock()
+    got_lock = lock.acquire_lock()
+    if not got_lock:
+        return
+
     prod = DnsProd()
     if not prod.okay:
         return

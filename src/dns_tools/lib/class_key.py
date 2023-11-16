@@ -48,6 +48,7 @@ class KeyInfo:
 
 class DnsKey:
     """ all key related tasks provided """
+    # pylint: disable=too-many-instance-attributes
     def __init__(self, dnskeys, domain, ktype, key_dir):
 
         self.dnskeys = dnskeys                # parent

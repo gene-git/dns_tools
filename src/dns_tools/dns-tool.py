@@ -22,16 +22,26 @@
 
  gc - 2022
 """
-#import pdb
+# pylint: disable=invalid-name
 from lib import DnsTool
+from lib import DnsLock
 
 def main():
     """
     Tool executes key and signing actions
     """
-    #pdb.set_trace()
+    #
+    # check no other dns-tool active
+    # If so, wait until we an get the lock
+    #
+    lock = DnsLock()
+    got_lock = lock.acquire_lock()
+    if not got_lock:
+        return
+
     tool = DnsTool()
     if not tool.okay:
+        lock.release_lock()
         return
 
     if tool.opts.print_keys:
@@ -67,6 +77,7 @@ def main():
     # Caller should now invoke separate tool dns-prod-push
     # to push newly signed zones to dns primary servers
     #
+    lock.release_lock()
 
 if __name__ == '__main__':
     main()

@@ -3,6 +3,7 @@
 """
  Ensure correct permissions of all zone files
 """
+# pylint: disable=too-many-arguments
 import os
 import stat
 from .tools import get_uid_gid

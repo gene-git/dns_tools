@@ -5,7 +5,8 @@ CLasses to support dns-tool (dnssec, ...)
 """
 from .class_dnstool import DnsTool
 from .class_prod import DnsProd
-#from .zone import zone_modify
+from .class_lock import DnsLock
+
 from .zone import zone_file_read
 from .zone import zone_file_write
 from .dns_serial import zone_get_new_serial
