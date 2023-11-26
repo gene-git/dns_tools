@@ -1,32 +1,36 @@
 Changelog
 =========
 
+[3.1.0] ----- 2023-11-26
+ * Switch python backend build to hatch  
+ * update Docs/Changelog.rst Docs/dns_tools.pdf  
+
 [3.0.0] ----- 2023-11-16
  * Some lint cleanups.  
- * Add lock to ensure only one dns-tool runs at a time.  
- * NB The inotify code, used to wait on lock, uses inotify in libc  
- * This returns a struct inotify_event and the size of this struct is important.  
- * Best I know on every (linux) system the struct size is:  
- * (int, uint_32_t, uint_32_t, uint_32_t, ...)  
- * If you find a system where they are different (see man inotify) let me know!  
+   Add lock to ensure only one dns-tool runs at a time.  
+   NB The inotify code, used to wait on lock, uses inotify in libc  
+   This returns a struct inotify_event and the size of this struct is important.  
+   Best I know on every (linux) system the struct size is:  
+   (int, uint_32_t, uint_32_t, uint_32_t, ...)  
+   If you find a system where they are different (see man inotify) let me know!  
  * update Docs/Changelog.rst Docs/dns_tools.pdf  
 
 [2.6.0] ----- 2023-11-12
  * resign.sh accept --serial-bump, -s, --serial_bump  
- * Do not expand $INCLUDE when in a comment line before signing  
+   Do not expand $INCLUDE when in a comment line before signing  
  * update Docs/Changelog.rst  
 
 [2.5.0] ----- 2023-11-06
  * scripts/resign.sh now has optional argument --serial-bump  
- * resign.sh now takes optional domain list.  
- * If none provided then does all domeains in /etc/dns_tool/conf.d/config as previously  
- * update readme for resign.sh changes  
- * fix typo in comment  
+   resign.sh now takes optional domain list.  
+   If none provided then does all domeains in /etc/dns_tool/conf.d/config as previously  
+   update readme for resign.sh changes  
+   fix typo in comment  
  * update Docs/Changelog.rst  
 
 [2.4.0] ----- 2023-09-27
  * Reorg and rework documentation.  
- * Now simple to generate html and pdf docs using sphinx  
+   Now simple to generate html and pdf docs using sphinx  
  * update CHANGELOG.md  
 
 [2.3.2] ----- 2023-05-18
@@ -64,8 +68,8 @@ Changelog
 
 [2.1.0] ----- 2023-02-04
  * rel_from_abs_path now uses os.path.relpath() instead of our own function  
- * Improve message about checking to ensure required keys are available  
- * Small readme changes  
+   Improve message about checking to ensure required keys are available  
+   Small readme changes  
  * more readme changes  
  * readme tweaks  
  * update CHANGELOG.md  
@@ -80,7 +84,7 @@ Changelog
 
 [2.0.1] ----- 2023-01-22
  * Remove "coming soon" from readme  
- * fix PKGBUILD  
+   fix PKGBUILD  
  * update CHANGELOG.md  
 
 [2.0.0] ----- 2023-01-22
