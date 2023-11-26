@@ -1,16 +1,29 @@
-[tool.poetry]
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
 name = "dns_tools"
-version = "3.0.0"
+dynamic = ["version"]
 description = "DNS server tools for DNSSEC etc"
-authors = ["Gene C"]
+authors = [{ name = "Gene C", email = "arch@sapience.com" }]
 license = "MIT"
 readme = "README.rst"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.11",
+]
+dependencies = []
 
-[tool.poetry.dependencies]
-python = "^3.9"
+[project.urls]
+Documentation = "https://github.com/gene-git/dns_tools/Docs"
+Issues = "https://github.com/gene-git/dns_tools/issues"
+Source = "https://github.com/gene-git/dns_tools"
 
-[tool.poetry.dev-dependencies]
+[tool.hatch.version]
+path = "src/dns_tools/__about__.py"
 
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+[[tool.hatch.envs.all.matrix]]
+python = ["3.10", "3.11", "3.12"]
+
