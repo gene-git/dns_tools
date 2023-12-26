@@ -1,6 +1,10 @@
 Changelog
 =========
 
+[3.1.1] ----- 2023-12-26
+ * Remove tomli from depends() in PKGBUILD as not needed for python >= 3.11  
+ * update Docs/Changelog.rst Docs/dns_tools.pdf  
+
 [3.1.0] ----- 2023-11-26
  * Switch python backend build to hatch  
  * update Docs/Changelog.rst Docs/dns_tools.pdf  
