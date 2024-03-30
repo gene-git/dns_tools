@@ -3,12 +3,17 @@
 """
 Shared File Lock Class
 """
+import os
 from lockmgr import LockMgr
 
 class DnsLock:
     """ File locking to ensure 1 tool can run at a time """
     def __init__(self):
-        self.lockmgr = LockMgr('/tmp/.dns-tool-lockmgr')
+        euid = os.geteuid()
+        lockdir = f'/tmp/.dns-tool-{euid}/'
+        os.makedirs(lockdir, exist_ok=True)
+        lockfile = f'{lockdir}/lock'
+        self.lockmgr = LockMgr(lockfile)
 
     def acquire_lock(self):
         """ get lock """
