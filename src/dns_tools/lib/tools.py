@@ -112,12 +112,10 @@ def latest_file_mod_time (path,recurse=True):
         scan = os.scandir(path)
         for item in scan:
             mtime_new = os.path.getmtime(item.path)
-            if mtime_new > mtime:
-                mtime = mtime_new
+            mtime = max(mtime, mtime_new)
             if recurse and item.is_dir():
                 mtime_new = latest_file_mod_time(item.path, recurse)
-                if mtime_new > mtime:
-                    mtime = mtime_new
+                mtime = max(mtime, mtime_new)
 
     return mtime
 
