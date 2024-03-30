@@ -15,6 +15,7 @@ to simplify and automate this as much as possible.
 New / Interesting
 ==================
 
+* Use `lockmgr`_ package instead of local copy (also `lockmgr AUR`_)
 * pdf doc is now pre-build in Docs dir
 * Use lockfile to enforce only one dns-tool runs at a time
 * NB the locking code uses inotify to wait to acquire a lock if another process has it locked.
@@ -533,6 +534,8 @@ Created by Gene C. and licensed under the terms of the MIT license.
 
 .. _Github: https://github.com/gene-git/dns_tools
 .. _Archlinux AUR: https://aur.archlinux.org/packages/dns_tools
+.. _lockmgr : https://github.com/gene-git/lockmgr 
+.. _lockmgr AUR : https://aur.archlinux.org/packages/lockmgr
 
 .. [1] https://github.com/google/googletest  
 .. [2] https://abseil.io/about/philosophy#upgrade-support
