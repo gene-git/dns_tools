@@ -1,8 +1,11 @@
 Changelog
 =========
 
-**[3.2.0] ----- 2024-03-30** ::
+**[3.3.0] ----- 2024-03-30** ::
 
+	    Lockfile now attached to uid
+	    update readme
+	    update Docs/Changelog.rst
 	    update project version
 	    use max(a,b) instead of if(a>b) etc
 	    Now uses separate lockmgr package instead of local copy
