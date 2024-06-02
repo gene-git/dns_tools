@@ -1,6 +1,13 @@
 Changelog
 =========
 
+**[3.4.0] ----- 2024-06-02** ::
+
+	    Improve exception handling with setting file permissions
+	    update requirements.txt to show dep on lockmgr
+	    update Docs/Changelog.rst Docs/dns_tools.pdf
+
+
 **[3.3.0] ----- 2024-03-30** ::
 
 	    Lockfile now attached to uid
