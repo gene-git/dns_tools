@@ -10,7 +10,7 @@
 #   - --serial_bump : bumps serial before signing
 #   - Limit to domains given as arguments - 
 #     If no domains on command line, then all domains
-#     in /etc/dns_tool/conf.d/config are bumped/signed/
+#     in /etc/dns_tools/conf.d/config are bumped/signed/
 #
 
 domains=()

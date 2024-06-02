@@ -55,24 +55,38 @@ def _set_perms(prnt, uid, gid, dmode, fmode, adir):
     if not os.path.exists(adir) or not os.path.isdir(adir):
         return
 
+    #
+    # scan directory
+    #
     try:
         scan = os.scandir(adir)
     except OSError as err:
-        prnt.msg(f'Failed scanning {adir} : {err}\n', fg_col='warn')
+        prnt.msg(f'Failed to scan {adir} : {err}\n', fg_col='warn')
         scan = None
 
     if not scan:
         return
 
-    os.chmod(adir, dmode)
-    os.chown(adir, uid, gid)
-    for item in scan:
+    #
+    # set perms
+    #
+    try:
+        os.chmod(adir, dmode)
+        os.chown(adir, uid, gid)
+    except OSError as err:
+        prnt.msg(f'Failed to set perms on {adir} : {err}\n', fg_col='warn')
+        return
 
+    for item in scan:
         this_mode = fmode
         if item.is_dir():
             this_mode = dmode
+        try:
+            os.chmod(item.path, this_mode)
+            os.chown(item.path, uid, gid)
+        except OSError as err:
+            prnt.msg(f'Failed set perms on {item.path} : {err}\n', fg_col='warn')
+            continue
 
-        os.chmod(item.path, this_mode)
-        os.chown(item.path, uid, gid)
         if item.is_dir:
             _set_perms(prnt, uid, gid, dmode, fmode, item.path)
