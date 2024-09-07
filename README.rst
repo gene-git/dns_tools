@@ -504,20 +504,25 @@ Appendix
 Dependencies
 ============
 
-* Run Time :
+**Run Time** :
 
-  * python (3.9 or later)
-  * ldns
-  * If python < 3.11 : tomli (aka python-tomli)
+* python (3.9 or later)
+* ldns
+* *tomli* if python < 3.11 (aka python-tomli)
 
-* Building Package:
+**Building Package**:
 
-  * git
-  * wheel (aka python-wheel)
-  * build (aka python-build)
-  * installer (aka python-installer)
-  * poetry (aka python-poetry)
-  * rsync
+* git
+* hatch (aka python-hatch)
+* wheel (aka python-wheel)
+* build (aka python-build)
+* installer (aka python-installer)
+* rsync
+
+**Optional to build docs**:
+* sphinx
+* myst-parser
+* texlive-latexextra  (archlinux packaging of texlive tools)
 
 .. _manual_build:
 
