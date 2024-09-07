@@ -15,6 +15,7 @@ to simplify and automate this as much as possible.
 New / Interesting
 ==================
 
+* Fix up restructred test formatting in README
 * Use `lockmgr`_ package instead of local copy (also `lockmgr AUR`_)
 * pdf doc is now pre-build in Docs dir
 * Use lockfile to enforce only one dns-tool runs at a time
@@ -32,22 +33,12 @@ Installation
 ============
 
 Available on
- * `Github`_
- * `Archlinux AUR`_
+* `Github`_
+* `Archlinux AUR`_
 
 On Arch you can build using the PKGBUILD provided in packaging directory or from the AUR package.
 
-To build it manually, clone the repo and do:
-
-.. code-block:: bash
-
-    rm -f dist/*
-    python -m build --wheel --no-isolation
-    root_dest="/"
-    ./scripts/do-install $root_dest
-
-
-When running as non-root then set root_dest a user writable directory
+To build manually,  see Appendix manual_build_. 
 
 ######################
 dns_tools applications
@@ -78,37 +69,39 @@ Kinds of DNSSEC keys
 
 A quick reminder about DNSSEC keys.
 
- - Zone Signing Key (ZSK)  
-   This is used to sign dns zone files. It is advisable to update this periodically, 
-   perhaps every 1 to 3 months.  The mechanism to update the key requires some care
-   and is known as *rolling* the keys. The tools make this straightforward. More on this later.
+* Zone Signing Key (ZSK)  
 
- - Key Signing Key (KSK)  
-   This signs the zone signing key - and its this key that must be registered with
-   the domain registrar for the root servers. The requirement ensures that there 
-   is an appropriate chain of trust from the root dns servers on down. 
-   Most, if not all registars now support DNSSEC - Google Domains does for example. 
-   This requirement means there is a manual step whenever the KSK changes, which is updating
-   the root servers with the new information.  KSK should be rolled occasionally,
-   in spite of the manual step, perhaps every 1-3 years, and the corresponding DS 
-   (Delegation Signer) record for the new KSK should be uploaded to the domain registrar.
+  This is used to sign dns zone files. It is advisable to update this periodically, 
+  perhaps every 1 to 3 months.  The mechanism to update the key requires some care
+  and is known as *rolling* the keys. The tools make this straightforward. More on this later.
+
+* Key Signing Key (KSK)  
+
+  This signs the zone signing key - and its this key that must be registered with
+  the domain registrar for the root servers. The requirement ensures that there 
+  is an appropriate chain of trust from the root dns servers on down. 
+  Most, if not all registars now support DNSSEC - Google Domains does for example. 
+  This requirement means there is a manual step whenever the KSK changes, which is updating
+  the root servers with the new information.  KSK should be rolled occasionally,
+  in spite of the manual step, perhaps every 1-3 years, and the corresponding DS 
+  (Delegation Signer) record for the new KSK should be uploaded to the domain registrar.
 
 Key Rolling  
 ===========
 
 The typical approach to doing this is accomplished in 2 basic steps. 
 
-   * **Phase 1** 
+* **Phase 1** 
 
-     Create a new key, called *next*, then sign the zone files using this key as well as
-     the current key (we call this *curr* for short). With the records now double signed
-     the existing key remains valid.
+  Create a new key, called *next*, then sign the zone files using this key as well as
+  the current key (we call this *curr* for short). With the records now double signed
+  the existing key remains valid.
 
-   * **Phase 2**  
+* **Phase 2**  
 
-     After a period sufficiently longer than the TTL for the zone, say 2 x TTL, then
-     rename the *next* key to be the *curr* key. Resign using just this key.
-     This gives time for DNS servers to catch up with the new key before the old one is removed. 
+  After a period sufficiently longer than the TTL for the zone, say 2 x TTL, then
+  rename the *next* key to be the *curr* key. Resign using just this key.
+  This gives time for DNS servers to catch up with the new key before the old one is removed. 
 
 Rolling KSK and ZSK is basically the same, but for KSK, the DS records
 must be uploaded to the domain registrar. In Phase 1 both old and new DS should be uploaded
@@ -120,42 +113,45 @@ Using the tools
 
 The following set of tools are provided.
 
- * **dns-tool**
+* **dns-tool**
 
-    This tool handles all DNSSEC related operations including key creation and rolling, and 
-    using those keys to sign the dns zone files. 
+  This tool handles all DNSSEC related operations including key creation and rolling, and 
+  using those keys to sign the dns zone files. 
 
 * **dns-prod-push**
 
-    This tool make it simple to push signed and/or unsigned dns zone files from the signing server to the
-    production area for each primary dns server. the DNS primary server(s) should be on same machine
-    or reachable via ssh. It also restarts those servers when appropriate.
+  This tool make it simple to push signed and/or unsigned dns zone files from the signing server to the
+  production area for each primary dns server. the DNS primary server(s) should be on same machine
+  or reachable via ssh. It also restarts those servers when appropriate.
 
 * **dns-serial-bump**
 
-    A standalone tool to check the validity and bump the serial number in the SOA of a dns zone file.
+  A standalone tool to check the validity and bump the serial number in the SOA of a dns zone file.
 
 Example Usage
 =============
 
 N.B. :
 
- * Must run on signing server.  
-   The tools must be run on the signing server which is defined in the config file.  
-   To minimize chance of an accident, the code will refuse to run if that is not the case.
+* Must run on signing server.  
 
- * Run as root.    
-   2 operations require effective root user:
-   * Changing the ownership permisions of staging zones to *dns_user* and *dns_group*.
-   * Preserving ownership when files rsync --owner to dns server(s)
+  The tools must be run on the signing server which is defined in the config file.  
+  To minimize chance of an accident, the code will refuse to run if that is not the case.
 
- * Zone serial numbers should be in canonical format for serial bump to work properly.  
-   i.e. yyymmddnn where yyymmdd is date and nn is a 2 digit counter from 00 to 99
-   If not code will do best it can to migrate to canonical format if possible.
-   It will warn of non-standard or invalid serials and replace them with
-   valid serials. A valid serial is all numbers and must be expressable as 
-   32 bits. You can use the *dns-serial-bump --check zonefile* to check
-   for valid serial.
+* Run as root.    
+
+  * operations require effective root user:
+  * Changing the ownership permisions of staging zones to *dns_user* and *dns_group*.
+  * Preserving ownership when files rsync --owner to dns server(s)
+
+* Zone serial numbers should be in canonical format for serial bump to work properly.  
+
+  i.e. yyymmddnn where yyymmdd is date and nn is a 2 digit counter from 00 to 99
+  If not code will do best it can to migrate to canonical format if possible.
+  It will warn of non-standard or invalid serials and replace them with
+  valid serials. A valid serial is all numbers and must be expressable as 
+  32 bits. You can use the *dns-serial-bump --check zonefile* to check
+  for valid serial.
 
 The tool supports 2 primary servers - an internal DNS server and an external server. 
 The internal server may also serve additional unsigned zones, typically RFC1918 and 
@@ -252,15 +248,16 @@ KSK Keys and DS to root servers
 When you create KSK keys a set of DS keys will be generated automatically. 
 These actually come in different hash types:
 
- * **1 : sha1**   - deprecated and shouldn't be used
- * **2 : sha256** - the default and saved in curr.ds
- * **4 : sha512** - slower but somewhat more secure hash 
- * **g : gost**
+* **1 : sha1**   - deprecated and shouldn't be used
+* **2 : sha256** - the default and saved in curr.ds
+* **4 : sha512** - slower but somewhat more secure hash 
+* **g : gost**
    
 We do not generate the type *4 gost* hash.
 
-These are saved into *\<work_dir\>/keys/\<domain\>/ksk/* directory.
-In addition to *curr.ds*, *curr.all.ds* contains sha1, sha256 and sha512.
+These are saved into the *<work_dir>/keys/<domain>/ksk/* directory.
+
+In addition to *curr.ds*, *curr.all.ds* contains **sha1**, **sha256** and **sha512**.
 Choose one or more of these to upload to your domain registrar.   
 
 Its good to get this uploaded and available from the root servers soon as your 
@@ -282,15 +279,15 @@ Updating dns zone files
 Whenever you update any zone files, they must be resigned. Make any zone file changes 
 in the zone staging directories. i.e.
 
-.. ::
+.. code-block::
 
-        <work_dir>/internal/staging/zones
-        <work_dir>/external/staging/zones
+   <work_dir>/internal/staging/zones
+   <work_dir>/external/staging/zones
 
 You don't need to bump serial number, the tool will do it for you, though its benign to do so.
 When you're done with the changes then to resign and push just run:
 
-.. code-block: bash
+.. code-block::bash
 
     /usr/bin/dns-tool --sign
     /usr/bin/dns-prod-push --dns_restart --to_production
@@ -301,10 +298,10 @@ or use the convenience wrapper script for these 2 commands by running:
 
     /etc/dns_tool/resign.sh
         
-This also takes optional arguments::
+This also takes optional arguments:
 
- * --serial_bump 
- * list of domains. If none listed, then uses all domains in config file.
+* --serial_bump 
+* list of domains. If none listed, then uses all domains in config file.
 
 ###################
 Overview of Options
@@ -319,142 +316,146 @@ Handles key generation, zone signing and key rolls.
 While there are many options, majority are more for testing or speical needs. The main options
 are *test*, *print_keys*, *sign*, *zsk_toll_1*, *zsk_roll_2* 
 
- * positional arguments:  
+* positional arguments:  
+
    one or more domains here will override config file.
 
- * (*-h, --help*)
+* (*-h, --help*)
 
-   show this help message and exit
+  show this help message and exit
 
- * (*--theme*)
+* (*--theme*)
 
-   Output color theme for tty. One of : dark, light or none
+  Output color theme for tty. One of : dark, light or none
 
- * (*-t, --test*)
+* (*-t, --test*)
 
-   Test mode - print but dont do
+  Test mode - print but dont do
 
- * (*-v, --verb*)
+* (*-v, --verb*)
 
-   More verbosity
+  More verbosity
 
- * (*--serial_bump*)
+* (*--serial_bump*)
 
-   Bump all serials. Not usually needed as happens auotmatically
-   This implies *--sign* so that signed zones stay consistent.
+  Bump all serials. Not usually needed as happens auotmatically
+  This implies *--sign* so that signed zones stay consistent.
 
- * (*--keep_include*)
+* (*--keep_include*)
 
-   Keep temp file which has $INCLUDE expanded
+  Keep temp file which has $INCLUDE expanded
 
- * (*--sign*)
+* (*--sign*)
 
-   Short hand for sign with curr keys (ksk and zsk)
+  Short hand for sign with curr keys (ksk and zsk)
 
- * (*--sign_ksk_next*)
+* (*--sign_ksk_next*)
 
-   Sign with next ksk
+  Sign with next ksk
 
- * (*--sign_zsk_next*)
+* (*--sign_zsk_next*)
 
-   Sign with next zsk
+  Sign with next zsk
 
- * (*--gen_zsk_curru*)
+* (*--gen_zsk_curru*)
 
-   Generate ZSK for curr
+  Generate ZSK for curr
 
- * (*--gen_zsk_next*)
+* (*--gen_zsk_next*)
 
-   Generate ZSK for next
+  Generate ZSK for next
 
- * (*--gen_ksk_curr*)
+* (*--gen_ksk_curr*)
 
   Generate KSK for curr
 
- * (*--gen_ksk_next*)
+* (*--gen_ksk_next*)
 
-   Generate KSK for next
+  Generate KSK for next
 
- * (*--zsk_roll_1*)
+* (*--zsk_roll_1*)
 
-   ZSK Phase 1 roll - old and new
+  ZSK Phase 1 roll - old and new
 
- * (*--zsk_roll_2*)
+* (*--zsk_roll_2*)
 
-   ZSK Phase 2 roll - new only
+  ZSK Phase 2 roll - new only
 
- * (*--ksk_roll_1*)
+* (*--ksk_roll_1*)
 
-   KSK Phase 1 roll - old and new - NB must add to degistrar
+  KSK Phase 1 roll - old and new - NB must add to degistrar
 
- * (*--ksk_roll_2*)
+* (*--ksk_roll_2*)
 
-   KSK Phase 2 roll - new only
+  KSK Phase 2 roll - new only
 
- * (*--print_keys*)
+* (*--print_keys*)
 
-   Print keys (curr and next)
+  Print keys (curr and next)
 
 dns-prod-push options
 =====================
 
 Tool to push signed and unsigned zones to the dns server(s)
 
- * positional arguments:  
-   one or more domains here will override config file.
+* positional arguments:  
 
- * (*-h, --help*)
+  one or more domains here will override config file.
 
-   show help message and exit
+* (*-h, --help*)
 
- * (*--theme*)
+  show help message and exit
 
-   Output color theme for tty. One of : dark, light or none
+* (*--theme*)
 
- * (*--int_ext what*)
+  Output color theme for tty. One of : dark, light or none
 
-   What to push. One of : internal, external or both (default is both)
+* (*--int_ext what*)
 
- * (*--to_production*)
+  What to push. One of : internal, external or both (default is both)
 
-   Copy zone files from work staging area to live production area
+* (*--to_production*)
 
- * (*--dns_restart*)
+  Copy zone files from work staging area to live production area
 
-   Restart the dns server after update zones using the config variable:  
-   dns\_restart\_cmd. For example for nsd, set this to:
-   dns\_restart\_cmd = "/usr/bin/systemctl restart nsd"  
+* (*--dns_restart*)
 
- * (*-t, --test*)
+  Restart the dns server after update zones using the config variable *dns_restart_cmd*. 
 
-   Test mode - print but dont do
+  For example for nsd, set this to:
 
- * (*-v, --verb*)
+  dns_restart_cmd = "/usr/bin/systemctl restart nsd"  
 
-   More verbosity
+* (*-t, --test*)
+
+  Test mode - print but dont do
+
+* (*-v, --verb*)
+
+  More verbosity
 
 
 dns-serial-bump options
 =======================
 
-Tool to bump the serial number of a DNS zone file.::
+Tool to bump the serial number of a DNS zone file.:
 
     dns-serial-bump [-c] <zonefile>
 
 Arguments:
 
- * positional arguments  
-   One or more zonefiles with SOA containing a serial number.
+* positional arguments  
+  One or more zonefiles with SOA containing a serial number.
 
- * (*-h, --help*)
+* (*-h, --help*)
 
-   show help message and exit
+  show help message and exit
 
- * (*-c, --check*)
+* (*-c, --check*)
 
-   Check and show current and updated serial number for each zonefile. When check is enabled
-   zonefiles do not have their serial number updated.
-   Without *check* option each zonefile will also be updated with new serial.
+  Check and show current and updated serial number for each zonefile. When check is enabled
+  zonefiles do not have their serial number updated.
+  Without *check* option each zonefile will also be updated with new serial.
 
 Update your DNS to use signed zone file
 =======================================
@@ -482,14 +483,15 @@ Why is name not dnssec_tools?
 This is a good question. I did give some thought to this and ended up with the more generic name.
 
 My thinking is this. Since the tool is really about managing DNS zones in one place and 
-not just about keys/signing I went with the more generic name along with adding DNSSEC as a keyword.
+not just about keys/signing I went with the more generic name combined with the addition
+of DNSSEC keyword.
 
 There are three basic parts to the tools:
 
- * Check the validity and increment the serial number in the SOA section of zonefile.
- * Push zone files to primary DNS servers (internal and external facing servers) and 
-   restart them.
- * Generate and manage KSK and ZSK keys and use them to sign zones.
+* Check the validity and increment the serial number in the SOA section of zonefile.
+* Push zone files to primary DNS servers (internal and external facing servers) and 
+  restart them.
+* Generate and manage KSK and ZSK keys and use them to sign zones.
 
 While all of them are needed to provide automation of key rolls, the first two items above are
 not specific to DNSSEC. That said the bulk of the code deals with the more complex
@@ -503,11 +505,13 @@ Dependencies
 ============
 
 * Run Time :
+
   * python (3.9 or later)
   * ldns
   * If python < 3.11 : tomli (aka python-tomli)
 
 * Building Package:
+
   * git
   * wheel (aka python-wheel)
   * build (aka python-build)
@@ -515,6 +519,23 @@ Dependencies
   * poetry (aka python-poetry)
   * rsync
 
+.. _manual_build:
+
+##############
+Build Manually
+##############
+
+To build it manually, clone the repo and do:
+
+.. code-block:: bash
+
+    rm -f dist/*
+    python -m build --wheel --no-isolation
+    root_dest="/"
+    ./scripts/do-install $root_dest
+
+
+When running as non-root then set root_dest a user writable directory
 
 Philosophy
 ==========
@@ -539,5 +560,4 @@ Created by Gene C. and licensed under the terms of the MIT license.
 
 .. [1] https://github.com/google/googletest  
 .. [2] https://abseil.io/about/philosophy#upgrade-support
-
 
