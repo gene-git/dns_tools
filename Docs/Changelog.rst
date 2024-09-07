@@ -1,8 +1,14 @@
 Changelog
 =========
 
-**[HEAD] ----- 2024-09-07** ::
+**[3.4.2] ----- 2024-09-07** ::
 
+	    More rst tweaks
+
+
+**[3.4.1, origin/master] ----- 2024-09-07** ::
+
+	    update Docs/Changelog.rst Docs/dns_tools.pdf
 	    Fix up restructred test formatting in README
 	    update Docs/Changelog.rst Docs/dns_tools.pdf
 
