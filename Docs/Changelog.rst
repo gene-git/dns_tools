@@ -1,6 +1,12 @@
 Changelog
 =========
 
+**[HEAD] ----- 2024-09-07** ::
+
+	    Fix up restructred test formatting in README
+	    update Docs/Changelog.rst Docs/dns_tools.pdf
+
+
 **[3.4.0] ----- 2024-06-02** ::
 
 	    Improve exception handling with setting file permissions
