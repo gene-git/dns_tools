@@ -1,6 +1,12 @@
 Changelog
 =========
 
+**[3.4.5] ----- 2024-12-31** ::
+
+	    Add git signing key to Arch Package
+	    update Docs/Changelog.rst Docs/dns_tools.pdf
+
+
 **[3.4.4] ----- 2024-12-31** ::
 
 	    typo
