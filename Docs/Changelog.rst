@@ -1,6 +1,12 @@
 Changelog
 =========
 
+**[3.4.4] ----- 2024-12-31** ::
+
+	    typo
+	    update Docs/Changelog.rst Docs/dns_tools.pdf
+
+
 **[3.4.3] ----- 2024-12-31** ::
 
 	    Git tags are now signed.
