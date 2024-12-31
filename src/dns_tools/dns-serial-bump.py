@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2023, Gene C
+# SPDX-FileCopyrightText: © 2023-present  Gene C <arch@sapience.com>
 """
 Read zone file = bump serial and write to stdout
 """

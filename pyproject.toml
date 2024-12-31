@@ -12,7 +12,7 @@ readme = "README.rst"
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.13",
 ]
 dependencies = []
 
@@ -25,5 +25,5 @@ Source = "https://github.com/gene-git/dns_tools"
 path = "src/dns_tools/__about__.py"
 
 [[tool.hatch.envs.all.matrix]]
-python = ["3.10", "3.11", "3.12"]
+python = ["3.13"]
 

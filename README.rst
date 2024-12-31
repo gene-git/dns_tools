@@ -15,6 +15,12 @@ to simplify and automate this as much as possible.
 New / Interesting
 ==================
 
+* Going forward all git tags will be signed by <arch@sapience.com>.
+  Public key is available via WKD or download from website:
+  https://www.sapience.com/tech
+  After key is on keyring use the PKGBUILD source line ending with *?signed*
+  or manually verify using *git tag -v <tag-name>
+
 * Fix up restructred test formatting in README
 * Use `lockmgr`_ package instead of local copy (also `lockmgr AUR`_)
 * pdf doc is now pre-build in Docs dir

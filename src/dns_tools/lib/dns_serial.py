@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2023, Gene C
+# SPDX-FileCopyrightText: © 2023-present  Gene C <arch@sapience.com>
 """
  Take 1 row of a zone file and update serial
  Algorithm assumes any string in form YYYYmmddnn is a serial.

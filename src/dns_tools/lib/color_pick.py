@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
-# Copyright (c) 2023, Gene C
+# SPDX-FileCopyrightText: © 2023-present  Gene C <arch@sapience.com>
 """
  Given a list of color names and a name (can be partial) find the match.
     e.g. given ['black', 'blue', 'brown']
