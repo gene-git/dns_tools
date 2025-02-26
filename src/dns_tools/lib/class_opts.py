@@ -98,6 +98,7 @@ class KeyOpts:
         self.roll_2 = False
         self.sign_curr = False
         self.sign_next = False
+        self.algo = 'ED25519'
 
     def set_opt(self, okey, oval):
         """ set correspondingf option for self.ktype """
@@ -143,7 +144,7 @@ class DnsOpts:
         self.external = None
 
         self.print_keys = False
-
+        breakpoint()
         _opts_raw = DnsOptsRaw()
 
         for (okey, oval) in vars(_opts_raw).items():

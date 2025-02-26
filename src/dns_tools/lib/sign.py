@@ -34,10 +34,10 @@ def _expire_to_dt_string(expire_in):
         dt = now + datetime.timedelta (days = delta)
 
     elif units.startswith('m'):
-        dt = now + datetime.timedelta (months = delta)
+        dt = now + datetime.timedelta (days = delta*30)     # approximation
 
     elif units.startswith('y'):
-        dt = now + datetime.timedelta (years = delta)
+        dt = now + datetime.timedelta (days = delta*365)    # approximation
 
     elif units.startswith('h'):
         dt = now + datetime.timedelta (hours = delta)
@@ -47,6 +47,9 @@ def _expire_to_dt_string(expire_in):
 
     elif units.startswith('M'):
         dt = now + datetime.timedelta (days = 30*delta)
+
+    else:
+        dt = now + datetime.timedelta (seconds = delta)
 
     expiry = dt.strftime('%Y%m%d%H%M%S')
 
@@ -111,7 +114,7 @@ def _base_name_to_hash_vers (base_name):
     file = os.path.basename(path)
     word = file.split('+')
     type_id = f'+{word[1]}+{word[2]}'
-    type_id = type_id.split('.')[0]     # remove .key
+    type_id = type_id.split('.', maxsplit=1)[0]     # remove .key
     return type_id
 
 
@@ -150,7 +153,7 @@ def zone_sign(tool, staging, domain, zonefile, ksk_keys, zsk_keys, zone_signed_l
       -b        - add comments
       -s        - add salt
     """
-    # pylint: disable=R0914
+    # pylint: disable=too-many-positional-arguments,too-many-locals
     opts = tool.opts
     start_dir = os.getcwd()
     os.chdir(tool.opts.work_dir)

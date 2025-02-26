@@ -151,10 +151,16 @@ def _make_all_ds(tool, domain, key_basename):
 
     #
     # extact DS
-    # hash: -1 = sha1
-    #       -2 = sha256
-    #       -4 = sha384
-    #       -g = gost (unsupported in our ldns)
+    # hash:
+    # 1   SHA-1   MANDATORY   [RFC3658]
+    # 2   SHA-256 MANDATORY   [RFC4509]
+    # 3   GOST R 34.11-94 DEPRECATED  [RFC5933][Change the status of
+    #                     GOST Signature Algorithms in DNSSEC in the IETF stream to Historic]
+    # 4   SHA-384 OPTIONAL    [RFC6605]
+    # 5   GOST R 34.11-2012   OPTIONAL    [RFC9558] Russian equivalent to SHA-256
+    # 6   SM3 OPTIONAL    [RFC9563] Chinese equivalent to SHA-256
+    # 7-255 - unassigned
+    #
     # ldns-key2ds -n: Write the result DS Resource Record to stdout instead of a file
     #
     hashes = ['-1', '-2', '-4']

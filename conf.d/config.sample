@@ -23,6 +23,10 @@ dns_user = 'nsd'
 dns_group = 'nsd'
 production_zone_dir = "/etc/nsd/zones"
 # production_zone_dir = "/tmp/nsd/zones"                # testing
+# ED25519 is the default for both ksk and zsk algo
+# Algos supported: 'ECDSAP256SHA256', 'ECDSAP384SHA384', 'ED25519', 'ED448'
+#ksk_algo = 'ED25519'
+#zsk_algo = 'ED25519'
 
 #
 # Signing / working

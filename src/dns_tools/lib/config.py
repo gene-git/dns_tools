@@ -102,12 +102,26 @@ def _validate_on_sign_server(prnt, sign_server):
         okay = False
     return okay
 
+
+def _key_algo_check(prnt, algo):
+    '''
+    Check input algo is one we support
+    '''
+    if not algo:
+        return False
+
+    algos = ['ECDSAP256SHA256', 'ECDSAP384SHA384', 'ED25519', 'ED448']
+    if algo.upper() not in algos:
+        prnt.msg(f'Error : Unsupported key algorithm {algo}')
+        prnt.msg(f'      : Must be one of {algos}')
+        return False
+    return True
+
 def config_check(prnt, opts):
     """
     Check that required options have values
     """
     okay = True
-
     #
     # Checks for both dns-tool and dns-prod
     #
@@ -143,6 +157,14 @@ def config_check(prnt, opts):
 
     # check running on signing server
     oki = _validate_on_sign_server(prnt, opts.sign_server)
+    okay &= oki
+
+    # Check both ksk and zsk have supported key algorithm
+    breakpoint()
+    oki = _key_algo_check(prnt, opts.ksk_opts.algo)
+    okay &= oki
+
+    oki = _key_algo_check(prnt, opts.zsk_opts.algo)
     okay &= oki
 
     # warn if not root

@@ -71,6 +71,12 @@ def opts_keys():
              'action' : 'store_true',
              'help' : 'Print keys (curr and next)',
              }],
+            [['--ksk_algo'], {
+             'help' : 'Key algorithm for KSK',
+             }],
+            [['--zsk_algo'], {
+             'help' : 'Key algorithm for KSK',
+             }],
            ]
     return opts
 

@@ -4,7 +4,7 @@
  run external program
  args:  ['program_pat', 'arg1', 'arg2', ...]
 """
-# pylint: disable=too-many-arguments
+# pylint: disable=too-many-arguments,too-many-positional-arguments
 import subprocess
 
 def run_prog(pargs, input_str=None, stdout=subprocess.PIPE, stderr=subprocess.PIPE,

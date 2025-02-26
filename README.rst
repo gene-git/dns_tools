@@ -12,24 +12,27 @@ DNS server tools - aka DNSSEC made easy.
 DNSSEC can be a little tricky especially rolling the keys. We provide the tools 
 to simplify and automate this as much as possible. 
 
-New / Interesting
-==================
-
-* Going forward all git tags will be signed by <arch@sapience.com>.
+Note:
+  All git tags will be signed by <arch@sapience.com>.
   Public key is available via WKD or download from website:
   https://www.sapience.com/tech
   After key is on keyring use the PKGBUILD source line ending with *?signed*
   or manually verify using *git tag -v <tag-name>
 
-* Fix up restructred test formatting in README
+New / Interesting
+==================
+
+* ksk/zsk key algorithms are now settable from config/command line.
+
+  Supported algos are: ECDSAP256SHA256, ECDSAP384SHA384, ED25519 and ED448.
+
+  Default remains ED25519.
+
 * Use `lockmgr`_ package instead of local copy (also `lockmgr AUR`_)
+
+    Use locking to enforce only one dns-tool runs at a time
+
 * pdf doc is now pre-build in Docs dir
-* Use lockfile to enforce only one dns-tool runs at a time
-* NB the locking code uses inotify to wait to acquire a lock if another process has it locked.
-  This uses *inotify* from standard C-library and our python code depends on the size 
-  of *struct inotify_event* that is returned. To best of my knowledge this is same 
-  on all versions of linux. i.e. (int, uint32_t, uint32_t, uint32_t, ...).
-  If anyone comes across anything different please let me know.
 
 ###############
 Getting Started
@@ -254,16 +257,19 @@ KSK Keys and DS to root servers
 When you create KSK keys a set of DS keys will be generated automatically. 
 These actually come in different hash types:
 
-* **1 : sha1**   - deprecated and shouldn't be used
-* **2 : sha256** - the default and saved in curr.ds
-* **4 : sha512** - slower but somewhat more secure hash 
-* **g : gost**
+* **1 : SHA-1**    - Mandatory RFC3658 : weak, dont use
+* **2 : SHA-256**  - Mandatory RFC4509 : the default and saved in curr.ds
+* **3 : gost R 34.11-94** - Deprecated RFC5933 : 
+* **4 : SHA-384**  - Optional RFC6605 : slower but more secure hash 
+* **5 : GOST R 34.11-2012** - OPTIONAL RFC9558 : Russian equivalent to SHA-256
+* **6 : SM3**       - Optional RFC9563 : Chinese equivalent to SHA-256.
+* *7 to 255* - Unassigned
    
-We do not generate the type *4 gost* hash.
+We generate the types *1*, *2* and *4*. We default to SHA-256 
 
 These are saved into the *<work_dir>/keys/<domain>/ksk/* directory.
 
-In addition to *curr.ds*, *curr.all.ds* contains **sha1**, **sha256** and **sha512**.
+In addition to *curr.ds*, *curr.all.ds* contains **sha1**, **sha256** and **sha384**.
 Choose one or more of these to upload to your domain registrar.   
 
 Its good to get this uploaded and available from the root servers soon as your 
@@ -398,6 +404,17 @@ are *test*, *print_keys*, *sign*, *zsk_toll_1*, *zsk_roll_2*
 * (*--print_keys*)
 
   Print keys (curr and next)
+
+ * (*--ksk_algo*)
+
+  Set the KSK key algorithm. Supported algos are: ECDSAP256SHA256, ECDSAP384SHA384, ED25519, ED448
+  Defaults to ED25519.
+
+ * (*--zsk_algo*)
+
+   Set the key algorithm for ZSK. Supported algos same as for KSK.
+   Defaults to ED25519.
+
 
 dns-prod-push options
 =====================

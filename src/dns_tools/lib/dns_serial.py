@@ -104,6 +104,7 @@ def _increment_serial(dt1, nnn, setdate):
         increment nn unless nnn == 99 then increment date by 1 day
         and set nn = 00
     """
+    # pylint: disable=possibly-used-before-assignment
     done = False
     if setdate:
         today = datetime.date.today()
