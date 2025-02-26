@@ -1,6 +1,15 @@
 Changelog
 =========
 
+**[3.5.0] ----- 2025-02-26** ::
+
+	    ksk/zsk key algorithms are now settable from config/command line.
+	      Supported algos are: ECDSAP256SHA256, ECDSAP384SHA384, ED25519 and ED448.
+	      Default remains ED25519.
+	      Some lint picking
+	    update Docs/Changelog.rst Docs/dns_tools.pdf
+
+
 **[3.4.5] ----- 2024-12-31** ::
 
 	    Add git signing key to Arch Package
