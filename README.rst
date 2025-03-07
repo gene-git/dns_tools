@@ -12,12 +12,18 @@ DNS server tools - aka DNSSEC made easy.
 DNSSEC can be a little tricky especially rolling the keys. We provide the tools 
 to simplify and automate this as much as possible. 
 
+If you're implementing DNSSEC then you may also want to implement DANE SMTP for email.
+If so, you may be interested in `ssl-mgr <https://github.com/gene-git/ssl-mgr>`_ tool 
+which simplifies key and certificate management including for DANE SMTP. 
+It is also available on `Arch AUR <https://aur.archlinux.org/packages/ssl-mgr>`_.
+
 Note:
-  All git tags will be signed by <arch@sapience.com>.
+
+  All git tags will be signed by *<arch@sapience.com>*.
   Public key is available via WKD or download from website:
   https://www.sapience.com/tech
   After key is on keyring use the PKGBUILD source line ending with *?signed*
-  or manually verify using *git tag -v <tag-name>
+  or manually verify using *git tag -v <tag-name>*
 
 New / Interesting
 ==================
@@ -28,7 +34,7 @@ New / Interesting
 
   Default remains ED25519.
 
-* Use `lockmgr`_ package instead of local copy (also `lockmgr AUR`_)
+* Use `lockmgr`_ package instead of local copy (also available as `lockmgr AUR`_)
 
     Use locking to enforce only one dns-tool runs at a time
 
@@ -89,11 +95,14 @@ A quick reminder about DNSSEC keys.
   This signs the zone signing key - and its this key that must be registered with
   the domain registrar for the root servers. The requirement ensures that there 
   is an appropriate chain of trust from the root dns servers on down. 
-  Most, if not all registars now support DNSSEC - Google Domains does for example. 
-  This requirement means there is a manual step whenever the KSK changes, which is updating
+  Most, if not all registars now support DNSSEC - Squarespace (previously Google Domains) does for example. 
+
+  This requirement means there is a manual step whenever the KSK changes, which is to update
   the root servers with the new information.  KSK should be rolled occasionally,
   in spite of the manual step, perhaps every 1-3 years, and the corresponding DS 
   (Delegation Signer) record for the new KSK should be uploaded to the domain registrar.
+
+  See the :ref:`section_create_keys` section about generating the DS records you will need.
 
 Key Rolling  
 ===========
@@ -225,6 +234,8 @@ for convenience, it uses the above commands wrapped by the shell scripts:
 
     /etc/dns_tools/scripts/zsk-roll-1.sh
     /etc/dns_tools/scripts/zsk-roll-2.sh
+
+.. _section_create_keys:
 
 Create Keys
 ===========
