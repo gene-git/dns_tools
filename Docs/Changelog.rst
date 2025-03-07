@@ -1,6 +1,12 @@
 Changelog
 =========
 
+**[3.5.1] ----- 2025-03-07** ::
+
+	    Small README changes
+	    update Docs/Changelog.rst Docs/dns_tools.pdf
+
+
 **[3.5.0] ----- 2025-02-26** ::
 
 	    ksk/zsk key algorithms are now settable from config/command line.
