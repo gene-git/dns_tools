@@ -160,7 +160,6 @@ def config_check(prnt, opts):
     okay &= oki
 
     # Check both ksk and zsk have supported key algorithm
-    breakpoint()
     oki = _key_algo_check(prnt, opts.ksk_opts.algo)
     okay &= oki
 

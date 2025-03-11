@@ -144,7 +144,6 @@ class DnsOpts:
         self.external = None
 
         self.print_keys = False
-        breakpoint()
         _opts_raw = DnsOptsRaw()
 
         for (okey, oval) in vars(_opts_raw).items():
