@@ -12,7 +12,7 @@ from .class_dnsserv import DnsServer
 from .options import get_prod_option_list
 from .config import load_config_into_opts
 from .config import config_paths_normalize
-from .config import config_check
+from .config import (config_check, prod_opts_check)
 from .zone_perms import set_zone_perms
 from .prod import staging_zones_to_production
 from .dns_server_restart import restart_dns_servers
@@ -107,7 +107,7 @@ class DnsProd:
         self.prnt = Prnt(self.opts.theme)
 
         # sanity check on inputs
-        if not config_check(self.prnt, self.opts):
+        if not prod_opts_check(self.prnt, self.opts):
             self.okay = False
 
     def to_production(self):

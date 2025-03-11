@@ -120,6 +120,7 @@ def _key_algo_check(prnt, algo):
 def config_check(prnt, opts):
     """
     Check that required options have values
+    opts : DnsOpts
     """
     okay = True
     #
@@ -199,3 +200,47 @@ def config_paths_normalize(opts):
         if not opts.external.check_staging():
             print('Error - invalid external staging dir')
             opts.okay = False
+
+def prod_opts_check(prnt, opts):
+    """
+    Check that required options have values
+    opts : ProdOpts
+    """
+    okay = True
+
+    # global dirs
+    oki = _dir_check(prnt, 'work_dir', opts.work_dir, True)
+    okay &= oki
+
+    oki = _dir_check(prnt, 'key_dir', opts.key_dir, True)
+    okay &= oki
+
+    oki = _dir_check(prnt, 'production_zone_dir', opts.production_zone_dir, False)
+    okay &= oki
+
+    oki = _variable_check(prnt, 'sign_server', opts.sign_server)
+    okay &= oki
+
+    #oki = _variable_check(prnt, 'dns_restart_cmd', opts.dns_restart_cmd)
+    #okay &= oki
+
+    # external
+    oki = _int_ext_check(prnt, 'external', opts.external)
+    okay &= oki
+
+    # internal - can be missing but if present must provide work_dir/server
+    if opts.internal:
+        oki = _int_ext_check(prnt, 'internal', opts.internal)
+        okay &= oki
+
+    # check running on signing server
+    oki = _validate_on_sign_server(prnt, opts.sign_server)
+    okay &= oki
+
+    # warn if not root
+    if opts.euid != 0:
+        prnt.msg('Warning: not running as root\n', fg_col='warn')
+
+    if not okay:
+        prnt.msg('Error in input\n', fg_col='error')
+    return okay
