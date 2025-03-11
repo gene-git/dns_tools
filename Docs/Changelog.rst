@@ -1,6 +1,12 @@
 Changelog
 =========
 
+**[3.7.0] ----- 2025-03-11** ::
+
+	    Fix push to production options checker - bug introduced by changes to config/opts classes
+	    update Docs/Changelog.rst Docs/dns_tools.pdf
+
+
 **[3.6.0] ----- 2025-03-11** ::
 
 	    Remove dumb debugging breakpoints left in by mistake - so sorry
