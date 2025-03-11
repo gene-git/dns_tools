@@ -1,6 +1,12 @@
 Changelog
 =========
 
+**[3.6.0] ----- 2025-03-11** ::
+
+	    Remove dumb debugging breakpoints left in by mistake - so sorry
+	    update Docs/Changelog.rst Docs/dns_tools.pdf
+
+
 **[3.5.1] ----- 2025-03-07** ::
 
 	    Small README changes
