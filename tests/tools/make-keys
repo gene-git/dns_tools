@@ -1,0 +1,9 @@
+#!/usr/bin/bash
+#
+# Make ksk/zsk keys
+#
+tooldir="$1"
+dns_tool="$tooldir/dns-tool.py"
+
+$dns_tool --gen-ksk-curr --gen-zsk-curr
+

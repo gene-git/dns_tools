@@ -8,32 +8,43 @@
  gc - 2022
 """
 # pylint: disable=invalid-name
-from lib import DnsProd
-from lib import DnsLock
+from production import DnsProduction
+from utils import DnsLock
+
 
 def main():
     """
-    - work staging to production staging
-    - production staging to live production
+    - Work staging to production
+    - Restart dns server(s)
     """
     #
-    # check no other dns-tool active
-    # If so, wait until we an get the lock
+    # Self protect - hold run if already running.
+    # Wait until we get lock to proceed
     #
     lock = DnsLock()
     got_lock = lock.acquire_lock()
     if not got_lock:
         return
 
-    prod = DnsProd()
+    prod = DnsProduction()
     if not prod.okay:
+        print('Error: failed initilize DnsProduction')
         return
 
     if prod.opts.to_production:
         prod.to_production()
+        if not prod.okay:
+            print('Error: failed to production')
+            return
 
     if prod.opts.dns_restart:
         prod.dns_restart()
+        if not prod.okay:
+            print('Error: failed to restart dns servers')
+            return
+
+    print('Success: all done')
+
 
 if __name__ == '__main__':
     main()

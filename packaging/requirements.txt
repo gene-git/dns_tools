@@ -1,8 +1,7 @@
 # 
 # requirements.txt
 # Run time
-python >= 3.9
-#tomli       # needed for python < 3.11
+python >= 3.13
 rsync       # Also by installer
 ldns        # used to do actual zone signing
 lockmgr     # used to protect against multiple instances of application running
@@ -13,5 +12,6 @@ hatch
 build
 installer
 wheel
+hatch
 
 

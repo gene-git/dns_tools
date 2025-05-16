@@ -28,17 +28,23 @@ Note:
 New / Interesting
 ==================
 
+* Code now complies with: PEP-8, PEP-257, PEP-484 and PEP-561
+* Refactor & clean ups (pretty big changes). Split into multiple modules.
+* Add test suite using pytest
+  
+  Our testing is clean but, given the large code changes, please
+  let us know if you find any issues.
+
+* Command line long args can now use either hyphen or underscores
+
+    e.g. dns-tool treats *--zsk-roll-1* and *--zsk_roll_1* exactly the same.
+
 * ksk/zsk key algorithms are now settable from config/command line.
 
   Supported algos are: ECDSAP256SHA256, ECDSAP384SHA384, ED25519 and ED448.
 
   Default remains ED25519.
 
-* Use `lockmgr`_ package instead of local copy (also available as `lockmgr AUR`_)
-
-    Use locking to enforce only one dns-tool runs at a time
-
-* pdf doc is now pre-build in Docs dir
 
 ###############
 Getting Started

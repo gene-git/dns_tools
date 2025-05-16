@@ -1,0 +1,20 @@
+theme = 'dark'      # tty colors:  dark, light, none
+domains = ["example.com"]
+dns_restart_cmd = "TEST_DIR/tools/fake_dns_restart.sh"
+dns_user = 'nsd'
+dns_group = 'nsd'
+work_dir = "TEST_DIR/work"
+production_zone_dir = "prod/zones"
+
+sign_server = "SIGN_SERVER"
+key_dir = "keys"
+expire = '90d'
+
+[internal]
+    dns_server = "SIGN_SERVER"
+    staging_zone_dir = "internal/staging/zones"
+    
+[external]
+    dns_server = "SIGN_SERVER"
+    staging_zone_dir = "external/staging/zones"
+

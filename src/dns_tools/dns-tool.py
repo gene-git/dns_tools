@@ -22,9 +22,10 @@
 
  gc - 2022
 """
-# pylint: disable=invalid-name
-from lib import DnsTool
-from lib import DnsLock
+# pylint: disable=invalid-name, too-many-return-statements
+from tool import DnsTool
+from utils import DnsLock
+
 
 def main():
     """
@@ -52,32 +53,50 @@ def main():
     # e.g. create new 'next' key
     #
     tool.do_key_updates()
+    if not tool.okay:
+        print('Error: key_update failed')
+        return
 
     #
     # Make any required signing keys if not available
     #
     tool.create_missing_keys()
+    if not tool.okay:
+        print('Error: create missing keys failed')
+        return
 
     #
     # If phase 2 roll then move next to be current key
     #
     tool.do_key_rollovers()
+    if not tool.okay:
+        print('Error: key rolloever failed')
+        return
 
     #
     # Sign whatever needs signing.
     #
     tool.do_sign_zones()
+    if not tool.okay:
+        print('Error: zone sign failed')
+        return
 
     #
     # Ensure correct file permissions and owner
     #
     tool.zone_perms()
+    if not tool.okay:
+        print('Error: zone permissions failed')
+        return
 
     #
     # Caller should now invoke separate tool dns-prod-push
     # to push newly signed zones to dns primary servers
     #
     lock.release_lock()
+
+    print('Success: all done')
+
 
 if __name__ == '__main__':
     main()

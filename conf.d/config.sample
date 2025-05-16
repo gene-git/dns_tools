@@ -1,46 +1,50 @@
 #
 # DNS Tools Config 
 #
-# NB relative paths are treated relative to work_dir (aside from work_dir itself)
-# When zones are pushed - the entire zone directory contents are pushed.
-# This includes signed and unsigned zones (such as local RFC1918 forward and reverse)
+# Notes: 
+#  - relative paths are treated relative to "work_dir" (aside from work_dir itself)
+#  - When zones are pushed - the entire zone directory contents are pushed.
+#    This includes signed and unsigned zones (such as local RFC1918 forward and reverse)
+#  - Both internal and external dns servers must be reachable by root via ssh
+#  - we use same zone dir names for internal / external dns servers
+#
+# Algos:
+#   Supported: 'ECDSAP256SHA256', 'ECDSAP384SHA384', 'ED25519', 'ED448'
+#   Default: ED25519 for both ksk and zsk
+#
+# For testing helpful to use something like: 
+#   production_zone_dir = "/tmp/nsd/zones"
+#   work_dir = "./"
+#
 # 
-# Both internal and external dns servers must be reachable by root via ssh
-# NB - we use same zone dir names for internal / external dns servers
+
+#
+# General 
 #
 theme = 'dark'      # tty colors:  dark, light, none
-
-#
-# Domains
-#
 domains = ["example.com", "example.net", "other.com", "yetanother.com"]
-
-#
-# DNS servers common
-#
 dns_restart_cmd = "/usr/bin/systemctl restart nsd"
 dns_user = 'nsd'
 dns_group = 'nsd'
+work_dir = "/etc/dns_tools"
 production_zone_dir = "/etc/nsd/zones"
-# production_zone_dir = "/tmp/nsd/zones"                # testing
-# ED25519 is the default for both ksk and zsk algo
-# Algos supported: 'ECDSAP256SHA256', 'ECDSAP384SHA384', 'ED25519', 'ED448'
-#ksk_algo = 'ED25519'
-#zsk_algo = 'ED25519'
+
 
 #
 # Signing / working
 #
-sign_server = "dns_int.internal.example.com"
-work_dir = "/etc/dns_tools"
+#ksk_algo = 'ED25519'
+#zsk_algo = 'ED25519'
+#
+sign_server = "dns_internal.example.com"
 key_dir = "keys"
 expire = '90d'
 
 [internal]
-    dns_server = "dns_int.internal.example.com"
+    dns_server = "dns_internal.example.com"
     staging_zone_dir  = "internal/staging/zones"
     
 [external]
-    dns_server = "dns_ext.internal.sapience.com"
+    dns_server = "dns_external.example.com"
     staging_zone_dir = "external/staging/zones"
 

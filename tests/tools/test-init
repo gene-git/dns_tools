@@ -1,0 +1,26 @@
+#!/usr/bin/bash
+#
+# Setup whats needed to run tests
+#
+
+/usr/bin/rm -rf ./prod/zones/*
+/usr/bin/rm -f ./conf.d/config
+/usr/bin/rm -rf ./work/keys/*
+
+mkdir -p ./conf.d
+mkdir -p ./prod/zones
+mkdir -p ./work/keys
+mkdir -p ./work/internal/staging/zones
+mkdir -p ./work/external/staging/zones
+
+test_dir=$(/usr/bin/pwd)
+this_host=$(/usr/bin/hostname)
+
+sed -e "s#SIGN_SERVER#${this_host}#g" \
+    -e "s#TEST_DIR#${test_dir}#g" \
+    < tools/config > conf.d/config
+
+/usr/bin/rsync -a --mkpath --delete tools/zones ./work/internal/staging/
+/usr/bin/rsync -a --mkpath --delete tools/zones ./work/external/staging/
+
+exit

@@ -1,0 +1,12 @@
+#!/usr/bin/bash
+#
+# Clean up 
+#
+
+/usr/bin/rm -rf ./prod/zones/*
+/usr/bin/rm -f ./conf.d/config
+/usr/bin/rm -rf ./work/keys/*
+/usr/bin/rm -rf ./work/internal/*
+/usr/bin/rm -rf ./work/external/*
+
+exit

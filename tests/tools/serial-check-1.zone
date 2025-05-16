@@ -1,0 +1,45 @@
+;; ------------------------------------------------------------
+;;
+;; example.com
+;;
+;; ------------------------------------------------------------
+
+$ORIGIN example.com.
+$TTL    3600
+
+
+@       IN	SOA	ns.example.com. hostmaster.example.com. (
+		2025051300	 ; Serial
+		86400        ; refresh (  24 hours)
+		7200         ; retry   (   2 hours)
+		3600000      ; expire  (1000 hours)
+		172800 )     ; minimum (   2 days)
+
+example.com.	IN	NS	ns.example.com.
+example.com.	IN	NS	ns2.example.com.
+
+example.com. 	IN	TXT "v=spf1 ip4:10.1.1.0/24 -all" 
+
+example.com.   IN      CAA 0 issue "letsencrypt.org"
+example.com.   IN      CAA 0 iodef "mailto:hostmaster@example.com" 
+
+
+
+;; ------------------------------------------------------------
+;;  		Address  Records
+;; ------------------------------------------------------------
+
+ns      IN	A	10.1.1.50
+serv1   IN  A   10.1.1.51
+serv2   IN  A   10.1.1.52
+mail	IN	A	10.1.1.53
+
+www		IN	CNAME	serv1.example.com.
+example.com.		IN	MX	10	mail.example.com.
+
+
+;;------------------------------------------
+;; TLSA 
+;;      
+$INCLUDE include-tlsa/tlsa.example.com
+

@@ -12,7 +12,7 @@
 # forward and reverse)
 #
 # Runs at 8:15 and 10:15 am on 1st of month
-# hour min day mon dow user cmd
+# min hour day mon dow user cmd
 #
 15  8  1 * *  root /etc/dns_tools/scripts/zsk-roll-1.sh
 15  10  1 * *  root /etc/dns_tools/scripts/zsk-roll-2.sh

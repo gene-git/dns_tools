@@ -16,14 +16,22 @@ classifiers = [
 ]
 dependencies = []
 
+[tool.hatch.build.targets.wheel]
+packages = ["src/dns_tools"]
+include = [
+    "src/dns_tools",
+]
+
 [project.urls]
 Documentation = "https://github.com/gene-git/dns_tools/Docs"
 Issues = "https://github.com/gene-git/dns_tools/issues"
 Source = "https://github.com/gene-git/dns_tools"
 
 [tool.hatch.version]
-path = "src/dns_tools/__about__.py"
+path = "src/dns_tools/_version.py"
 
 [[tool.hatch.envs.all.matrix]]
-python = ["3.13"]
+python = ["3.13", "3.14"]
 
+[tool.mypy]
+check_untyped_defs = true
