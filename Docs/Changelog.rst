@@ -7,12 +7,19 @@ Tags
 
 ::
 
-	2.0.0 (2023-01-22) -> 4.0.2 (2025-05-16)
-	79 commits.
+	2.0.0 (2023-01-22) -> 4.0.3 (2025-05-16)
+	81 commits.
 
 Commits
 =======
 
+
+* 2025-05-16  : **4.0.3**
+
+::
+
+                Arch PKGBUILD add missed dependency on lockmgr
+                update Docs/Changelog Docs/${my_name}.pdf
 
 * 2025-05-16  : **4.0.2**
 

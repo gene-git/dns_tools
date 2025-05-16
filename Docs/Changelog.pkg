@@ -1,9 +1,13 @@
 -------------------------------------------------------
  Changelog    : dns_tools
- Tags         : 3.5.1 ➙ 4.0.2
-              : 2025-03-07 ➙ 2025-05-16
+ Tags         : 3.6.0 ➙ 4.0.3
+              : 2025-03-11 ➙ 2025-05-16
               : 6 tags. See Docs for full changelog
 -------------------------------------------------------
+
+ 2025-05-16   : 4.0.3
+                Arch PKGBUILD add missed dependency on lockmgr
+                update Docs/Changelog Docs/${my_name}.pdf
 
  2025-05-16   : 4.0.2
                 Typo in Arch PKGBUILD
@@ -28,7 +32,3 @@
  2025-03-11   : 3.6.0
                 Remove dumb debugging breakpoints left in by mistake - so sorry
  2025-03-07     update Docs/Changelog.rst Docs/dns_tools.pdf
-
- 2025-03-07   : 3.5.1
-                Small README changes
- 2025-02-26     update Docs/Changelog.rst Docs/dns_tools.pdf
