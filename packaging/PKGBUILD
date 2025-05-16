@@ -10,7 +10,7 @@ pkgname='dns_tools'
 pkgdesc='DNS Tools for managing DNSSEC aka easy dnssec'
 _gitname='dns_tools'
 
-pkgver=4.0.0
+pkgver=4.0.2
 pkgrel=1
 url="https://github.com/gene-git/dns_tools"
 
@@ -49,7 +49,7 @@ build() {
 }
 
 check() {
-    cd "${gitname}/tests"
+    cd "${_gitname}/tests"
     PYTHONPATH=../src/dns_tools pytest
 }
 
