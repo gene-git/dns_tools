@@ -1,9 +1,13 @@
 -------------------------------------------------------
  Changelog    : dns_tools
- Tags         : 3.5.0 ➙ 4.0.0
-              : 2025-02-26 ➙ 2025-05-16
+ Tags         : 3.5.1 ➙ 4.0.2
+              : 2025-03-07 ➙ 2025-05-16
               : 6 tags. See Docs for full changelog
 -------------------------------------------------------
+
+ 2025-05-16   : 4.0.2
+                Typo in Arch PKGBUILD
+                update Docs/Changelog Docs/${my_name}.pdf
 
  2025-05-16   : 4.0.0
                 Code now complies with: PEP-8, PEP-257, PEP-484 and PEP-561
@@ -28,10 +32,3 @@
  2025-03-07   : 3.5.1
                 Small README changes
  2025-02-26     update Docs/Changelog.rst Docs/dns_tools.pdf
-
- 2025-02-26   : 3.5.0
-                ksk/zsk key algorithms are now settable from config/command line.
-                  Supported algos are: ECDSAP256SHA256, ECDSAP384SHA384, ED25519 and ED448.
-                  Default remains ED25519.
-                  Some lint picking
- 2024-12-31     update Docs/Changelog.rst Docs/dns_tools.pdf

@@ -7,12 +7,19 @@ Tags
 
 ::
 
-	2.0.0 (2023-01-22) -> 4.0.0 (2025-05-16)
-	77 commits.
+	2.0.0 (2023-01-22) -> 4.0.2 (2025-05-16)
+	79 commits.
 
 Commits
 =======
 
+
+* 2025-05-16  : **4.0.2**
+
+::
+
+                Typo in Arch PKGBUILD
+                update Docs/Changelog Docs/${my_name}.pdf
 
 * 2025-05-16  : **4.0.0**
 
