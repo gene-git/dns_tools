@@ -3,6 +3,7 @@ Serial Bump Tests
 
 Please set PYTHONPATH=../src/dns_tools
 """
+from datetime import datetime
 from .run_prog import run_prog
 from .new_env import get_new_env
 
@@ -28,6 +29,9 @@ def _check_result(stdout: str, target: str) -> bool:
                     return True
     return False
 
+def _today():
+    """ date for serial """
+    return datetime.today().date().strftime("%Y%m%d")
 
 class TestSerialBump:
     """
@@ -49,7 +53,9 @@ class TestSerialBump:
         pargs += ['--check', 'tools/serial-check-1.zone']
         (rc, stdout, _stderr) = run_prog(pargs, env=ENV)
         assert rc == 0
-        assert _check_result(stdout, '2025051600')
+
+        target = _today() + '00'
+        assert _check_result(stdout, target)
 
     def test_serial_2(self):
         """
@@ -59,7 +65,8 @@ class TestSerialBump:
         pargs += ['--check', 'tools/serial-check-2.zone']
         (rc, stdout, _stderr) = run_prog(pargs, env=ENV)
         assert rc == 0
-        assert _check_result(stdout, '2025051600')
+        target = _today() + '00'
+        assert _check_result(stdout, target)
 
     def test_serial_3(self):
         """
@@ -69,4 +76,5 @@ class TestSerialBump:
         pargs += ['--check', 'tools/serial-check-3.zone']
         (rc, stdout, _stderr) = run_prog(pargs, env=ENV)
         assert rc == 0
-        assert _check_result(stdout, '2025051700')
+        target = _today() + '00'
+        assert _check_result(stdout, target)
