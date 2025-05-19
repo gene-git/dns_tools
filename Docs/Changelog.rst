@@ -7,12 +7,19 @@ Tags
 
 ::
 
-	2.0.0 (2023-01-22) -> 4.0.3 (2025-05-16)
-	81 commits.
+	2.0.0 (2023-01-22) -> 4.0.4 (2025-05-19)
+	83 commits.
 
 Commits
 =======
 
+
+* 2025-05-19  : **4.0.4**
+
+::
+
+                Arch PKGBUILD: move pytest to checkdepends instead of makedepends
+ 2025-05-16     update Docs/Changelog Docs/${my_name}.pdf
 
 * 2025-05-16  : **4.0.3**
 

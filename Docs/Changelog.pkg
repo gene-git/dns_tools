@@ -1,9 +1,13 @@
 -------------------------------------------------------
  Changelog    : dns_tools
- Tags         : 3.6.0 ➙ 4.0.3
-              : 2025-03-11 ➙ 2025-05-16
+ Tags         : 3.7.0 ➙ 4.0.4
+              : 2025-03-11 ➙ 2025-05-19
               : 6 tags. See Docs for full changelog
 -------------------------------------------------------
+
+ 2025-05-19   : 4.0.4
+                Arch PKGBUILD: move pytest to checkdepends instead of makedepends
+ 2025-05-16     update Docs/Changelog Docs/${my_name}.pdf
 
  2025-05-16   : 4.0.3
                 Arch PKGBUILD add missed dependency on lockmgr
@@ -28,7 +32,3 @@
                 Fix push to production options checker - bug introduced by changes to
                 config/opts classes
                 update Docs/Changelog.rst Docs/dns_tools.pdf
-
- 2025-03-11   : 3.6.0
-                Remove dumb debugging breakpoints left in by mistake - so sorry
- 2025-03-07     update Docs/Changelog.rst Docs/dns_tools.pdf
