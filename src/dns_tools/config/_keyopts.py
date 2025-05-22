@@ -5,7 +5,6 @@
  All controls are command line arguments.
 """
 # pylint: disable=too-many-instance-attributes,too-few-public-methods
-from typing import (Tuple)
 
 
 class KeyOpts:
@@ -36,12 +35,12 @@ class KeyOpts:
         new_key = key.replace(txt, '')
         setattr(self, new_key, val)
 
-    def check_options(self) -> Tuple[bool, str]:
+    def check_options(self) -> tuple[bool, str]:
         """
         Check options
 
         Returns:
-            Tuple[success: bool, msg: str]
+            tuple[success: bool, msg: str]
             success is True if all ok.
             If not ok then error message is returned
         """
@@ -70,7 +69,7 @@ class KeyOpts:
             return True
         return False
 
-    def _algo_check(self) -> Tuple[bool, str]:
+    def _algo_check(self) -> tuple[bool, str]:
         """
         Check algo is supported.
 
@@ -103,7 +102,7 @@ class KeyOptions:
         self.print_keys: bool = False
         self.do_keys: bool = False
 
-    def check(self) -> Tuple[bool, str]:
+    def check(self) -> tuple[bool, str]:
         """
         Valid option check.
         """

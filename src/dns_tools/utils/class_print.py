@@ -8,12 +8,13 @@ Output sent to stdout
 Colors are turned off if non-tty
 """
 # pylint: disable=too-few-public-methods
-from typing import (Callable, List, Optional, TextIO, Tuple)
+from typing import (TextIO)
+from collections.abc import (Callable)
 import sys
 from .color_pick import color_pick
 
-type PrntMsg = Callable[[str | List[str],
-                        Optional[str], Optional[str], Optional[bool]],
+type PrntMsg = Callable[[str | list[str],
+                        str | None, str | None, bool | None],
                         None]
 
 
@@ -117,7 +118,7 @@ class AscCol:
                  txt: str,
                  fg: str = '',
                  bg: str = '',
-                 bold: bool = False) -> Tuple[str, int]:
+                 bold: bool = False) -> tuple[str, int]:
         """
         Colorize a string using 256 color ascii escapes
         Colors are a few names or digit from 0-255
@@ -171,7 +172,7 @@ class Prnt:
             self.tty = True
 
     def msg(self,
-            txt: str | List[str],
+            txt: str | list[str],
             fg: str = '',
             bg: str = '',
             bold: bool = False):
@@ -187,7 +188,7 @@ class Prnt:
         if not txt:
             return
 
-        if isinstance(txt, List):
+        if isinstance(txt, list):
             text = ''.join(txt)
         else:
             text = txt
@@ -195,7 +196,7 @@ class Prnt:
         self.fpo.write(text)
         self.fpo.flush()
 
-    def colorize(self, txt, fg=None, bg=None, bold=False) -> Tuple[str, int]:
+    def colorize(self, txt, fg=None, bg=None, bold=False) -> tuple[str, int]:
         """
         colorize text without printing
           - also returns how many chars the color esacapes occupy in string

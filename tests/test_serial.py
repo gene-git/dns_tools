@@ -29,9 +29,11 @@ def _check_result(stdout: str, target: str) -> bool:
                     return True
     return False
 
+
 def _today():
     """ date for serial """
     return datetime.today().date().strftime("%Y%m%d")
+
 
 class TestSerialBump:
     """

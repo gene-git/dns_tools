@@ -5,21 +5,20 @@
  args:  ['program_pat', 'arg1', 'arg2', ...]
 """
 # pylint: disable=too-many-arguments,too-many-positional-arguments
-from typing import (List, Tuple)
 import subprocess
 
 
-def run_prog(pargs: List[str],
+def run_prog(pargs: list[str],
              input_str: str | None = None,
              stdout: int = subprocess.PIPE,
              stderr: int = subprocess.PIPE,
              test: bool = False,
-             verb: bool = False) -> Tuple[int, str, str]:
+             verb: bool = False) -> tuple[int, str, str]:
     """
     Run external program using subprocess.
 
     Returns:
-        Tuple(retc: int, stdout: str, stderrr: str)
+        tuple(retc: int, stdout: str, stderrr: str)
     """
     if not pargs:
         return (0, '', '')

@@ -3,7 +3,6 @@
 """
 DNS Server Class
 """
-from typing import (Dict, Tuple)
 import os
 
 from utils import normalize_one_path
@@ -17,7 +16,7 @@ class DnsServer:
         self.dns_server: str = ''
         self.staging_zone_dir: str = ''
 
-    def set_opt(self, adict: Dict[str, str]):
+    def set_opt(self, adict: dict[str, str]):
         """
         Map dictionary to our attributes.
         """
@@ -48,7 +47,7 @@ class DnsServer:
 
         return False
 
-    def check(self) -> Tuple[bool, str]:
+    def check(self) -> tuple[bool, str]:
         """
         Check have needed info
         """

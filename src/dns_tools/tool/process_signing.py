@@ -32,7 +32,6 @@
 
  gc - 2022
 """
-from typing import List
 import os
 
 from utils import rel_from_abs_path
@@ -48,7 +47,7 @@ from .sign import get_signing_key_base_names
 
 
 def _do_one_zone(tool: DnsToolBase, domain: str, staging: str,
-                 zone: List[str], zone_file_path: str):
+                 zone: list[str], zone_file_path: str):
     """
     Sign one zone file
     """

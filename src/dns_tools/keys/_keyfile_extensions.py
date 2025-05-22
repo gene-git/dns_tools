@@ -3,24 +3,23 @@
 """
 Key File extensions
 """
-from typing import (List)
 
 
-def keyfile_extensions(key_type: str) -> List[str]:
+def keyfile_extensions(key_type: str) -> list[str]:
 
     """
-    List of file extensions for given key type.
+    list of file extensions for given key type.
 
     Args:
         key_type (str):
             "ksk" or "zsk"
 
     Returns:
-        List(str):
-        List of key file extensions for "key_type"
+        list(str):
+        list of key file extensions for "key_type"
         If unknown key type, an empty list is returned.
     """
-    exts: List[str] = []
+    exts: list[str] = []
     match key_type:
         case 'ksk':
             exts = ['.all.ds', '.ds', '.key', '.private']

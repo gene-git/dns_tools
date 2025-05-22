@@ -4,7 +4,6 @@
 Handle generating keys
 """
 # pylint: disable=invalid-name,too-many-locals
-from typing import (List)
 import os
 
 from config import ToolOpts
@@ -121,14 +120,14 @@ $TTL 1800
     return dumz
 
 
-def _make_all_ds(opts: ToolOpts, domain, key_basename: str) -> List[str]:
+def _make_all_ds(opts: ToolOpts, domain, key_basename: str) -> list[str]:
     """
      Make all DS keys extracted from signed dummy zone file
      Stay in domain key dir
      NB = we fake this and use the KSK for both KSK and ZSK
           since we're only doing this to extract DS
     """
-    ds_all: List[str] = []
+    ds_all: list[str] = []
     msg = opts.prnt.msg
 
     msg(f'    Making DS for {domain}\n')

@@ -5,7 +5,6 @@
  All controls are command line arguments.
 """
 # pylint: disable=too-many-instance-attributes,too-few-public-methods
-from typing import (List)
 import os
 import datetime
 
@@ -34,7 +33,7 @@ class Config:
         self.euid = os.geteuid()
         self.cwd: str = os.getcwd()
 
-        self.domains: List[str] = []
+        self.domains: list[str] = []
         self.work_dir: str = '/etc/nsd_tools'
         self.key_dir: str = './keys'
         self.expire: str = '90d'

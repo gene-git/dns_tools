@@ -4,7 +4,6 @@
  Initialize for dns-prod
 """
 # pylint: disable=duplicate-code
-from typing import (List, Tuple)
 
 from ._prodopts_base import ProdOptsBase
 from ._config_checks import (config_warnings_errors)
@@ -19,7 +18,7 @@ class ProdOpts(ProdOptsBase):
         super().__init__()
         self.normalize_paths()
 
-    def config_warnings_errors(self) -> Tuple[List[str], List[str]]:
+    def config_warnings_errors(self) -> tuple[list[str], list[str]]:
         """
         Check for valid inputs
         """

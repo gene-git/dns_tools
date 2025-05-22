@@ -6,13 +6,13 @@
  Keep all options here so they are all in one place and
  makes it easier to avoid any conflicts.
 """
-from typing import (Any, List, Dict, Tuple)
+from typing import (Any)
 import argparse
 
-type Opt = Tuple[str | Tuple[str, str], Dict[str, Any]]
+type Opt = tuple[str | tuple[str, str], dict[str, Any]]
 
 
-def parse_args(desc: str, avail_options: List[Opt]) -> Dict[str, Any]:
+def parse_args(desc: str, avail_options: list[Opt]) -> dict[str, Any]:
     """
     Run argparse parse_args on list of options.
 
@@ -20,11 +20,11 @@ def parse_args(desc: str, avail_options: List[Opt]) -> Dict[str, Any]:
         desc (str):
         Description for options.
 
-        avail_opts (List[Opt]):
-        List of available command line options.
+        avail_opts (list[Opt]):
+        list of available command line options.
 
     Returns:
-        Dict[key: str, value: Any]:
+        dict[key: str, value: Any]:
         The result of parse_args on the options.
     """
     #
@@ -42,7 +42,7 @@ def parse_args(desc: str, avail_options: List[Opt]) -> Dict[str, Any]:
     #
     # Parse and return dictionary
     #
-    parsed_dict: Dict[str, Any] = {}
+    parsed_dict: dict[str, Any] = {}
     parsed = par.parse_args()
     if parsed:
         parsed_dict = vars(parsed)

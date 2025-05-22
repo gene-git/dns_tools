@@ -4,7 +4,7 @@
 supporting tools
 """
 # pylint: disable=too-many-arguments,too-many-positional-arguments
-from typing import (List, IO, Tuple)
+from typing import (IO)
 import os
 
 
@@ -46,7 +46,7 @@ def make_symlink(target: str, linkname: str) -> bool:
 
 
 def get_dirlist(indir: str, which: str = 'name'
-                ) -> Tuple[List[str], List[str], List[str]]:
+                ) -> tuple[list[str], list[str], list[str]]:
     """
     Get a list of files in a local directory
     returns a list of files/dirs/links in a directory
@@ -60,9 +60,9 @@ def get_dirlist(indir: str, which: str = 'name'
     so always check link before file or dir as we want links separated
     whether or not they point to a dir or file.
     """
-    flist: List[str] = []
-    dlist: List[str] = []
-    llist: List[str] = []
+    flist: list[str] = []
+    dlist: list[str] = []
+    llist: list[str] = []
 
     scan = None
     if os.path.exists(indir) and os.path.isdir(indir):

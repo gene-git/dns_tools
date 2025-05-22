@@ -3,15 +3,14 @@
 """
 zone file read and wrte
 """
-from typing import (List)
 from utils import open_file
 
 
-def zone_file_read(zone_file: str) -> List[str]:
+def zone_file_read(zone_file: str) -> list[str]:
     """
      Read zone file and return list of rows
     """
-    zone: List[str] = []
+    zone: list[str] = []
     if not zone_file:
         return zone
 
@@ -22,7 +21,7 @@ def zone_file_read(zone_file: str) -> List[str]:
     return zone
 
 
-def zone_file_write(zone: List[str], zone_file: str) -> bool:
+def zone_file_write(zone: list[str], zone_file: str) -> bool:
     """
     Write zone file given list of rows.
     """
@@ -39,11 +38,11 @@ def zone_file_write(zone: List[str], zone_file: str) -> bool:
     return okay
 
 
-def zone_expand_includes(zone: List[str]) -> List[str]:
+def zone_expand_includes(zone: list[str]) -> list[str]:
     """
      Modify zone by expanding any $INCLUDE files
     """
-    zone_new: List[str] = []
+    zone_new: list[str] = []
     if not zone:
         return zone_new
 

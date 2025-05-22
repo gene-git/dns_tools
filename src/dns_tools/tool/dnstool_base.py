@@ -4,7 +4,6 @@
 DNS tool base class
 """
 # pylint: disable=duplicate-code, too-few-public-methods
-from typing import (Dict)
 from config import ToolOpts
 
 from keys import DnsKeys
@@ -31,7 +30,7 @@ class DnsToolBase:
         # if sign - get keys for each domain
         # keys maps(domain) to DnsKeys
         #
-        self.keys: Dict[str, DnsKeys] = {}
+        self.keys: dict[str, DnsKeys] = {}
         opts = self.opts
         if opts.domains:
             for dom in opts.domains:

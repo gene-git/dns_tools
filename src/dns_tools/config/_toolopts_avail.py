@@ -7,17 +7,16 @@
  makes it easier to avoid any conflicts.
 """
 # pylint: disable=duplicate-code
-from typing import (List)
 
 from ._parse_args import Opt
 
 
-def opts_sign() -> List[Opt]:
+def opts_sign() -> list[Opt]:
     """
     Signing options.
     """
     opt: Opt
-    opts: List[Opt] = []
+    opts: list[Opt] = []
 
     opt = (('--serial-bump', '--serial_bump'),
            {'help': 'Bump all serials',
@@ -47,12 +46,12 @@ def opts_sign() -> List[Opt]:
     return opts
 
 
-def opts_keys() -> List[Opt]:
+def opts_keys() -> list[Opt]:
     """
     Key options
     """
     opt: Opt
-    opts: List[Opt] = []
+    opts: list[Opt] = []
 
     opt = (('--gen-zsk-curr', '--gen_zsk_curr'),
            {'help': 'Generate ZSK for curr',
@@ -111,12 +110,12 @@ def opts_keys() -> List[Opt]:
     return opts
 
 
-def available_tool_options() -> List[Opt]:
+def available_tool_options() -> list[Opt]:
     """
     Define the full set of options
     """
     opt: Opt
-    opts: List[Opt] = []
+    opts: list[Opt] = []
 
     opt = (('--theme'),
            {'help': 'Color theme: dark, light or none)'})

@@ -3,11 +3,10 @@ Hash Tests
 
 Please set PYTHONPATH.
 """
-from typing import (Dict)
 import os
 
 
-def get_new_env() -> Dict[str, str]:
+def get_new_env() -> dict[str, str]:
     """
     Update PATH to include PYTHONPATH
 

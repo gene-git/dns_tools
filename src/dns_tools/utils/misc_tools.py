@@ -4,7 +4,6 @@
 supporting tools
 """
 # pylint: disable=too-many-arguments,too-many-positional-arguments
-from typing import (List, Tuple)
 import os
 import socket
 import pwd
@@ -13,8 +12,8 @@ import grp
 from .run_prog import run_prog
 
 
-def _construct_remote_call(host_src: str, src: str, opts: List[str],
-                           host_dst: str, dst: str) -> List[str]:
+def _construct_remote_call(host_src: str, src: str, opts: list[str],
+                           host_dst: str, dst: str) -> list[str]:
     """
     Handle:
        1 host: use rsync
@@ -64,7 +63,7 @@ def _construct_remote_call(host_src: str, src: str, opts: List[str],
     return pargs
 
 
-def rsync_copy(host_src: str, src: str, rsync_opts: List[str],
+def rsync_copy(host_src: str, src: str, rsync_opts: list[str],
                host_dst: str, dst: str, test: bool, verb: bool) -> bool:
     """
     Use rsync to copy src to dst
@@ -94,7 +93,7 @@ def rsync_copy(host_src: str, src: str, rsync_opts: List[str],
     return okay
 
 
-def get_uid_gid(username: str, groupname: str) -> Tuple[int, int]:
+def get_uid_gid(username: str, groupname: str) -> tuple[int, int]:
     """
     Get numerical uid/gid for user/group names
     defaults to -1

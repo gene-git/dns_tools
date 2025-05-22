@@ -4,12 +4,11 @@
  Take 1 row of a zone file and update serial
  Algorithm assumes any string in form YYYYmmddnn is a serial.
 """
-from typing import (List, Tuple)
 import datetime
 import re
 
 
-def serial_from_rows(zone_rows: List[str]) -> str:
+def serial_from_rows(zone_rows: list[str]) -> str:
     """
     find row with SOA
      - handle multiline (parens) and single line (no parens)
@@ -80,7 +79,7 @@ def canonical_serial() -> str:
     return serial
 
 
-def split_std_serial(serial: str) -> Tuple[bool, datetime.date | None, int]:
+def split_std_serial(serial: str) -> tuple[bool, datetime.date | None, int]:
     """
     Given serial in form YYYMMDDnn (8-10 digits)
        where: nn can be empty, 1 digit or 2 digits
@@ -109,7 +108,7 @@ def split_std_serial(serial: str) -> Tuple[bool, datetime.date | None, int]:
 
 
 def _increment_serial(dt1: datetime.date, nnn: int, setdate: bool
-                      ) -> Tuple[datetime.date, int]:
+                      ) -> tuple[datetime.date, int]:
     """
     Given date and number split from canonical serial
     increment number by 1
@@ -204,8 +203,8 @@ def make_new_serial(serial: str, setdate: bool = True) -> str:
     return serial_new
 
 
-def zone_get_new_serial(zone_rows: List[str], setdate: bool = True
-                        ) -> Tuple[str, str]:
+def zone_get_new_serial(zone_rows: list[str], setdate: bool = True
+                        ) -> tuple[str, str]:
     """
     Given list of rows of the zonefile
     Identify the serial and return old and new serial
@@ -217,8 +216,8 @@ def zone_get_new_serial(zone_rows: List[str], setdate: bool = True
     return (serial, new_serial)
 
 
-def zone_update_serial(zone: List[str], setdate: bool = True
-                       ) -> List[str]:
+def zone_update_serial(zone: list[str], setdate: bool = True
+                       ) -> list[str]:
     """
     Given list of zonefile rows
     Find and update serial and return updated zone_rows
@@ -228,8 +227,8 @@ def zone_update_serial(zone: List[str], setdate: bool = True
     return zone_updated
 
 
-def update_serial_to_new(zone_rows: List[str], serial: str,
-                         new_serial: str) -> List[str]:
+def update_serial_to_new(zone_rows: list[str], serial: str,
+                         new_serial: str) -> list[str]:
     """
     Given list of zonefile rows
      - Find and increment serial number
@@ -240,7 +239,7 @@ def update_serial_to_new(zone_rows: List[str], serial: str,
     """
     soa_found = False
     serial_updated = False
-    zone_updated: List[str] = []
+    zone_updated: list[str] = []
 
     for row in zone_rows:
         if serial_updated or row.startswith(';'):

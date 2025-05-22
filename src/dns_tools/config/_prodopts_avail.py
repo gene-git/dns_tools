@@ -7,19 +7,18 @@
  makes it easier to avoid any conflicts.
 """
 # pylint: disable=duplicate-code
-from typing import (List)
 
 from ._parse_args import Opt
 
 
-def available_prod_options() -> List[Opt]:
+def available_prod_options() -> list[Opt]:
     """
     options for pushing to production
       - work staging -> production staging ( to_staging )
       - production staging to live productions (to_live )
     """
     opt: Opt
-    opts: List[Opt] = []
+    opts: list[Opt] = []
 
     opt = (('--theme'),
            {'help': 'Color theme: dark, light or none)'})

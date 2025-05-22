@@ -3,15 +3,13 @@
 """
 Error and Warning checks
 """
-from typing import (List, Tuple)
-
 from utils import get_my_hostname
 
 from ._config import Config
 from ._config_utils import (directory_check, str_variable_check)
 
 
-def config_warnings(conf: Config) -> List[str]:
+def config_warnings(conf: Config) -> list[str]:
     """
     Returns list of warnings (or none)
 
@@ -19,10 +17,10 @@ def config_warnings(conf: Config) -> List[str]:
         conf (Config):
 
     Returns:
-        List[warnings: str]
+        list[warnings: str]
         Possibly empty list of warnings
     """
-    warnings: List[str] = []
+    warnings: list[str] = []
 
     if conf.euid != 0:
         warnings.append('Not running as root\n')
@@ -33,7 +31,7 @@ def config_warnings(conf: Config) -> List[str]:
     return warnings
 
 
-def config_warnings_errors(conf: Config) -> Tuple[List[str], List[str]]:
+def config_warnings_errors(conf: Config) -> tuple[list[str], list[str]]:
     """
     Returns list of errors and warnings.
 
@@ -41,11 +39,11 @@ def config_warnings_errors(conf: Config) -> Tuple[List[str], List[str]]:
         conf (Config):
 
     Returns:
-        Tuple[List[warnings: str], List[errors: str]):
+        tuple[list[warnings: str], list[errors: str]):
         Possibly empty lists of warnings and errors.
     """
-    errors: List[str] = []
-    warnings: List[str] = config_warnings(conf)
+    errors: list[str] = []
+    warnings: list[str] = config_warnings(conf)
 
     #
     # Directories
@@ -103,7 +101,7 @@ def config_warnings_errors(conf: Config) -> Tuple[List[str], List[str]]:
     return (warnings, errors)
 
 
-def _check_sign_server(sign_server: str) -> Tuple[bool, str]:
+def _check_sign_server(sign_server: str) -> tuple[bool, str]:
     """
     Check we're running on the signing server
     """

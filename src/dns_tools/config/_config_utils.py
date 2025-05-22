@@ -5,11 +5,10 @@ Read options from config files:
     1) ./conf.d/config
     2) /etc/dns_tools/conf.d/config
 """
-from typing import (Tuple)
 import os
 
 
-def directory_check(adir, is_local: bool = True) -> Tuple[bool, str]:
+def directory_check(adir, is_local: bool = True) -> tuple[bool, str]:
     """
     Check directory:
 
@@ -30,7 +29,7 @@ def directory_check(adir, is_local: bool = True) -> Tuple[bool, str]:
     return (True, '')
 
 
-def str_variable_check(variable: str) -> Tuple[bool, str]:
+def str_variable_check(variable: str) -> tuple[bool, str]:
     """
     String variable check
     Can only check existance.

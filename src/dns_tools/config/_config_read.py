@@ -4,12 +4,12 @@
 Read options from config file.
 
 """
-from typing import (Any, Dict)
+from typing import (Any)
 import os
 from utils import read_toml_file
 
 
-def read_config() -> Dict[str, Any]:
+def read_config() -> dict[str, Any]:
     """
     Read config settings.
 
@@ -21,11 +21,11 @@ def read_config() -> Dict[str, Any]:
 
     Config "can" be any legal toml. In practice it is limited to:
 
-    - Dict[str, X]
-    - x : str, List[str], Dict[str, Dict[str, str]]
+    - dict[str, X]
+    - x : str, List[str], dict[str, dict[str, str]]
 
     """
-    config: Dict[str, Any] = {}
+    config: dict[str, Any] = {}
     conf_file = 'conf.d/config'
     confs = [f'./{conf_file}', f'/etc/dns_tools/{conf_file}']
 

@@ -23,7 +23,6 @@ per day if needed - 1 min may be sufficient.
 
 """
 # pylint: disable=invalid-name, too-many-arguments
-from typing import (List, Tuple)
 import os
 import datetime
 import re
@@ -135,7 +134,7 @@ def _base_name_to_hash_vers(base_name: str) -> str:
 
 
 def get_signing_key_base_names(tool: DnsToolBase, domain: str
-                               ) -> Tuple[List[str], List[str]]:
+                               ) -> tuple[list[str], list[str]]:
     """
     Retrieve list of keys to be used to sign this domain
     """

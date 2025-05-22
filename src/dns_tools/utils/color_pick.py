@@ -11,11 +11,10 @@ e.g. given ['black', 'blue', 'brown']
 bl would not be a unique match. So return the first match in list.
 We want to minimize failure
 """
-from typing import (List)
 
 
 def _get_matches(cnt: int, num_max: int,
-                 col: str, col_list: List[str]) -> List[str]:
+                 col: str, col_list: list[str]) -> list[str]:
     """
     return matches of first 'cnt' chars
     of col in col_list
@@ -34,7 +33,7 @@ def _get_matches(cnt: int, num_max: int,
     return sub_list
 
 
-def color_pick(color: str, color_list: List[str]) -> str:
+def color_pick(color: str, color_list: list[str]) -> str:
     """
     Find matching color to 'col' which is a full or partial name
     in col_list

@@ -6,7 +6,6 @@ Initialize options for dns-tool.
 Config file + command line options.
 """
 # pylint: disable=duplicate-code
-from typing import (List, Tuple)
 
 from ._toolopts_base import ToolOptsBase
 from ._config_checks import (config_warnings_errors)
@@ -21,7 +20,7 @@ class ToolOpts(ToolOptsBase):
         super().__init__()
         self.normalize_paths()
 
-    def config_warnings_errors(self) -> Tuple[List[str], List[str]]:
+    def config_warnings_errors(self) -> tuple[list[str], list[str]]:
         """
         Check for valid inputs
         """
