@@ -15,33 +15,32 @@ def opts_sign() -> list[Opt]:
     """
     Signing options.
     """
-    opt: Opt
     opts: list[Opt] = []
 
-    opt = (('--serial-bump', '--serial_bump'),
-           {'help': 'Bump all serials',
-            'action': 'store_true'})
-    opts.append(opt)
+    opts.append((('--serial-bump', '--serial_bump'),
+                 {'help': 'Bump all serials',
+                  'action': 'store_true'}
+                 ))
 
-    opt = (('--keep-include', '--keep_include'),
-           {'help': 'Keep temp file $INCLUDE expanded',
-            'action': 'store_true'})
-    opts.append(opt)
+    opts.append((('--keep-include', '--keep_include'),
+                 {'help': 'Keep temp file $INCLUDE expanded',
+                  'action': 'store_true'}
+                 ))
 
-    opt = (('--sign'),
-           {'help': 'Sign with curr keys (ksk and zsk)',
-            'action': 'store_true'})
-    opts.append(opt)
+    opts.append((('--sign'),
+                 {'help': 'Sign with curr keys (ksk and zsk)',
+                  'action': 'store_true'}
+                 ))
 
-    opt = (('--sign-ksk-next', '--sign_ksk_next'),
-           {'help': 'Sign with both next and curr ksk',
-            'action': 'store_true'})
-    opts.append(opt)
+    opts.append((('--sign-ksk-next', '--sign_ksk_next'),
+                 {'help': 'Sign with both next and curr ksk',
+                  'action': 'store_true'}
+                 ))
 
-    opt = (('--sign-zsk-next', '--sign_zsk_next'),
-           {'help': 'Sign with both next and curr zsk',
-            'action': 'store_true'})
-    opts.append(opt)
+    opts.append((('--sign-zsk-next', '--sign_zsk_next'),
+                 {'help': 'Sign with both next and curr zsk',
+                  'action': 'store_true'}
+                 ))
 
     return opts
 
@@ -50,63 +49,61 @@ def opts_keys() -> list[Opt]:
     """
     Key options
     """
-    opt: Opt
     opts: list[Opt] = []
 
-    opt = (('--gen-zsk-curr', '--gen_zsk_curr'),
-           {'help': 'Generate ZSK for curr',
-            'action': 'store_true'})
-    opts.append(opt)
+    opts.append((('--gen-zsk-curr', '--gen_zsk_curr'),
+                 {'help': 'Generate ZSK for curr',
+                  'action': 'store_true'}
+                 ))
 
-    opt = (('--gen-zsk-next', '--gen_zsk_next'),
-           {'help': 'Generate ZSK for next',
-            'action': 'store_true'})
-    opts.append(opt)
+    opts.append((('--gen-zsk-next', '--gen_zsk_next'),
+                 {'help': 'Generate ZSK for next',
+                  'action': 'store_true'}
+                 ))
 
-    opt = (('--gen-ksk-curr', '--gen_ksk_curr'),
-           {'help': 'Generate KSK for curr',
-            'action': 'store_true'})
-    opts.append(opt)
+    opts.append((('--gen-ksk-curr', '--gen_ksk_curr'),
+                 {'help': 'Generate KSK for curr',
+                  'action': 'store_true'}
+                 ))
 
-    opt = (('--gen-ksk-next', '--gen_ksk_next'),
-           {'help': 'Generate KSK for next',
-            'action': 'store_true'})
-    opts.append(opt)
+    opts.append((('--gen-ksk-next', '--gen_ksk_next'),
+                 {'help': 'Generate KSK for next',
+                  'action': 'store_true'}
+                 ))
 
-    opt = (('--zsk-roll-1', '--zsk_roll_1'),
-           {'help': 'ZSK Phase 1 roll - old and new',
-            'action': 'store_true'})
-    opts.append(opt)
+    opts.append((('--zsk-roll-1', '--zsk_roll_1'),
+                 {'help': 'ZSK Phase 1 roll - old and new',
+                  'action': 'store_true'}
+                 ))
 
-    opt = (('--zsk-roll-2', '--zsk_roll_2'),
-           {'help': 'ZSK Phase 2 roll - new only',
-            'action': 'store_true'})
-    opts.append(opt)
+    opts.append((('--zsk-roll-2', '--zsk_roll_2'),
+                 {'help': 'ZSK Phase 2 roll - new only',
+                  'action': 'store_true'}
+                 ))
 
     note = '** Plesae Update registrar'
-    opt = (('--ksk-roll-1', '--ksk_roll_1'),
-           {'help': f'KSK Phase 1 roll: old & new. {note},',
-            'action': 'store_true'})
-    opts.append(opt)
+    opts.append((('--ksk-roll-1', '--ksk_roll_1'),
+                 {'help': f'KSK Phase 1 roll: old & new. {note}',
+                  'action': 'store_true'}
+                 ))
 
-    opt = (('--ksk-roll-2', '--ksk_roll_2'),
-           {'help': 'KSK Phase 2 roll - new only',
-            'action': 'store_true'})
-    opts.append(opt)
+    opts.append((('--ksk-roll-2', '--ksk_roll_2'),
+                 {'help': 'KSK Phase 2 roll - new only',
+                  'action': 'store_true'}
+                 ))
 
-    opt = (('--print-keys', '--print_keys'),
-           {'help': 'Print keys (curr and next)',
-            'action': 'store_true'})
-    opts.append(opt)
+    opts.append((('--print-keys', '--print_keys'),
+                 {'help': 'Print keys (curr and next)',
+                  'action': 'store_true'}
+                 ))
 
-    opt = (('--ksk-algo', '--ksk_algo'),
-           {'help': 'Key algorithm for KSK)'})
-    opts.append(opt)
+    opts.append((('--ksk-algo', '--ksk_algo'),
+                 {'help': 'Key algorithm for KSK)'}
+                 ))
 
-    opt = (('--zsk-algo', '--zsk_algo'),
-           {'help': 'Key algorithm for ZSK)'})
-    opts.append(opt)
-
+    opts.append((('--zsk-algo', '--zsk_algo'),
+                 {'help': 'Key algorithm for ZSK)'}
+                 ))
     return opts
 
 
@@ -114,26 +111,26 @@ def available_tool_options() -> list[Opt]:
     """
     Define the full set of options
     """
-    opt: Opt
     opts: list[Opt] = []
 
-    opt = (('--theme'),
-           {'help': 'Color theme: dark, light or none)'})
-    opts.append(opt)
+    opts.append((('--theme'),
+                 {'help': 'Color theme: dark, light or none)'}
+                 ))
 
-    opt = (('-t', '--test'),
-           {'help': 'Test mode - print but dont do',
-            'action': 'store_true'})
-    opts.append(opt)
+    opts.append((('-t', '--test'),
+                 {'help': 'Test mode - print but dont do',
+                  'action': 'store_true'}
+                 ))
 
-    opt = (('-v', '--verb'),
-           {'help': 'More verbosity',
-            'action': 'store_true'})
-    opts.append(opt)
+    opts.append((('-v', '--verb'),
+                 {'help': 'More verbosity',
+                  'action': 'store_true'}
+                 ))
 
-    opt = (('zones'),
-           {'help': 'Zones/domains this action applies to',
-            'nargs': '*'})
+    opts.append((('zones'),
+                 {'help': 'Zones/domains this action applies to',
+                  'nargs': '*'}
+                 ))
 
     opts += opts_sign()
     opts += opts_keys()

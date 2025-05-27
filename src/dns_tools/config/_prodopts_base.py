@@ -71,10 +71,10 @@ def _command_line_options(opts: ProdOptsBase):
         # elif 'zsk_' in opt:
         #     opts.zsk_opts.set_opt(opt, val)
         if opt == 'int_ext':
-            if opt.startswith('int'):
+            if val.lower().startswith('int'):
                 opts.int_zones = True
 
-            elif opt.startswith('ext'):
+            elif val.lower().startswith('ext'):
                 opts.ext_zones = True
 
             else:

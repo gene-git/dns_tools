@@ -3,8 +3,8 @@
 """
 Project dns_tools
 """
-__version__ = "4.2.0"
-__date__ = "2025-05-21"
+__version__ = "4.3.0"
+__date__ = "2025-05-27"
 __reldev__ = "release"
 
 
