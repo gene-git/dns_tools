@@ -7,12 +7,19 @@ Tags
 
 ::
 
-	2.0.0 (2023-01-22) -> 4.2.0 (2025-05-21)
-	87 commits.
+	2.0.0 (2023-01-22) -> 4.3.0 (2025-05-27)
+	89 commits.
 
 Commits
 =======
 
+
+* 2025-05-27  : **4.3.0**
+
+::
+
+                Fix option parser for dns-prod-push --int-ext
+ 2025-05-21     update Docs/Changelog Docs/${my_name}.pdf
 
 * 2025-05-21  : **4.2.0**
 
