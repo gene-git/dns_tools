@@ -23,13 +23,14 @@ class ProdOptsBase(Config):
 
         self.dns_restart: bool = False
         self.to_production: bool = False
-        self.int_zones: bool = False
-        self.ext_zones: bool = False
+        self.int_zones: bool = True
+        self.ext_zones: bool = True
 
         #
         # command line options override config
         #
         _command_line_options(self)
+        breakpoint()
 
         # now theme is set, initialize print
         self.prnt = Prnt(self.theme)
@@ -73,8 +74,10 @@ def _command_line_options(opts: ProdOptsBase):
         if opt == 'int_ext':
             if val.lower().startswith('int'):
                 opts.int_zones = True
+                opts.ext_zones = False
 
             elif val.lower().startswith('ext'):
+                opts.int_zones = False
                 opts.ext_zones = True
 
             else:

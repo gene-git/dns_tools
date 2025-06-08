@@ -79,7 +79,7 @@ class TestTool:
 
     def test_to_production(self):
         """
-        Roll keys
+        push to production
         """
         pargs = ['dns-prod-push.py']
         pargs += ['--to-production']
@@ -89,7 +89,7 @@ class TestTool:
 
     def test_restart_dns_servers(self):
         """
-        Roll keys
+        Restart DNS servers
         """
         pargs = ['dns-prod-push.py']
         pargs += ['--dns-restart']
