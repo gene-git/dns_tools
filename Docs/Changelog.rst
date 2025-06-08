@@ -7,12 +7,21 @@ Tags
 
 ::
 
-	2.0.0 (2023-01-22) -> 4.3.0 (2025-05-27)
-	89 commits.
+	2.0.0 (2023-01-22) -> 4.4.1 (2025-06-08)
+	92 commits.
 
 Commits
 =======
 
+
+* 2025-06-08  : **4.4.1**
+
+::
+
+                remove debug
+                bug: dns-prod-push int-ext option defaulted off instead of both
+                Improved code which runs external programs.
+ 2025-05-27     update Docs/Changelog Docs/${my_name}.pdf
 
 * 2025-05-27  : **4.3.0**
 
