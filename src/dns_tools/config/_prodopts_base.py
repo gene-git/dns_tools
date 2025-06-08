@@ -30,7 +30,6 @@ class ProdOptsBase(Config):
         # command line options override config
         #
         _command_line_options(self)
-        breakpoint()
 
         # now theme is set, initialize print
         self.prnt = Prnt(self.theme)
