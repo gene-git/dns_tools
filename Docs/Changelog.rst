@@ -7,12 +7,20 @@ Tags
 
 ::
 
-	2.0.0 (2023-01-22) -> 4.4.1 (2025-06-08)
-	92 commits.
+	2.0.0 (2023-01-22) -> 4.5.0 (2025-06-10)
+	94 commits.
 
 Commits
 =======
 
+
+* 2025-06-10  : **4.5.0**
+
+::
+
+                Enhance run_prog to pass env.
+                pytest now uses the run_prog from src via a symlink
+ 2025-06-08     update Docs/Changelog Docs/${my_name}.pdf
 
 * 2025-06-08  : **4.4.1**
 
