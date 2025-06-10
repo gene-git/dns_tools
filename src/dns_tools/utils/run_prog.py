@@ -17,8 +17,10 @@ def run_prog(pargs: list[str],
              input_str: str | None = None,
              stdout: int = subprocess.PIPE,
              stderr: int = subprocess.PIPE,
+             env: dict[str, str] | None = None,
              test: bool = False,
-             verb: bool = False) -> tuple[int, str, str]:
+             verb: bool = False,
+             ) -> tuple[int, str, str]:
     """
     Run external program using subprocess.
 
@@ -39,6 +41,9 @@ def run_prog(pargs: list[str],
 
         stderr (int):
             Subprocess stderr. Defaults to subprocess.PIPE
+
+        env (None | dic[str, str]):
+            Environmen for subprocess to use.
 
         test (bool):
             If true dont actually run anything.
@@ -79,7 +84,7 @@ def run_prog(pargs: list[str],
     output: str = ''
     errors: str = ''
 
-    (okay, proc, errors) = _popen_proc(pargs, stdin, stdout, stderr)
+    (okay, proc, errors) = _popen_proc(pargs, stdin, stdout, stderr, env)
 
     if not okay:
         return (1, '', errors)
@@ -98,7 +103,8 @@ def run_prog(pargs: list[str],
 def _popen_proc(pargs: list[str],
                 stdin: int | None,
                 stdout: int = subprocess.PIPE,
-                stderr: int = subprocess.PIPE
+                stderr: int = subprocess.PIPE,
+                env: dict[str, str] | None = None,
                 ) -> tuple[bool, subprocess.Popen | None, str]:
     """
     Popen the process to run
@@ -117,7 +123,8 @@ def _popen_proc(pargs: list[str],
         proc = subprocess.Popen(pargs,
                                 stdin=stdin,
                                 stdout=stdout,
-                                stderr=stderr)
+                                stderr=stderr,
+                                env=env)
 
     except (OSError, FileNotFoundError, ValueError, SubprocessError) as err:
         return (False, proc, str(err))
