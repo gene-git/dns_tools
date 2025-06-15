@@ -7,6 +7,8 @@ External program execution
 # pylint: disable=too-many-locals,too-many-branches
 # pylint: disable=consider-using-with
 from typing import (IO)
+import os
+import fcntl
 import io
 from select import select
 import subprocess
@@ -145,46 +147,53 @@ def _wait_for_proc(bstring: bytes | None,
     """
     output = ''
     errors = ''
+    timeout = 30
     bufsiz = io.DEFAULT_BUFFER_SIZE
 
     if not proc:
-        return (-1, '', 'process not started by popen - givig up')
+        return (-1, '', 'process not started by popen - giving up')
 
     returncode = proc.returncode
     has_stdout = True
     has_stderr = True
     has_stdin = bool(bstring)
 
+    if proc.stdout:
+        fcntl.fcntl(proc.stdout, fcntl.F_SETFL, os.O_NONBLOCK)
+
+    if proc.stderr:
+        fcntl.fcntl(proc.stderr, fcntl.F_SETFL, os.O_NONBLOCK)
+
     data_pending = bool(has_stdout or has_stderr or has_stdin)
 
     while returncode is None or data_pending:
         returncode = proc.poll()
 
+        readlist: list[int | IO] = []
+        if has_stdout and proc.stdout:
+            readlist.append(proc.stdout)
+
+        if has_stderr and proc.stderr:
+            readlist.append(proc.stderr)
+
+        writelist: list[int | IO] = []
+        if has_stdin and proc.stdin:
+            writelist = [proc.stdin]
+
+        exceplist: list[int | IO] = []
+
+        if not (readlist or writelist or exceplist):
+            data_pending = False
+            continue
+
         try:
-            readlist: list[int | IO] = []
-            if has_stdout and proc.stdout:
-                readlist.append(proc.stdout)
-
-            if has_stderr and proc.stderr:
-                readlist.append(proc.stderr)
-
-            writelist: list[int | IO] = []
-            if has_stdin and proc.stdin:
-                writelist = [proc.stdin]
-
-            exceplist: list[int | IO] = []
-
-            if not (readlist or writelist or exceplist):
-                data_pending = False
-                continue
-
-            ready = select(readlist, writelist, exceplist)
+            ready = select(readlist, writelist, exceplist, timeout)
             read_ready = ready[0]
             write_ready = ready[1]
 
             try:
                 if has_stdin and proc.stdin and proc.stdin in write_ready:
-                    # todo handle writing large buffers.
+                    # todo handle writing large buffers w/o blocking.
                     proc.stdin.write(bstring)
                     proc.stdin.close()
                     has_stdin = False

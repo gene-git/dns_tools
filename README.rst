@@ -28,6 +28,7 @@ Note:
 New / Interesting
 ==================
 
+* Use non-blocking IO when running any external programs.
 * Code now complies with: PEP-8, PEP-257, PEP-484 and PEP-561
 * Refactor & clean ups (pretty big changes). Split into multiple modules.
 * Add test suite using pytest
