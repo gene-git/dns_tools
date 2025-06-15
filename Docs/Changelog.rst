@@ -7,12 +7,19 @@ Tags
 
 ::
 
-	2.0.0 (2023-01-22) -> 4.5.0 (2025-06-10)
-	94 commits.
+	2.0.0 (2023-01-22) -> 4.6.0 (2025-06-15)
+	96 commits.
 
 Commits
 =======
 
+
+* 2025-06-15  : **4.6.0**
+
+::
+
+                run_prog: Use non-blocking IO with the select() loop
+ 2025-06-10     update Docs/Changelog Docs/${my_name}.pdf
 
 * 2025-06-10  : **4.5.0**
 
