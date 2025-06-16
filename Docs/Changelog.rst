@@ -7,12 +7,18 @@ Tags
 
 ::
 
-	2.0.0 (2023-01-22) -> 4.6.0 (2025-06-15)
-	96 commits.
+	2.0.0 (2023-01-22) -> 4.7.0, origin/master (2025-06-15)
+	97 commits.
 
 Commits
 =======
 
+
+* 2025-06-15  : **4.7.0, origin/master**
+
+::
+
+                update Docs/Changelog Docs/${my_name}.pdf
 
 * 2025-06-15  : **4.6.0**
 
