@@ -3,8 +3,8 @@
 """
 External program execution
 """
-# pylint: disable=too-many-arguments,too-many-positional-arguments
-# pylint: disable=too-many-locals,too-many-branches
+# pylint: disable=too-many-arguments, too-many-positional-arguments
+# pylint: disable=too-many-locals, too-many-branches, too-many-statements
 # pylint: disable=consider-using-with
 from typing import (IO)
 import os
@@ -27,16 +27,18 @@ def run_prog(pargs: list[str],
     Run external program using subprocess.
 
     Take care to handle large outputs (default buffer size
-    is 8k). This avoids possible hangs shoul IO buffer fill up.
+    is 8k). This avoids possible hangs should IO buffer fill up.
+
+    non-blocking IO together with select() loop provides
+    a robust methodology.
 
     Args:
         pargs (list[str]):
-        The command + arguments to be run. Standard list format.
-        e.g. ['/usr/bin/sleep', 22]
+            The command + arguments to be run in standard list format.
+            e.g. ['/usr/bin/sleep', '22'].
 
         input_str (str | None):
-        Input to be fed to subprocess stdin.
-        Defaults to None.
+            Optional input to be fed to subprocess stdin.  Defaults to None.
 
         stdout (int):
             Subprocess stdout. Defaults to subprocess.PIPE
@@ -44,23 +46,24 @@ def run_prog(pargs: list[str],
         stderr (int):
             Subprocess stderr. Defaults to subprocess.PIPE
 
-        env (None | dic[str, str]):
-            Environmen for subprocess to use.
+        env (None | dict[str, str]):
+            Optional to specify environment for subprocess to use.
+            If not set, inherits from calling process as usual.
 
         test (bool):
-            If true dont actually run anything.
+            Flag - if true dont actually run anything.
 
         verb (bool):
-            Only used when test is True - prints pargs.
+            Flag - only used with test == True - prints pargs.
 
     Returns:
-        tuple(retc: int, stdout: str, stderr: str)
-        retc is 0 when all is well.
-        stdout is what subprocess returns on it's stdout
-        and stdferr is what it's stedd return.
+        tuple[retc: int, stdout: str, stderr: str]:
+            retc is 0 when all is well.
+            stdout is what the subprocess returns on it's stdout
+            and stderr is what it's stderr return.
 
-    todo: Handle stdin > buffer size
-    At moment we simply write entirety to subprocess.
+    Note that any input string is written in it's entirety in one
+    shot to the subprocess. This should not be a problem.
     """
     if not pargs:
         return (0, '', '')
@@ -86,6 +89,9 @@ def run_prog(pargs: list[str],
     output: str = ''
     errors: str = ''
 
+    #
+    # Start up the process
+    #
     (okay, proc, errors) = _popen_proc(pargs, stdin, stdout, stderr, env)
 
     if not okay:
@@ -93,8 +99,10 @@ def run_prog(pargs: list[str],
 
     #
     # Wait for it to complete
-    #  - Note that we handle large output buffers by reading pipe.
-    #    otherwise can hang on full buffer.
+    # - we handle large output buffers by using non-blocking IO
+    #   and select() along with reading buffer/pipe to ensure
+    #   it never fills up and blocks.
+    #   Without this, larger output can hang hwne IO buffer is full.
     #
 
     (retc, output, errors) = _wait_for_proc(bstring, proc)
@@ -137,7 +145,7 @@ def _popen_proc(pargs: list[str],
 def _wait_for_proc(bstring: bytes | None,
                    proc: subprocess.Popen | None) -> tuple[int, str, str]:
     """
-    Process has been opened, wait for process to complete
+    Process has been opened, wait for process to complete.
 
     Args:
         proc (subprocess.Popen):
@@ -158,16 +166,27 @@ def _wait_for_proc(bstring: bytes | None,
     has_stderr = True
     has_stdin = bool(bstring)
 
-    if proc.stdout:
-        fcntl.fcntl(proc.stdout, fcntl.F_SETFL, os.O_NONBLOCK)
+    try:
+        if proc.stdin:
+            fcntl.fcntl(proc.stdin, fcntl.F_SETFL, os.O_NONBLOCK)
 
-    if proc.stderr:
-        fcntl.fcntl(proc.stderr, fcntl.F_SETFL, os.O_NONBLOCK)
+        if proc.stdout:
+            fcntl.fcntl(proc.stdout, fcntl.F_SETFL, os.O_NONBLOCK)
+
+        if proc.stderr:
+            fcntl.fcntl(proc.stderr, fcntl.F_SETFL, os.O_NONBLOCK)
+
+    except OSError as err:
+        # Should not happen. Cross fingers and keep going.
+        print(f'Error setting NONBLOCK: {err}')
 
     data_pending = bool(has_stdout or has_stderr or has_stdin)
 
     while returncode is None or data_pending:
         returncode = proc.poll()
+
+        if returncode:
+            continue
 
         readlist: list[int | IO] = []
         if has_stdout and proc.stdout:
@@ -193,8 +212,8 @@ def _wait_for_proc(bstring: bytes | None,
 
             try:
                 if has_stdin and proc.stdin and proc.stdin in write_ready:
-                    # todo handle writing large buffers w/o blocking.
                     proc.stdin.write(bstring)
+                    proc.stdin.flush()
                     proc.stdin.close()
                     has_stdin = False
 
