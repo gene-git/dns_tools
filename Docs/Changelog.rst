@@ -7,14 +7,21 @@ Tags
 
 ::
 
-	2.0.0 (2023-01-22) -> 4.7.0, origin/master (2025-06-15)
-	97 commits.
+	2.0.0 (2023-01-22) -> 4.8.0 (2025-06-20)
+	99 commits.
 
 Commits
 =======
 
 
-* 2025-06-15  : **4.7.0, origin/master**
+* 2025-06-20  : **4.8.0**
+
+::
+
+                Pull local copy of latest run_prog from pycocurrent
+ 2025-06-16     update Docs/Changelog Docs/${my_name}.pdf
+
+* 2025-06-15  : **4.7.0**
 
 ::
 
