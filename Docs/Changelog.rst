@@ -7,12 +7,19 @@ Tags
 
 ::
 
-	2.0.0 (2023-01-22) -> 4.10.0 (2025-06-26)
-	103 commits.
+	2.0.0 (2023-01-22) -> 4.10.1 (2025-06-26)
+	105 commits.
 
 Commits
 =======
 
+
+* 2025-06-26  : **4.10.1**
+
+::
+
+                update arch PKGBUILD
+                update Docs/Changelog Docs/${my_name}.pdf
 
 * 2025-06-26  : **4.10.0**
 
