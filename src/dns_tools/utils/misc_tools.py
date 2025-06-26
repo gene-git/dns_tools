@@ -9,7 +9,7 @@ import socket
 import pwd
 import grp
 
-from .run_prog import run_prog
+from .run_prog_local import run_prog
 
 
 def _construct_remote_call(host_src: str, src: str, opts: list[str],

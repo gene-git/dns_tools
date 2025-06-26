@@ -15,4 +15,4 @@ from .misc_tools import rsync_copy
 from .misc_tools import get_uid_gid
 from .misc_tools import get_my_hostname
 from .misc_tools import normalize_one_path
-from .run_prog import run_prog
+from .run_prog_local import run_prog

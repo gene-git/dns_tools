@@ -9,7 +9,7 @@ Please set PYTHONPATH=../src/dns_tools
 from subprocess import CalledProcessError
 import pytest
 
-from .run_prog import run_prog
+from .run_prog_local import run_prog
 from .new_env import get_new_env
 
 ENV = get_new_env()
