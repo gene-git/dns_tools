@@ -6,12 +6,19 @@ Tags
 
 .. code-block:: text
 
-	2.0.0 (2023-01-22) -> 5.1.0 (2026-01-04)
-	107 commits.
+	2.0.0 (2023-01-22) -> 5.1.1 (2026-01-04)
+	109 commits.
 
 Commits
 =======
 
+
+* 2026-01-04  : **5.1.1**
+
+.. code-block:: text
+
+              - fix type
+              - update Docs/Changelog
 
 * 2026-01-04  : **5.1.0**
 
