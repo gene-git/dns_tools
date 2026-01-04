@@ -9,7 +9,7 @@
 project = "dns_tools"
 copyright = '2023, Gene C'
 author = 'Gene C'
-release = "5.1.0"
+release = "5.1.1"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

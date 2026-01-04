@@ -2,7 +2,7 @@
 License
 =======
 
-nginx software is a Basic Auth Password File Manager for nginx.
+dns_tools for managing DNS including DNSSEC
 
 Copyright © 2022-present Gene C <arch@sapience.com>
 
