@@ -1,11 +1,11 @@
-# SPDX-License-Identifier: MIT
-# SPDX-FileCopyrightText: © 2023-present  Gene C <arch@sapience.com>
+# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-FileCopyrightText: © 2023-present Gene C <arch@sapience.com>
 """
 Process requested key updates
 """
 # pylint: disable=too-many-branches
-from config import (KeyOpts, ToolOpts)
-from keys import DnsKey
+from dns_tools.config import (KeyOpts, ToolOpts)
+from dns_tools.keys import DnsKey
 
 from .dnstool_base import DnsToolBase
 

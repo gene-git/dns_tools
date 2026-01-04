@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-# SPDX-License-Identifier: MIT
-# SPDX-FileCopyrightText: © 2023-present  Gene C <arch@sapience.com>
+# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-FileCopyrightText: © 2023-present Gene C <arch@sapience.com>
 """
  Tool to push into production
   - work staging to production staging
@@ -8,8 +8,8 @@
  gc - 2022
 """
 # pylint: disable=invalid-name
-from production import DnsProduction
-from utils import DnsLock
+from dns_tools.production import DnsProduction
+from dns_tools.utils import DnsLock
 
 
 def main():

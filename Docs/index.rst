@@ -8,17 +8,5 @@ dns_tools documentation
 
 .. toctree::
    README
-   Changelog
-   License
-   Contributing
-   Code-of-conduct
-   :maxdepth: 2
-   :caption: Contents:
+   License/License
 
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

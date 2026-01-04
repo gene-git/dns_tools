@@ -1,12 +1,12 @@
-# SPDX-License-Identifier: MIT
-# SPDX-FileCopyrightText: © 2023-present  Gene C <arch@sapience.com>
+# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-FileCopyrightText: © 2023-present Gene C <arch@sapience.com>
 """
 Read options from config file.
 
 """
 from typing import (Any)
 import os
-from utils import read_toml_file
+from dns_tools.utils import read_toml_file
 
 
 def read_config() -> dict[str, Any]:

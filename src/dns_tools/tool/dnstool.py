@@ -1,10 +1,10 @@
-# SPDX-License-Identifier: MIT
-# SPDX-FileCopyrightText: © 2023-present  Gene C <arch@sapience.com>
+# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-FileCopyrightText: © 2023-present Gene C <arch@sapience.com>
 """
 dnssec class
 """
 
-from zone import set_zone_perms
+from dns_tools.zone import set_zone_perms
 
 from .dnstool_base import DnsToolBase
 from .process_signing import dns_process_signing_zones

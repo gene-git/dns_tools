@@ -41,7 +41,7 @@ class TestTool:
         """
         Generate ksk and zsk
         """
-        pargs = ['dns-tool.py']
+        pargs = ['../src/dns_tools/apps/dns-tool.py']
         pargs += ['--gen-ksk-curr', '--gen-zsk-curr']
         (rc, stdout, _stderr) = run_prog(pargs, env=ENV)
         assert rc == 0
@@ -51,7 +51,7 @@ class TestTool:
         """
         Roll keys phase 1
         """
-        pargs = ['dns-tool.py']
+        pargs = ['../src/dns_tools/apps/dns-tool.py']
         pargs += ['--sign']
         (rc, stdout, _stderr) = run_prog(pargs, env=ENV)
         assert rc == 0
@@ -61,7 +61,7 @@ class TestTool:
         """
         Roll keys phase 1
         """
-        pargs = ['dns-tool.py']
+        pargs = ['../src/dns_tools/apps/dns-tool.py']
         pargs += ['--zsk-roll-1']
         (rc, stdout, _stderr) = run_prog(pargs, env=ENV)
         assert rc == 0
@@ -71,7 +71,7 @@ class TestTool:
         """
         Roll keys phase 2
         """
-        pargs = ['dns-tool.py']
+        pargs = ['../src/dns_tools/apps/dns-tool.py']
         pargs += ['--zsk-roll-2']
         (rc, stdout, _stderr) = run_prog(pargs, env=ENV)
         assert rc == 0
@@ -81,7 +81,7 @@ class TestTool:
         """
         push to production
         """
-        pargs = ['dns-prod-push.py']
+        pargs = ['../src/dns_tools/apps/dns-prod-push.py']
         pargs += ['--to-production']
         (rc, stdout, _stderr) = run_prog(pargs, env=ENV)
         assert rc == 0
@@ -91,7 +91,7 @@ class TestTool:
         """
         Restart DNS servers
         """
-        pargs = ['dns-prod-push.py']
+        pargs = ['../src/dns_tools/apps/dns-prod-push.py']
         pargs += ['--dns-restart']
         (rc, stdout, _stderr) = run_prog(pargs, env=ENV)
         assert rc == 0

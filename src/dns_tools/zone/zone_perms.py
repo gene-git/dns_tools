@@ -1,5 +1,5 @@
-# SPDX-License-Identifier: MIT
-# SPDX-FileCopyrightText: © 2023-present  Gene C <arch@sapience.com>
+# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-FileCopyrightText: © 2023-present Gene C <arch@sapience.com>
 """
  Ensure correct permissions of all zone files
 """
@@ -7,8 +7,8 @@
 import os
 import stat
 
-from utils import get_uid_gid
-from config import Config
+from dns_tools.utils import get_uid_gid
+from dns_tools.config import Config
 
 
 def set_zone_perms(opts: Config):

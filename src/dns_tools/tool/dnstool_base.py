@@ -1,12 +1,11 @@
-# SPDX-License-Identifier: MIT
-# SPDX-FileCopyrightText: © 2023-present  Gene C <arch@sapience.com>
+# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-FileCopyrightText: © 2023-present Gene C <arch@sapience.com>
 """
 DNS tool base class
 """
 # pylint: disable=duplicate-code, too-few-public-methods
-from config import ToolOpts
-
-from keys import DnsKeys
+from dns_tools.config import ToolOpts
+from dns_tools.keys import DnsKeys
 
 
 class DnsToolBase:

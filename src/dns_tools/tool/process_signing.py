@@ -1,5 +1,5 @@
-# SPDX-License-Identifier: MIT
-# SPDX-FileCopyrightText: © 2023-present  Gene C <arch@sapience.com>
+# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-FileCopyrightText: © 2023-present Gene C <arch@sapience.com>
 """
 
  DNSSEC management tool
@@ -34,12 +34,12 @@
 """
 import os
 
-from utils import rel_from_abs_path
-from utils import make_dir_if_needed
-from zone import zone_file_read
-from zone import zone_file_write
-from zone import zone_expand_includes
-from zone import zone_update_serial
+from dns_tools.utils import rel_from_abs_path
+from dns_tools.utils import make_dir_if_needed
+from dns_tools.zone import zone_file_read
+from dns_tools.zone import zone_file_write
+from dns_tools.zone import zone_expand_includes
+from dns_tools.zone import zone_update_serial
 
 from .dnstool_base import DnsToolBase
 from .sign import zone_sign

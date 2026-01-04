@@ -9,7 +9,7 @@
 project = "dns_tools"
 copyright = '2023, Gene C'
 author = 'Gene C'
-release = '4.10.1'
+release = "5.1.0"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -18,7 +18,7 @@ release = '4.10.1'
 extensions = []
 
 templates_path = ['_templates']
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['_build', 'Thumbs.db', 'Misc/*.rst', 'Changelog.rst']
 
 
 

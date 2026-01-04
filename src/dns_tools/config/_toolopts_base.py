@@ -1,12 +1,12 @@
-# SPDX-License-Identifier: MIT
-# SPDX-FileCopyrightText: © 2023-present  Gene C <arch@sapience.com>
+# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-FileCopyrightText: © 2023-present Gene C <arch@sapience.com>
 """
  Initialize for dns-tool
  All controls are command line arguments.
 """
 # pylint: disable=too-few-public-methods
 
-from utils import Prnt
+from dns_tools.utils import Prnt
 
 from ._config import Config
 from ._parse_args import parse_args

@@ -1,5 +1,5 @@
-# SPDX-License-Identifier: MIT
-# SPDX-FileCopyrightText: © 2023-present  Gene C <arch@sapience.com>
+# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-FileCopyrightText: © 2023-present Gene C <arch@sapience.com>
 """
  Initialize for dns-tool
  All controls are command line arguments.
@@ -8,7 +8,7 @@
 import os
 import datetime
 
-from utils import Prnt
+from dns_tools.utils import Prnt
 from ._dnsserv import DnsServer
 from ._keyopts import KeyOptions
 from ._config_read import read_config

@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-# SPDX-License-Identifier: MIT
-# SPDX-FileCopyrightText: © 2023-present  Gene C <arch@sapience.com>
+# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-FileCopyrightText: © 2023-present Gene C <arch@sapience.com>
 """
  DNSSEC management tool - aka easy dnssec
 
@@ -23,8 +23,8 @@
  gc - 2022
 """
 # pylint: disable=invalid-name, too-many-return-statements
-from tool import DnsTool
-from utils import DnsLock
+from dns_tools.tool import DnsTool
+from dns_tools.utils import DnsLock
 
 
 def main():

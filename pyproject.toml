@@ -1,37 +1,42 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["uv_build>=0.9.21,<=1.0.0"]
+build-backend = "uv_build"
 
 [project]
 name = "dns_tools"
-dynamic = ["version"]
 description = "DNS server tools for DNSSEC etc"
 authors = [{ name = "Gene C", email = "arch@sapience.com" }]
-license = "MIT"
+license = "GPL-2.0-or-later"
 readme = "README.rst"
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
 ]
+requires-python = ">=3.13"
+version = "5.1.0"
 dependencies = []
-
-[tool.hatch.build.targets.wheel]
-packages = ["src/dns_tools"]
-include = [
-    "src/dns_tools",
-]
 
 [project.urls]
 Documentation = "https://github.com/gene-git/dns_tools/Docs"
 Issues = "https://github.com/gene-git/dns_tools/issues"
 Source = "https://github.com/gene-git/dns_tools"
 
-[tool.hatch.version]
-path = "src/dns_tools/_version.py"
+[tool.uv.build-backend]
+module-name = 'dns_tools'
+module-root = "src"
+source-include = [
+    '/dns_tools',
+    '/dns_tools/py.typed',
+]
+source-exclude = [
+    ".pytest_cache",
+    "__pycache__",
+    ".mypy_cache",
+]
 
-[[tool.hatch.envs.all.matrix]]
-python = ["3.13", "3.14"]
 
 [tool.mypy]
 check_untyped_defs = true

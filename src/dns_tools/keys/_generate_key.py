@@ -1,14 +1,14 @@
-# SPDX-License-Identifier: MIT
-# SPDX-FileCopyrightText: © 2023-present  Gene C <arch@sapience.com>
+# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-FileCopyrightText: © 2023-present Gene C <arch@sapience.com>
 """
 Handle generating keys
 """
 # pylint: disable=invalid-name,too-many-locals
 import os
 
-from config import ToolOpts
-from utils import run_prog
-from utils import (make_dir_if_needed, make_symlink, open_file)
+from dns_tools.config import ToolOpts
+from dns_tools.utils import run_prog
+from dns_tools.utils import (make_dir_if_needed, make_symlink, open_file)
 
 from ._keyinfo_base import KeyInfoBase
 from ._keyfile_extensions import keyfile_extensions

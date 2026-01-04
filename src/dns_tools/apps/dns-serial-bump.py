@@ -1,16 +1,16 @@
 #!/usr/bin/python
-# SPDX-License-Identifier: MIT
-# SPDX-FileCopyrightText: © 2023-present  Gene C <arch@sapience.com>
+# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-FileCopyrightText: © 2023-present Gene C <arch@sapience.com>
 """
 Read zone file = bump serial and write to stdout
 """
 # pylint: disable=invalid-name
 import argparse
-from zone import zone_file_read
-from zone import zone_file_write
-from zone import zone_get_new_serial
-from zone import zone_update_serial
-from utils import DnsLock
+from dns_tools.zone import zone_file_read
+from dns_tools.zone import zone_file_write
+from dns_tools.zone import zone_get_new_serial
+from dns_tools.zone import zone_update_serial
+from dns_tools.utils import DnsLock
 
 
 def options():

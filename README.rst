@@ -1,4 +1,4 @@
-.. SPDX-License-Identifier: MIT
+.. SPDX-License-Identifier: GPL-2.0-or-later
 
 #########
 dns_tools
@@ -28,6 +28,15 @@ Note:
 New / Interesting
 ==================
 
+**Version 5.0.0**
+
+* Code Reorg
+* Switch packaging from hatch to uv
+* Testing to confirm all working on python 3.14.2 
+* License GPL-2.0-or-later
+
+**Older**
+
 * Use run_prog() from pyconcurrent module if available, otherwise use local copy
 * Use non-blocking IO when running any external programs.
 * Code now complies with: PEP-8, PEP-257, PEP-484 and PEP-561
@@ -56,6 +65,7 @@ Installation
 ============
 
 Available on
+
 * `Github`_
 * `Archlinux AUR`_
 
@@ -587,17 +597,17 @@ When running as non-root then set root_dest a user writable directory
 Philosophy
 ==========
 
-We follow the *live at head commit* philosophy. This means we recommend using the
-latest commit on git master branch. We also provide git tags. 
+We follow the *live at head commit* philosophy as recommended by
+Google's Abseil team [1]_.  This means we recommend using the
+latest commit on git master branch.
 
-This approach is also taken by Google [1]_ [2]_.
 
 License
 ========
 
-Created by Gene C. and licensed under the terms of the MIT license.
+Created by Gene C. and licensed under the terms of the GPL-2.0-or-later license.
 
- - SPDX-License-Identifier: MIT
+ - SPDX-License-Identifier: GPL-2.0-or-later
  - Copyright (c) 2023 Gene C
 
 .. _Github: https://github.com/gene-git/dns_tools
@@ -605,6 +615,5 @@ Created by Gene C. and licensed under the terms of the MIT license.
 .. _lockmgr : https://github.com/gene-git/lockmgr 
 .. _lockmgr AUR : https://aur.archlinux.org/packages/lockmgr
 
-.. [1] https://github.com/google/googletest  
-.. [2] https://abseil.io/about/philosophy#upgrade-support
+.. [1] https://abseil.io/about/philosophy#upgrade-support
 

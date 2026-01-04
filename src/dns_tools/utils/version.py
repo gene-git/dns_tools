@@ -1,10 +1,10 @@
-# SPDX-License-Identifier: MIT
-# SPDX-FileCopyrightText: © 2023-present  Gene C <arch@sapience.com>
+# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-FileCopyrightText: © 2023-present Gene C <arch@sapience.com>
 """
 Project dns_tools
 """
-__version__ = "4.10.1"
-__date__ = "2025-06-26"
+__version__ = "5.1.0"
+__date__ = "2026-01-04"
 __reldev__ = "release"
 
 

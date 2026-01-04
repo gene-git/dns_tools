@@ -1,9 +1,9 @@
-# SPDX-License-Identifier: MIT
-# SPDX-FileCopyrightText: © 2023-present  Gene C <arch@sapience.com>
+# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-FileCopyrightText: © 2023-present Gene C <arch@sapience.com>
 """
  Initialize for dns-prod
 """
-from zone import set_zone_perms
+from dns_tools.zone import set_zone_perms
 
 from ._prod_base import DnsProdBase
 from ._to_prod import staging_zones_to_production

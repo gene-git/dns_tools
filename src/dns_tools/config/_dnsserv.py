@@ -1,11 +1,11 @@
-# SPDX-License-Identifier: MIT
-# SPDX-FileCopyrightText: © 2023-present  Gene C <arch@sapience.com>
+# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-FileCopyrightText: © 2023-present Gene C <arch@sapience.com>
 """
 DNS Server Class
 """
 import os
 
-from utils import normalize_one_path
+from dns_tools.utils import normalize_one_path
 
 
 class DnsServer:

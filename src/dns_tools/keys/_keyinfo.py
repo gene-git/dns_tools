@@ -1,11 +1,11 @@
-# SPDX-License-Identifier: MIT
-# SPDX-FileCopyrightText: © 2023-present  Gene C <arch@sapience.com>
+# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-FileCopyrightText: © 2023-present Gene C <arch@sapience.com>
 """
 DNS key class
 """
 import os
 
-from config import ToolOpts
+from dns_tools.config import ToolOpts
 
 from ._keyinfo_base import KeyInfoBase
 from ._keyid_from_filename import keyid_from_filename

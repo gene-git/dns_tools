@@ -51,7 +51,7 @@ class TestSerialBump:
         """
         Check serial-1
         """
-        pargs = ['dns-serial-bump.py']
+        pargs = ['../src/dns_tools/apps/dns-serial-bump.py']
         pargs += ['--check', 'tools/serial-check-1.zone']
         (rc, stdout, _stderr) = run_prog(pargs, env=ENV)
         assert rc == 0
@@ -63,7 +63,7 @@ class TestSerialBump:
         """
         Check serial-2
         """
-        pargs = ['dns-serial-bump.py']
+        pargs = ['../src/dns_tools/apps/dns-serial-bump.py']
         pargs += ['--check', 'tools/serial-check-2.zone']
         (rc, stdout, _stderr) = run_prog(pargs, env=ENV)
         assert rc == 0
@@ -74,7 +74,7 @@ class TestSerialBump:
         """
         Check serial-3
         """
-        pargs = ['dns-serial-bump.py']
+        pargs = ['../src/dns_tools/apps/dns-serial-bump.py']
         pargs += ['--check', 'tools/serial-check-3.zone']
         (rc, stdout, _stderr) = run_prog(pargs, env=ENV)
         assert rc == 0

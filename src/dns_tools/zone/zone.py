@@ -1,9 +1,9 @@
-# SPDX-License-Identifier: MIT
-# SPDX-FileCopyrightText: © 2023-present  Gene C <arch@sapience.com>
+# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-FileCopyrightText: © 2023-present Gene C <arch@sapience.com>
 """
 zone file read and wrte
 """
-from utils import open_file
+from dns_tools.utils import open_file
 
 
 def zone_file_read(zone_file: str) -> list[str]:

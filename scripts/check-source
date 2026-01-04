@@ -1,0 +1,30 @@
+#!/usr/bin/bash
+#
+# Source code checks.
+#
+# Run in src dir
+# i.e. cd src
+# Requires
+# - pylint
+# - pycodestyle
+# - mypy
+
+apps=(
+    dns-tool.py dns-prod-push.py dns-serial-bump.py
+)
+
+modules=(
+    config keys production tool utils zone
+)
+mod_dir="dns_tools"
+    
+# code
+echo "---"
+echo "Checking code"
+
+PYTHONPATH=. pylint $mod_dir/*y $mod_dir/*/*py
+PYTHONPATH=. pycodestyle --max-line-length=110 $mod_dir/*y $mod_dir/*/*py
+
+mypy --check-untyped-defs --follow-untyped-imports $mod_dir
+
+

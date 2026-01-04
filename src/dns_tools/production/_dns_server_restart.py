@@ -1,9 +1,9 @@
-# SPDX-License-Identifier: MIT
-# SPDX-FileCopyrightText: © 2023-present  Gene C <arch@sapience.com>
+# SPDX-License-Identifier: GPL-2.0-or-later
+# SPDX-FileCopyrightText: © 2023-present Gene C <arch@sapience.com>
 """
 tools to help push things to production
 """
-from utils import run_prog
+from dns_tools.utils import run_prog
 
 
 def restart_one_dns_server(dns_host, dns_restart_cmd, test, verb):
