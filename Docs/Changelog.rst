@@ -6,12 +6,28 @@ Tags
 
 .. code-block:: text
 
-	2.0.0 (2023-01-22) -> 5.1.1 (2026-01-04)
-	109 commits.
+	2.0.0 (2023-01-22) -> 5.2.0 (2026-01-24)
+	111 commits.
 
 Commits
 =======
 
+
+* 2026-01-24  : **5.2.0**
+
+.. code-block:: text
+
+              - Version 5.2.0
+                Bug fix:
+                  dns-tool --serial-bump --sign -> works file.
+                  dns-tool --serial-bump        -> did not bump the serial.
+                pyconcurrent is new dependency (was optional):
+                  Reduce maintenance and no loner having duplicate code copied from pyconcurrent module.
+ 2026-01-04   ⋯
+
+.. code-block:: text
+
+              - update Docs/Changelog
 
 * 2026-01-04  : **5.1.1**
 
