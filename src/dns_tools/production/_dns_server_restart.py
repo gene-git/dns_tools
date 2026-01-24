@@ -3,7 +3,7 @@
 """
 tools to help push things to production
 """
-from dns_tools.utils import run_prog
+from pyconcurrent import run_prog
 
 
 def restart_one_dns_server(dns_host, dns_restart_cmd, test, verb):

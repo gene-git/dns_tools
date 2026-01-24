@@ -20,7 +20,7 @@ def available_prod_options() -> list[Opt]:
     opts: list[Opt] = []
 
     opts.append((('--theme'),
-                 {'help': 'Color theme: dark, light or none)'}
+                 {'help': 'Color theme: dark, light or none'}
                  ))
 
     opts.append((('--int-ext', '--int_ext'),

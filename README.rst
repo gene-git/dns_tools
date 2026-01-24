@@ -28,6 +28,20 @@ Note:
 New / Interesting
 ==================
 
+**Version 5.2.0**
+
+* Bug fix: 
+
+  dns-tool --serial-bump --sign -> works file.
+  dns-tool --serial-bump        -> did not bump the serial.
+
+* pyconcurrent is new dependency (was optional):
+
+  Reduce maintenance and no loner having duplicate code copied from pyconcurrent module.
+
+  Available in `Arch AUR <https://aur.archlinux.org/packages/pyconcurrent>`_ and
+  `Github <https://github.com/gene-git/pyconcurrent>`_
+
 **Version 5.0.0**
 
 * Code Reorg

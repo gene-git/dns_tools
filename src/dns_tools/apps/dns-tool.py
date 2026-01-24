@@ -74,11 +74,13 @@ def main():
         return
 
     #
-    # Sign whatever needs signing.
+    # Handle one or both of:
+    # - Bump SOA serials
+    # - Sign zones that need to be signed.
     #
-    tool.do_sign_zones()
+    tool.do_serial_bump_sign_zones()
     if not tool.okay:
-        print('Error: zone sign failed')
+        print('Error: zone serial-bump-sign failed')
         return
 
     #

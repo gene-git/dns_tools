@@ -114,9 +114,11 @@ def _do_one_zone(tool: DnsToolBase, domain: str, staging: str,
                 os.unlink(zone_file_exp_path)
 
 
-def dns_process_signing_zones(tool: DnsToolBase):
+def dns_bump_serial_sign_zones(tool: DnsToolBase):
     """
-    Sign each zone/domain with curr key,
+    Do one or both of:
+    - Bump serial if asked
+    - Sign each zone/domain with curr key,
     With next key if indicated by roll_1.
     """
     okay = True

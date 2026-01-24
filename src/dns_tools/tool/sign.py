@@ -27,9 +27,10 @@ import os
 import datetime
 import re
 
+from pyconcurrent import run_prog
+
 from dns_tools.utils import make_dir_if_needed
 from dns_tools.utils import make_symlink
-from dns_tools.utils import run_prog
 
 from .dnstool_base import DnsToolBase
 

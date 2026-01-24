@@ -9,7 +9,8 @@ Please set PYTHONPATH=../src/dns_tools
 from subprocess import CalledProcessError
 import pytest
 
-from .run_prog_local import run_prog
+from pyconcurrent import run_prog
+
 from .new_env import get_new_env
 
 ENV = get_new_env()
@@ -53,6 +54,26 @@ class TestTool:
         """
         pargs = ['../src/dns_tools/apps/dns-tool.py']
         pargs += ['--sign']
+        (rc, stdout, _stderr) = run_prog(pargs, env=ENV)
+        assert rc == 0
+        assert 'Success: all done' in stdout
+
+    def test_serial_bump(self):
+        """
+        Roll keys phase 1
+        """
+        pargs = ['../src/dns_tools/apps/dns-tool.py']
+        pargs += ['--serial-bump']
+        (rc, stdout, _stderr) = run_prog(pargs, env=ENV)
+        assert rc == 0
+        assert 'Success: all done' in stdout
+
+    def test_serial_bump_sign(self):
+        """
+        Roll keys phase 1
+        """
+        pargs = ['../src/dns_tools/apps/dns-tool.py']
+        pargs += ['--serial-bump', '--sign']
         (rc, stdout, _stderr) = run_prog(pargs, env=ENV)
         assert rc == 0
         assert 'Success: all done' in stdout

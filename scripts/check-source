@@ -9,22 +9,15 @@
 # - pycodestyle
 # - mypy
 
-apps=(
-    dns-tool.py dns-prod-push.py dns-serial-bump.py
-)
-
-modules=(
-    config keys production tool utils zone
-)
-mod_dir="dns_tools"
-    
-# code
-echo "---"
-echo "Checking code"
-
-PYTHONPATH=. pylint $mod_dir/*y $mod_dir/*/*py
-PYTHONPATH=. pycodestyle --max-line-length=110 $mod_dir/*y $mod_dir/*/*py
+mod_dir="src/dns_tools"
+echo 'Check module'
+PYTHONPATH=./src pylint $mod_dir/*y $mod_dir/*/*py
+PYTHONPATH=./src pycodestyle --max-line-length=110 $mod_dir/*y $mod_dir/*/*py
 
 mypy --check-untyped-defs --follow-untyped-imports $mod_dir
+
+echo ''
+echo 'Check tests'
+mypy --check-untyped-defs --follow-untyped-imports tests/
 
 

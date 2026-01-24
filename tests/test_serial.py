@@ -4,9 +4,9 @@ Serial Bump Tests
 Please set PYTHONPATH=../src/dns_tools
 """
 from datetime import datetime
-from .run_prog_local import run_prog
-from .new_env import get_new_env
+from pyconcurrent import run_prog
 
+from .new_env import get_new_env
 
 ENV = get_new_env()
 

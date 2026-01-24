@@ -7,7 +7,7 @@ dnssec class
 from dns_tools.zone import set_zone_perms
 
 from .dnstool_base import DnsToolBase
-from .process_signing import dns_process_signing_zones
+from .bump_serial_sign import dns_bump_serial_sign_zones
 from .process_keys import process_key_updates
 from .key_tools import print_all_keys
 
@@ -58,13 +58,16 @@ class DnsTool(DnsToolBase):
                 for dom in self.opts.domains:
                     self.keys[dom].roll_zsk_keys(opts)
 
-    def do_sign_zones(self):
-        """ do signkey actions """
-        if not self.opts.key_opts.sign:
+    def do_serial_bump_sign_zones(self):
+        """
+        - bump serials (tool.opts.serial_bump)
+        - sign zones   (opts.key_opts.sign)
+        """
+        if not (self.opts.key_opts.sign or self.opts.serial_bump):
             return
 
         msg = self.opts.prnt.msg
-        if not dns_process_signing_zones(self):
+        if not dns_bump_serial_sign_zones(self):
             self.okay = False
             msg('Error: zone signing failed\n')
 

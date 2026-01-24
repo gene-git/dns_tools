@@ -6,8 +6,9 @@ Handle generating keys
 # pylint: disable=invalid-name,too-many-locals
 import os
 
+from pyconcurrent import run_prog
+
 from dns_tools.config import ToolOpts
-from dns_tools.utils import run_prog
 from dns_tools.utils import (make_dir_if_needed, make_symlink, open_file)
 
 from ._keyinfo_base import KeyInfoBase
