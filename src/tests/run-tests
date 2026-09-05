@@ -1,0 +1,10 @@
+#!/usr/bin/bash
+#
+# run the test suite.
+#
+
+export PYTHONPATH=$(/usr/bin/realpath ../../src)
+# export APPDIR=../../src/dns_tools/apps
+
+/usr/bin/pytest -s -v
+

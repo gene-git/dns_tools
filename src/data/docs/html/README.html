@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>1. dns_tools &#8212; dns-tools 5.3.0
+ documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=5c0b1849"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="2. Appendix" href="Appendix.html" />
+    <link rel="prev" title="dns_tools documentation" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="dns-tools">
+<h1><span class="section-number">1. </span>dns_tools<a class="headerlink" href="#dns-tools" title="Link to this heading">¶</a></h1>
+<section id="overview">
+<h2><span class="section-number">1.1. </span>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>DNS server tools - aka DNSSEC made easy.</p>
+<p>DNSSEC can be a little tricky especially rolling the keys. We provide the tools
+to simplify and automate this as much as possible.</p>
+<p>If you’re implementing DNSSEC then you may also want to implement DANE SMTP for email.
+If so, you may be interested in <a class="reference external" href="https://github.com/gene-git/ssl-mgr">ssl-mgr</a> tool
+which simplifies key and certificate management including for DANE SMTP.
+It is also available on <a class="reference external" href="https://aur.archlinux.org/packages/ssl-mgr">Arch AUR</a>.</p>
+<p>Note:</p>
+<blockquote>
+<div><p>All git tags will be signed by <em>&lt;arch&#64;sapience.com&gt;</em>.
+Public key is available via WKD or download from website:
+<a class="reference external" href="https://www.sapience.com/tech">sapience.com</a>.
+After key is on keyring use the PKGBUILD source line ending with <em>?signed</em>
+or manually verify using <em>git tag -v &lt;tag-name&gt;</em></p>
+</div></blockquote>
+</section>
+<section id="recent-changes">
+<h2><span class="section-number">1.2. </span>Recent Changes<a class="headerlink" href="#recent-changes" title="Link to this heading">¶</a></h2>
+<p><strong>5.3.0</strong></p>
+<ul class="simple">
+<li><p>Use meson/meson-python for build and package management</p></li>
+<li><p>periodic code review and improvements</p></li>
+<li><p>directory re-org</p></li>
+</ul>
+</section>
+<section id="avaailable">
+<h2><span class="section-number">1.3. </span>Avaailable<a class="headerlink" href="#avaailable" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/gene-git/dns_tools">Github</a></p></li>
+<li><p><a class="reference external" href="https://aur.archlinux.org/packages/dns_tools">Archlinux AUR</a></p></li>
+</ul>
+<p>The Archlinux PKGBUILD is also in the packaging directory.</p>
+<p>To build manually,  see Appendix <a class="reference internal" href="Appendix.html#manual-build"><span class="std std-ref">Build Manually</span></a>.</p>
+</section>
+<section id="more-detail">
+<h2><span class="section-number">1.4. </span>More Detail<a class="headerlink" href="#more-detail" title="Link to this heading">¶</a></h2>
+<section id="testing-mode">
+<h3><span class="section-number">1.4.1. </span>Testing Mode<a class="headerlink" href="#testing-mode" title="Link to this heading">¶</a></h3>
+<p>For convenience each tool supports a test mode engaged using the <em>-t, –test</em> option.
+When run in test mode, actions are printed instead of actually being done.</p>
+<p>When running in test mode nothing is done, which can lead to things seemingly
+being strange. For example, when testing rolling or generation of <em>next</em> keys,
+the code later checks for any missing keys. Now in test mode they can be missing
+since they were not actually created when they would normally be. So
+now you can see messages about keys being generated a second time.
+They wont be in non-test mode of course as nothing would be missing.</p>
+<p>For testing, I also find it convenient to change the production dns zone directores
+to something like <em>/tmp/dns</em> - and then run the tests without <em>-t</em>. This does everything
+as asked, but instead of pushing to the real dns servers, the files are pushed to the
+test production directory. When doing this, you can drop the <em>–dns_restart</em> option
+so as to skip restarting the dns servers - which is not needed obviously.</p>
+</section>
+<section id="types-of-dnssec-keys">
+<h3><span class="section-number">1.4.2. </span>Types of DNSSEC keys<a class="headerlink" href="#types-of-dnssec-keys" title="Link to this heading">¶</a></h3>
+<p>A short summary of DNSSEC keys.</p>
+<ul>
+<li><p>Zone Signing Key (ZSK)</p>
+<p>This is used to sign dns zone files. It is advisable to update this periodically,
+perhaps every 1 to 3 months.  The mechanism to update the key requires some care
+and is known as <em>rolling</em> the keys. The tools make this straightforward. More on this later.</p>
+</li>
+<li><p>Key Signing Key (KSK)</p>
+<p>This signs the zone signing key - and its this key that must be registered with
+the domain registrar for the root servers. The requirement ensures that there
+is an appropriate chain of trust from the root dns servers on down.
+Most, if not all registars now support DNSSEC - Squarespace (previously Google Domains) does for example.</p>
+<p>This requirement means there is a manual step whenever the KSK changes, which is to update
+the root servers with the new information.  KSK should be rolled occasionally,
+in spite of the manual step, perhaps every 1-3 years, and the corresponding DS
+(Delegation Signer) record for the new KSK should be uploaded to the domain registrar.</p>
+<p>See the <a class="reference internal" href="#section-create-keys"><span class="std std-ref">Create Keys</span></a> section about generating the DS records you will need.</p>
+</li>
+</ul>
+</section>
+<section id="key-rolling">
+<h3><span class="section-number">1.4.3. </span>Key Rolling<a class="headerlink" href="#key-rolling" title="Link to this heading">¶</a></h3>
+<p>The typical approach to doing this is accomplished in 2 basic steps.</p>
+<ul>
+<li><p><strong>Phase 1</strong></p>
+<p>Create a new key, called <em>next</em>, then sign the zone files using this key as well as
+the current key (we call this <em>curr</em> for short). With the records now double signed
+the existing key remains valid.</p>
+</li>
+<li><p><strong>Phase 2</strong></p>
+<p>After a period sufficiently longer than the TTL for the zone, say 2 x TTL, then
+rename the <em>next</em> key to be the <em>curr</em> key. Resign using just this key.
+This gives time for DNS servers to catch up with the new key before the old one is removed.</p>
+</li>
+</ul>
+<p>Rolling KSK and ZSK is basically the same, but for KSK, the DS records
+must be uploaded to the domain registrar. In Phase 1 both old and new DS should be uploaded
+and in Phase 2 just the new (now current) KSK DS.  The tool creates the DS records
+but uploading them to registrar must be done manually.</p>
+</section>
+</section>
+<section id="the-tools">
+<h2><span class="section-number">1.5. </span>The Tools<a class="headerlink" href="#the-tools" title="Link to this heading">¶</a></h2>
+<p>The following set of tools are provided.</p>
+<ul>
+<li><p><strong>dns-tool</strong></p>
+<p>This tool handles all DNSSEC related operations including key creation and rolling, and
+using those keys to sign the dns zone files.</p>
+</li>
+<li><p><strong>dns-prod-push</strong></p>
+<p>This tool make it simple to push signed and/or unsigned dns zone files from the signing server to the
+production area for each primary dns server. the DNS primary server(s) should be on same machine
+or reachable via ssh. It also restarts those servers when appropriate.</p>
+</li>
+<li><p><strong>dns-serial-bump</strong></p>
+<p>A standalone tool to check the validity and bump the serial number in the SOA of a dns zone file.</p>
+</li>
+</ul>
+<section id="example-usage">
+<h3><span class="section-number">1.5.1. </span>Example Usage<a class="headerlink" href="#example-usage" title="Link to this heading">¶</a></h3>
+<p>N.B. :</p>
+<ul>
+<li><p>Must run on signing server.</p>
+<p>The tools must be run on the signing server which is defined in the config file.
+To minimize chance of an accident, the code will refuse to run if that is not the case.</p>
+</li>
+<li><p>Run as root.</p>
+<ul class="simple">
+<li><p>operations require effective root user:</p></li>
+<li><p>Changing the ownership permisions of staging zones to <em>dns_user</em> and <em>dns_group</em>.</p></li>
+<li><p>Preserving ownership when files rsync –owner to dns server(s)</p></li>
+</ul>
+</li>
+<li><p>Zone serial numbers should be in canonical format for serial bump to work properly.</p>
+<p>i.e. yyymmddnn where yyymmdd is date and nn is a 2 digit counter from 00 to 99
+If not code will do best it can to migrate to canonical format if possible.
+It will warn of non-standard or invalid serials and replace them with
+valid serials. A valid serial is all numbers and must be expressable as
+32 bits. You can use the <em>dns-serial-bump –check zonefile</em> to check
+for valid serial.</p>
+</li>
+</ul>
+<p>The tool supports 2 primary servers - an internal DNS server and an external server.
+The internal server may also serve additional unsigned zones, typically RFC1918 and
+their reverse zones. There can be unsigned zones for external server too of course
+and if there are, they will be pushed along with all the other signed zones.</p>
+<p>The external primary is how the outside world views DNS for each domain.
+As usual once a primary dns server is updated, it’s secondaries
+will get updated automatically via IXFR/AXFR.</p>
+<p>The tool is driven by a straightforward config file which is first looked for in
+current directory under <em>./conf.d/config</em> and if not available there it
+should be in <em>/etc/dns_tools/conf.d/config</em>.</p>
+<p>The config file holds the information about where all the relevant files are kept
+and the command to use to restart the dns servers, the DNS server hosts and so on.</p>
+<p>Copy the sample config file and edit it for your needs:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/etc/dns_tools
+cp<span class="w"> </span>conf.d/config.sample<span class="w"> </span>conf.d/config
+</pre></div>
+</div>
+<p>Edit the config file to suit your needs. Set the <em>work_dir</em> to wherever you
+want to keep the internal/external zone files and the keys.
+The sample config uses <em>/etc/dns_tools</em> for the working directory.
+Relative directory names are always relative to the working directory.</p>
+<p>The <em>work_dir</em> holds all the data and is the source for all key and zone information.
+Signed and unsigned zone files are pushed from the working dir to each of the
+DNS servers.  Internal and external dns zone files are kept in their own directories.
+e.g.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&lt;work_dir&gt;/internal/staging/zones
+</pre></div>
+</div>
+<p>The <em>ldns</em> package has standalone tools which used to handle key generation
+and to sign the zone files.</p>
+<p>With that background information, and under the assumption that the domain registrar
+already has the ksk required information then to roll ZSK using dns_tools would be simply:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/usr/bin/dns-tool<span class="w"> </span>--zsk_roll_1
+/usr/bin/dns-prod-push<span class="w"> </span>--dns_restart<span class="w"> </span>--to_production
+</pre></div>
+</div>
+<p>and after couple hours or similar time, the second phase would be accomplished using:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/usr/bin/dns-tool<span class="w"> </span>--zsk_roll_2
+/usr/bin/dns-prod-push<span class="w"> </span>--dns_restart<span class="w"> </span>--to_production
+</pre></div>
+</div>
+<p>And of course in practice each of these would be run from cron - I run them monthly.
+A sample cron file is provided in <em>/etc/dns_tools/cron/dnssec-roll.cron</em>. And
+for convenience, it uses the above commands wrapped by the shell scripts:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/etc/dns_tools/scripts/zsk-roll-1.sh
+/etc/dns_tools/scripts/zsk-roll-2.sh
+</pre></div>
+</div>
+</section>
+<section id="create-keys">
+<span id="section-create-keys"></span><h3><span class="section-number">1.5.2. </span>Create Keys<a class="headerlink" href="#create-keys" title="Link to this heading">¶</a></h3>
+<p>To get things started simply create the KSK and ZSK keys and then upload the DS key info
+to the domain registrar. To generate a new set of keys simply run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/usr/bin/dns-tool<span class="w"> </span>--gen_ksk_curr<span class="w"> </span>--gen_zsk_curr
+</pre></div>
+</div>
+<p>All the keys will be under the <em>keys</em> directory. For each domain, the info needed
+for the domain registrar will be found in the file:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>&lt;work_dir&gt;/keys/&lt;domain&gt;/ksk/curr.all.ds
+</pre></div>
+</div>
+<p>By default all the domains in the config are processed. To process a one or more specific
+domains just put them on the command line. Domains listed on command line will
+override the config file.</p>
+<p>All zone files for both internal and external dns should be available as specified
+in the config file. See the sample config for more details.</p>
+</section>
+<section id="ksk-keys-and-ds-to-root-servers">
+<h3><span class="section-number">1.5.3. </span>KSK Keys and DS to root servers<a class="headerlink" href="#ksk-keys-and-ds-to-root-servers" title="Link to this heading">¶</a></h3>
+<p>When you create KSK keys a set of DS keys will be generated automatically.
+These actually come in different hash types:</p>
+<ul class="simple">
+<li><p><strong>1 : SHA-1</strong>    - Mandatory RFC3658 : weak, dont use</p></li>
+<li><p><strong>2 : SHA-256</strong>  - Mandatory RFC4509 : the default and saved in curr.ds</p></li>
+<li><p><strong>3 : gost R 34.11-94</strong> - Deprecated RFC5933 :</p></li>
+<li><p><strong>4 : SHA-384</strong>  - Optional RFC6605 : slower but more secure hash</p></li>
+<li><p><strong>5 : GOST R 34.11-2012</strong> - OPTIONAL RFC9558 : Russian equivalent to SHA-256</p></li>
+<li><p><strong>6 : SM3</strong>       - Optional RFC9563 : Chinese equivalent to SHA-256.</p></li>
+<li><p><em>7 to 255</em> - Unassigned</p></li>
+</ul>
+<p>We generate the types <em>1</em>, <em>2</em> and <em>4</em>. We default to SHA-256</p>
+<p>These are saved into the <em>&lt;work_dir&gt;/keys/&lt;domain&gt;/ksk/</em> directory.</p>
+<p>In addition to <em>curr.ds</em>, <em>curr.all.ds</em> contains <strong>sha1</strong>, <strong>sha256</strong> and <strong>sha384</strong>.
+Choose one or more of these to upload to your domain registrar.</p>
+<p>Its good to get this uploaded and available from the root servers soon as your
+KSK keys are ready and before you push any signed zones out. This is the only manual step.
+And if/when you roll your ksk, then it needs to be repeated with the new DS key info.</p>
+<p>I recommend uploading both sha256 (type 2) and sha512 (type 4) keys. Associated with each
+the <em>curr.all.ds</em> file will also have a numerical Id, which you’ll need to share with
+your registrar. Note that it can take some time for the root servers to get updated
+with your new KSK - which is fine. Just means that your DNS will be non-dnssec until they
+get the KSK pushed out to the world. Once that happens, then dns clients will see the KSK
+and dnssec will be operational.</p>
+<p>Everthing else should be handled automatically by the tool.</p>
+</section>
+<section id="updating-dns-zone-files">
+<h3><span class="section-number">1.5.4. </span>Updating dns zone files<a class="headerlink" href="#updating-dns-zone-files" title="Link to this heading">¶</a></h3>
+<p>Whenever you update any zone files, they must be resigned. Make any zone file changes
+in the zone staging directories. i.e.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">work_dir</span><span class="o">&gt;/</span><span class="n">internal</span><span class="o">/</span><span class="n">staging</span><span class="o">/</span><span class="n">zones</span>
+<span class="o">&lt;</span><span class="n">work_dir</span><span class="o">&gt;/</span><span class="n">external</span><span class="o">/</span><span class="n">staging</span><span class="o">/</span><span class="n">zones</span>
+</pre></div>
+</div>
+<p>You don’t need to bump serial number, the tool will do it for you, though its benign to do so.
+When you’re done with the changes then to resign and push just run:</p>
+<p>or use the convenience wrapper script for these 2 commands by running:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/etc/dns_tool/resign.sh
+</pre></div>
+</div>
+<p>This also takes optional arguments:</p>
+<ul class="simple">
+<li><p>–serial_bump</p></li>
+<li><p>list of domains. If none listed, then uses all domains in config file.</p></li>
+</ul>
+</section>
+</section>
+<section id="tool-options">
+<h2><span class="section-number">1.6. </span>Tool Options<a class="headerlink" href="#tool-options" title="Link to this heading">¶</a></h2>
+<section id="dns-tool">
+<h3><span class="section-number">1.6.1. </span>dns-tool<a class="headerlink" href="#dns-tool" title="Link to this heading">¶</a></h3>
+<p>Handles key generation, zone signing and key rolls.</p>
+<p>While there are many options, majority are more for testing or special needs.
+The primary options are :</p>
+<p><em>test
+*print_keys
+*sign</em>
+<em>zsk_toll_1
+*zsk_roll_2</em></p>
+<p>Full list of options:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>* positional arguments:
+   zones                            Zones/domains this action applies to (over rides the config file)
+
+   -h, --help                       show this help message and exit
+  --theme THEME                     Color theme: dark, light or none)
+  --sign                            Sign with curr keys (ksk and zsk)
+  --gen-ksk-curr, --gen_ksk_curr    Generate KSK for curr
+  --gen-ksk-next, --gen_ksk_next    Generate KSK for next
+  --gen-zsk-curr, --gen_zsk_curr    Generate ZSK for curr
+  --gen-zsk-next, --gen_zsk_next    Generate ZSK for next
+  --keep-include, --keep_include    Keep temp file $INCLUDE expanded
+  --ksk-algo, --ksk_algo KSK_ALGO   Key algorithm for KSK)
+  --ksk-roll-1, --ksk_roll_1 KSK    Phase 1 roll: old &amp; new. ** Plesae Update registrar
+  --ksk-roll-2, --ksk_roll_2 KSK    Phase 2 roll - new only
+  --print-keys, --print_keys        Print keys (curr and next)
+  --serial-bump, --serial_bump      Bump all serials
+  --sign-ksk-next, --sign_ksk_next  Sign with both next and curr ksk
+  --sign-zsk-next, --sign_zsk_next  Sign with both next and curr zsk
+  --zsk-algo, --zsk_algo ZSK_ALGO   Key algorithm for ZSK)
+  --zsk-roll-1, --zsk_roll_1 ZSK    Phase 1 roll - old and new
+  --zsk-roll-2, --zsk_roll_2 ZSK    Phase 2 roll - new only
+  -t, --test                        Test mode - print but dont do
+  -v, --verb                        More verbosity
+</pre></div>
+</div>
+<p>Notes:</p>
+<ul class="simple">
+<li><p>Bump all serials is not usually needed as its auotmatic.
+And doing this implies <em>–sign</em> so that signed zones stay consistent.</p></li>
+<li><p>Supported KSK key algorithm algos default is ED25519.
+Also available ECDSAP256SHA256, ECDSAP384SHA384, ED448</p></li>
+</ul>
+</section>
+<section id="dns-prod-push">
+<h3><span class="section-number">1.6.2. </span>dns-prod-push<a class="headerlink" href="#dns-prod-push" title="Link to this heading">¶</a></h3>
+<p>Push signed and/or unsigned zones to the dns server(s):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">positional</span> <span class="n">arguments</span>                <span class="n">one</span> <span class="ow">or</span> <span class="n">more</span> <span class="n">domains</span> <span class="n">here</span> <span class="n">will</span> <span class="n">override</span> <span class="n">config</span> <span class="n">file</span><span class="o">.</span>
+
+  <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>                        <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="ow">and</span> <span class="n">exit</span>
+  <span class="o">--</span><span class="n">theme</span> <span class="n">THEME</span>                     <span class="n">Color</span> <span class="n">theme</span><span class="p">:</span> <span class="n">dark</span><span class="p">,</span> <span class="n">light</span> <span class="ow">or</span> <span class="n">none</span>
+  <span class="o">--</span><span class="n">dns</span><span class="o">-</span><span class="n">restart</span><span class="p">,</span> <span class="o">--</span><span class="n">dns_restart</span>      <span class="n">Restart</span> <span class="n">the</span> <span class="n">DNS</span> <span class="n">server</span> <span class="n">after</span> <span class="n">zones</span> <span class="n">updated</span>
+  <span class="o">--</span><span class="nb">int</span><span class="o">-</span><span class="n">ext</span><span class="p">,</span> <span class="o">--</span><span class="n">int_ext</span> <span class="n">INT_EXT</span>      <span class="n">What</span> <span class="n">to</span> <span class="n">push</span><span class="p">:</span> <span class="n">internal</span><span class="p">,</span> <span class="n">external</span> <span class="ow">or</span> <span class="n">both</span> <span class="p">(</span><span class="n">both</span><span class="p">)</span>
+  <span class="o">--</span><span class="n">to</span><span class="o">-</span><span class="n">production</span><span class="p">,</span> <span class="o">--</span><span class="n">to_production</span>  <span class="n">Copy</span> <span class="n">zone</span> <span class="n">files</span> <span class="kn">from</span><span class="w"> </span><span class="nn">staging</span> <span class="n">to</span> <span class="n">live</span> <span class="n">production</span>
+  <span class="o">-</span><span class="n">t</span><span class="p">,</span> <span class="o">--</span><span class="n">test</span>                        <span class="n">Test</span> <span class="n">mode</span> <span class="o">-</span> <span class="nb">print</span> <span class="n">but</span> <span class="n">dont</span> <span class="n">do</span>
+  <span class="o">-</span><span class="n">v</span><span class="p">,</span> <span class="o">--</span><span class="n">verb</span>                        <span class="n">More</span> <span class="n">verbosity</span>
+</pre></div>
+</div>
+<p>Notes:</p>
+<ul>
+<li><p>dns_restart</p>
+<p>Uses the config variable <em>dns_restart_cmd</em>.</p>
+<p>For example for nsd, set this to:</p>
+<p>dns_restart_cmd = “/usr/bin/systemctl restart nsd”</p>
+</li>
+</ul>
+</section>
+<section id="dns-serial-bump">
+<h3><span class="section-number">1.6.3. </span>dns-serial-bump<a class="headerlink" href="#dns-serial-bump" title="Link to this heading">¶</a></h3>
+<p>Bump the serial number of a DNS zone file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dns</span><span class="o">-</span><span class="n">serial</span><span class="o">-</span><span class="n">bump</span> <span class="p">[</span><span class="o">-</span><span class="n">c</span><span class="p">]</span> <span class="o">&lt;</span><span class="n">zonefile</span> <span class="p">[</span><span class="n">zonefile</span> <span class="o">..</span><span class="p">]</span><span class="o">&gt;</span>
+
+<span class="n">positional</span> <span class="n">arguments</span><span class="p">:</span>
+  <span class="n">zonefile</span>     <span class="n">Zone</span> <span class="n">file</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">with</span> <span class="n">serial</span> <span class="n">numbers</span> <span class="n">to</span> <span class="n">increment</span>
+
+<span class="n">options</span><span class="p">:</span>
+  <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>   <span class="n">show</span> <span class="n">this</span> <span class="n">help</span> <span class="n">message</span> <span class="ow">and</span> <span class="n">exit</span>
+  <span class="o">-</span><span class="n">c</span><span class="p">,</span> <span class="o">--</span><span class="n">check</span>  <span class="n">Check</span> <span class="n">serial</span> <span class="kn">from</span><span class="w"> </span><span class="nn">zonefile</span>
+</pre></div>
+</div>
+<p>Notes:</p>
+<ul class="simple">
+<li><p>Check
+Shows current and the bumped serial number for each zonefile.
+Does not change any serial numbers, just displays them.
+Without <em>check</em> option each zonefile will be updated with new serial.</p></li>
+</ul>
+</section>
+</section>
+<section id="update-your-dns-to-use-signed-zone-file">
+<h2><span class="section-number">1.7. </span>Update your DNS to use signed zone file<a class="headerlink" href="#update-your-dns-to-use-signed-zone-file" title="Link to this heading">¶</a></h2>
+<p>When you’re ready to switch your dns to dnssec then all that’s needed is change the
+primary server config to point to the signed zone file rather than the unsigned.</p>
+<p>For nsd this would be of the form:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>zone:
+<span class="w">    </span>name:<span class="w">       </span>example.com
+<span class="w">    </span><span class="c1">#zonefile:  %s                      # unsigned</span>
+<span class="w">    </span>zonefile:<span class="w">   </span>%s.signed/zone<span class="w">          </span><span class="c1"># signed</span>
+<span class="w">    </span>include-pattern:<span class="w"> </span><span class="s2">"tosecondary"</span><span class="w">      </span><span class="c1"># notify all secondary servers</span>
+</pre></div>
+</div>
+</section>
+<section id="faq">
+<h2><span class="section-number">1.8. </span>FAQ<a class="headerlink" href="#faq" title="Link to this heading">¶</a></h2>
+<section id="why-is-name-not-dnssec-tools">
+<h3><span class="section-number">1.8.1. </span>Why is name not dnssec_tools?<a class="headerlink" href="#why-is-name-not-dnssec-tools" title="Link to this heading">¶</a></h3>
+<p>This is a good question. I did give some thought to this and ended up with the more generic name.</p>
+<p>My thinking is this. Since the tool is really about managing DNS zones in one place and
+not just about keys/signing I went with the more generic name combined with the addition
+of DNSSEC keyword.</p>
+<p>There are three basic parts to the tools:</p>
+<ul class="simple">
+<li><p>Check the validity and increment the serial number in the SOA section of zonefile.</p></li>
+<li><p>Push zone files to primary DNS servers (internal and external facing servers) and
+restart them.</p></li>
+<li><p>Generate and manage KSK and ZSK keys and use them to sign zones.</p></li>
+</ul>
+<p>While all of them are needed to provide automation of key rolls, the first two items above are
+not specific to DNSSEC. That said the bulk of the code deals with the more complex
+DNSSEC tasks.</p>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">dns-tools</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">dns-tools Manual</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. dns_tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">1.1. Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#recent-changes">1.2. Recent Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#avaailable">1.3. Avaailable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#more-detail">1.4. More Detail</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-tools">1.5. The Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tool-options">1.6. Tool Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#update-your-dns-to-use-signed-zone-file">1.7. Update your DNS to use signed zone file</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#faq">1.8. FAQ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Appendix.html">2. Appendix</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">dns_tools documentation</a></li>
+      <li>Next: <a href="Appendix.html" title="next chapter"><span class="section-number">2. </span>Appendix</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2023-presennt, Gene C.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/README.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

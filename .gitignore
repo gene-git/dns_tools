@@ -1,0 +1,5 @@
+build/
+src/data/docs/_build/
+__pycache__/
+.mypy_cache/
+.pytest_cache/
