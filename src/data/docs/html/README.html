@@ -5,12 +5,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>1. dns_tools &#8212; dns-tools 5.3.0
+    <title>1. dns_tools &#8212; dns-tools 5.3.1
  documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
     <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
-    <script src="_static/documentation_options.js?v=5c0b1849"></script>
+    <script src="_static/documentation_options.js?v=f8739c50"></script>
     <script src="_static/doctools.js?v=fd6eb6e6"></script>
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -41,9 +41,9 @@
 <p>DNS server tools - aka DNSSEC made easy.</p>
 <p>DNSSEC can be a little tricky especially rolling the keys. We provide the tools
 to simplify and automate this as much as possible.</p>
-<p>If you’re implementing DNSSEC then you may also want to implement DANE SMTP for email.
+<p>If you’re implementing DNSSEC then you may want to implement DANE SMTP for email.
 If so, you may be interested in <a class="reference external" href="https://github.com/gene-git/ssl-mgr">ssl-mgr</a> tool
-which simplifies key and certificate management including for DANE SMTP.
+which simplifies key and certificate management including DANE SMTP.
 It is also available on <a class="reference external" href="https://aur.archlinux.org/packages/ssl-mgr">Arch AUR</a>.</p>
 <p>Note:</p>
 <blockquote>
@@ -56,11 +56,14 @@ or manually verify using <em>git tag -v &lt;tag-name&gt;</em></p>
 </section>
 <section id="recent-changes">
 <h2><span class="section-number">1.2. </span>Recent Changes<a class="headerlink" href="#recent-changes" title="Link to this heading">¶</a></h2>
-<p><strong>5.3.0</strong></p>
+<p><strong>5.3.1</strong></p>
 <ul class="simple">
-<li><p>Use meson/meson-python for build and package management</p></li>
-<li><p>periodic code review and improvements</p></li>
-<li><p>directory re-org</p></li>
+<li><p>Change Arch package dependencies that have been renamed:</p>
+<ul>
+<li><p>pyconcurrent -&gt; python-pyconcurrent</p></li>
+<li><p>lockmgr -&gt; python-lockmgr</p></li>
+</ul>
+</li>
 </ul>
 </section>
 <section id="avaailable">

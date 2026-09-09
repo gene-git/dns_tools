@@ -6,14 +6,25 @@ Tags
 
 .. code-block:: text
 
-	2.0.0 (2023-01-22) -> 5.3.0 (2026-09-05)
-	113 commits.
+	2.0.0 (2023-01-22) -> 5.3.1 (2026-09-09)
+	114 commits.
 
 Commits
 =======
 
 
-* 2026-09-05  : **5.3.0**
+* 2026-09-09  : **5.3.1**
+
+.. code-block:: text
+
+              - **5.3.1**
+            
+                * Change Arch package dependencies that have been renamed:
+            
+                  - pyconcurrent -> python-pyconcurrent
+                  - lockmgr -> python-lockmgr
+
+* 2026-09-05  : **5.3.0, origin/master**
 
 .. code-block:: text
 

@@ -12,9 +12,9 @@ DNS server tools - aka DNSSEC made easy.
 DNSSEC can be a little tricky especially rolling the keys. We provide the tools 
 to simplify and automate this as much as possible. 
 
-If you're implementing DNSSEC then you may also want to implement DANE SMTP for email.
+If you're implementing DNSSEC then you may want to implement DANE SMTP for email.
 If so, you may be interested in `ssl-mgr <https://github.com/gene-git/ssl-mgr>`_ tool 
-which simplifies key and certificate management including for DANE SMTP. 
+which simplifies key and certificate management including DANE SMTP. 
 It is also available on `Arch AUR <https://aur.archlinux.org/packages/ssl-mgr>`_.
 
 Note:
@@ -28,11 +28,12 @@ Note:
 Recent Changes
 ==============
 
-**5.3.0**
+**5.3.1**
 
-* Use meson/meson-python for build and package management
-* periodic code review and improvements
-* directory re-org
+* Change Arch package dependencies that have been renamed:
+
+  - pyconcurrent -> python-pyconcurrent
+  - lockmgr -> python-lockmgr 
 
 Avaailable
 ==========
