@@ -25,6 +25,15 @@ If so, you may be interested in `ssl-mgr <https://github.com/gene-git/ssl-mgr>`_
 which simplifies key and certificate management including DANE SMTP. 
 It is also available on `Arch AUR <https://aur.archlinux.org/packages/ssl-mgr>`_.
 
+Documentation
+-------------
+
+The manual provides detailed information and is available in both HTML and PDF formats.
+Both are installed under */usr/share/dns_tools/docs*.
+
+The manual is also available at: `readthedocs <https://dns-tool.readthedocs.io>`_.
+
+
 Signed Source
 -------------
 

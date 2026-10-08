@@ -6,20 +6,26 @@ Tags
 
 .. code-block:: text
 
-	2.0.0 (2023-01-22) -> 5.3.2 (2026-10-08)
-	115 commits.
+	2.0.0 (2023-01-22) -> 5.3.3 (2026-10-08)
+	116 commits.
 
 Commits
 =======
 
 
-* 2026-10-08  : **5.3.2**
+* 2026-10-08  : **5.3.3**
+
+.. code-block:: text
+
+              - 5.3.3 Readme update
+
+* 2026-10-08  : **5.3.2, origin/master**
 
 .. code-block:: text
 
               - 5.3.2 Documentation available on `readthedocs <https://dns-tools.readthedocs.io>`
 
-* 2026-09-09  : **5.3.1, origin/master**
+* 2026-09-09  : **5.3.1**
 
 .. code-block:: text
 
