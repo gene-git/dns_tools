@@ -7,36 +7,37 @@ dns_tools
 Overview
 ========
 
-DNS server tools - aka DNSSEC made easy.
 
-DNSSEC can be a little tricky especially rolling the keys. We provide the tools 
-to simplify and automate this as much as possible. 
+Provides DNS management tools including automating key updates (rolls) for 
+DNSSEC.
 
-If you're implementing DNSSEC then you may want to implement DANE SMTP for email.
+dns-tools simplifies DNSSEC deployment very straightforward. It makes it
+simple to update and re-sign any changes to DNS zone files. Since keys should
+be updated periodically, this is done with simple cron file to update the keys and
+publish old and new keys. Then after sufficient time has passed for DNS servers to
+udpate and have the new keys, the old ones are removed. Key rolling is fully automated.
+
+DNSSEC can be a little tricky especially rolling the keys. 
+
+If you're implementing DNSSEC then you may want to implement DANE SMTP for email once
+DNSSEC is running.
 If so, you may be interested in `ssl-mgr <https://github.com/gene-git/ssl-mgr>`_ tool 
 which simplifies key and certificate management including DANE SMTP. 
 It is also available on `Arch AUR <https://aur.archlinux.org/packages/ssl-mgr>`_.
 
-Note:
+Signed Source
+-------------
 
-  All git tags will be signed by *<arch@sapience.com>*.
-  Public key is available via WKD or download from website:
+All git tags are signed by *<arch@sapience.com>* and the
+public key is available via WKD or download from website (same domain as key):
+
   `sapience.com <https://www.sapience.com/tech>`_.
-  After key is on keyring use the PKGBUILD source line ending with *?signed*
-  or manually verify using *git tag -v <tag-name>*
 
-Recent Changes
-==============
+After key is installed on the keyring then the PKGBUILD source line ending with *?signed*
+can be used. Manually verification may also be done with *git tag -v <tag-name>*
 
-**5.3.1**
-
-* Change Arch package dependencies that have been renamed:
-
-  - pyconcurrent -> python-pyconcurrent
-  - lockmgr -> python-lockmgr 
-
-Avaailable
-==========
+Available
+---------
 
 * `Github <https://github.com/gene-git/dns_tools>`_
 * `Archlinux AUR <https://aur.archlinux.org/packages/dns_tools>`_
@@ -45,41 +46,22 @@ The Archlinux PKGBUILD is also in the packaging directory.
 
 To build manually,  see Appendix :ref:`manual_build`. 
 
-More Detail
-===========
-
-Testing Mode
-------------
-
-For convenience each tool supports a test mode engaged using the *-t, --test* option.
-When run in test mode, actions are printed instead of actually being done.
-
-When running in test mode nothing is done, which can lead to things seemingly 
-being strange. For example, when testing rolling or generation of *next* keys,
-the code later checks for any missing keys. Now in test mode they can be missing
-since they were not actually created when they would normally be. So
-now you can see messages about keys being generated a second time. 
-They wont be in non-test mode of course as nothing would be missing.
-
-For testing, I also find it convenient to change the production dns zone directores 
-to something like */tmp/dns* - and then run the tests without *-t*. This does everything 
-as asked, but instead of pushing to the real dns servers, the files are pushed to the
-test production directory. When doing this, you can drop the *--dns_restart* option 
-so as to skip restarting the dns servers - which is not needed obviously.
-
+======---=
+Background
+==========
 
 Types of DNSSEC keys 
---------------------
+====================
 
 A short summary of DNSSEC keys.
 
-* Zone Signing Key (ZSK)  
+* **Zone Signing Key (ZSK)**
 
   This is used to sign dns zone files. It is advisable to update this periodically, 
   perhaps every 1 to 3 months.  The mechanism to update the key requires some care
   and is known as *rolling* the keys. The tools make this straightforward. More on this later.
 
-* Key Signing Key (KSK)  
+* **Key Signing Key (KSK)**
 
   This signs the zone signing key - and its this key that must be registered with
   the domain registrar for the root servers. The requirement ensures that there 
@@ -94,7 +76,7 @@ A short summary of DNSSEC keys.
   See the :ref:`section_create_keys` section about generating the DS records you will need.
 
 Key Rolling  
------------
+===========
 
 The typical approach to doing this is accomplished in 2 basic steps. 
 
@@ -115,14 +97,15 @@ must be uploaded to the domain registrar. In Phase 1 both old and new DS should 
 and in Phase 2 just the new (now current) KSK DS.  The tool creates the DS records
 but uploading them to registrar must be done manually.
 
+=========
 The Tools
 =========
 
-The following set of tools are provided.
+The following tools are provided.
 
 * **dns-tool**
 
-  This tool handles all DNSSEC related operations including key creation and rolling, and 
+  This handles all DNSSEC related operations including key creation and rolling, and 
   using those keys to sign the dns zone files. 
 
 * **dns-prod-push**
@@ -133,25 +116,45 @@ The following set of tools are provided.
 
 * **dns-serial-bump**
 
-  A standalone tool to check the validity and bump the serial number in the SOA of a dns zone file.
+  A standalone executable to check the validity and bump the serial number in the SOA of a dns zone file.
+
+Testing Mode
+============
+
+Each tool supports a test mode engaged with the *-t, --test* option.
+When run in test mode, actions are printed instead of actually being done.
+
+When running in test mode nothing is done, which can lead to things seemingly 
+being strange. For example, when testing rolling or generation of *next* keys,
+the code later checks for any missing keys. Now in test mode they can be missing
+since they were not actually created when they would normally be. So
+now you can see messages about keys being generated a second time. 
+They wont be in non-test mode of course as nothing would be missing.
+
+For testing, I find it convenient to change the production dns zone directores 
+to something like */tmp/dns* - and then run the tests without *-t*. This does everything 
+as asked, but instead of pushing to the real dns servers, the files are pushed to the
+test production directory. When doing this, you can drop the *--dns_restart* option 
+so as to skip restarting the dns servers - which is not needed obviously.
+
 
 Example Usage
 -------------
 
 N.B. :
 
-* Must run on signing server.  
+* **Must run on signing server**
 
   The tools must be run on the signing server which is defined in the config file.  
   To minimize chance of an accident, the code will refuse to run if that is not the case.
 
-* Run as root.    
+* **Run as root**
 
   * operations require effective root user:
   * Changing the ownership permisions of staging zones to *dns_user* and *dns_group*.
   * Preserving ownership when files rsync --owner to dns server(s)
 
-* Zone serial numbers should be in canonical format for serial bump to work properly.  
+* **Zone serial numbers should be in canonical format for serial bump to work properly**
 
   i.e. yyymmddnn where yyymmdd is date and nn is a 2 digit counter from 00 to 99
   If not code will do best it can to migrate to canonical format if possible.
@@ -160,7 +163,7 @@ N.B. :
   32 bits. You can use the *dns-serial-bump --check zonefile* to check
   for valid serial.
 
-The tool supports 2 primary servers - an internal DNS server and an external server. 
+dns-tool supports 2 primary servers - an internal DNS server and an external server. 
 The internal server may also serve additional unsigned zones, typically RFC1918 and 
 their reverse zones. There can be unsigned zones for external server too of course 
 and if there are, they will be pushed along with all the other signed zones.
@@ -191,33 +194,31 @@ Relative directory names are always relative to the working directory.
 The *work_dir* holds all the data and is the source for all key and zone information.
 Signed and unsigned zone files are pushed from the working dir to each of the
 DNS servers.  Internal and external dns zone files are kept in their own directories.
-e.g.
-
-.. code-block:: bash
+e.g.::
 
     <work_dir>/internal/staging/zones
 
-The *ldns* package has standalone tools which used to handle key generation
-and to sign the zone files.
+The *ldns* package has standalone tools which handle key generation
+and signing the zone files.
 
 With that background information, and under the assumption that the domain registrar
-already has the ksk required information then to roll ZSK using dns\_tools would be simply:
+already has the ksk required information then to roll ZSK using dns_tools would be simply:
 
 .. code-block:: bash
 
     /usr/bin/dns-tool --zsk_roll_1
     /usr/bin/dns-prod-push --dns_restart --to_production
 
-and after couple hours or similar time, the second phase would be accomplished using:
+and after couple hours or similar, the second phase would be accomplished using:
 
 .. code-block:: bash
 
     /usr/bin/dns-tool --zsk_roll_2
     /usr/bin/dns-prod-push --dns_restart --to_production
 
-And of course in practice each of these would be run from cron - I run them monthly. 
+Of course in practice each of these would be run from cron - I run them monthly. 
 A sample cron file is provided in */etc/dns_tools/cron/dnssec-roll.cron*. And
-for convenience, it uses the above commands wrapped by the shell scripts:
+for convenience, it uses the above commands wrapped in shell scripts:
 
 .. code-block:: bash
 
@@ -226,8 +227,8 @@ for convenience, it uses the above commands wrapped by the shell scripts:
 
 .. _section_create_keys:
 
-Create Keys
------------
+Creating Keys
+=============
 
 To get things started simply create the KSK and ZSK keys and then upload the DS key info
 to the domain registrar. To generate a new set of keys simply run:
@@ -263,7 +264,7 @@ These actually come in different hash types:
 * **4 : SHA-384**  - Optional RFC6605 : slower but more secure hash 
 * **5 : GOST R 34.11-2012** - OPTIONAL RFC9558 : Russian equivalent to SHA-256
 * **6 : SM3**       - Optional RFC9563 : Chinese equivalent to SHA-256.
-* *7 to 255* - Unassigned
+* **7 to 255** - Unassigned
    
 We generate the types *1*, *2* and *4*. We default to SHA-256 
 
@@ -283,10 +284,10 @@ with your new KSK - which is fine. Just means that your DNS will be non-dnssec u
 get the KSK pushed out to the world. Once that happens, then dns clients will see the KSK 
 and dnssec will be operational.
 
-Everthing else should be handled automatically by the tool.
+Everthing else should be handled automatically by dns-tool.
 
 Updating dns zone files
------------------------
+=======================
 
 Whenever you update any zone files, they must be resigned. Make any zone file changes 
 in the zone staging directories. i.e.
@@ -316,9 +317,8 @@ This also takes optional arguments:
 * list of domains. If none listed, then uses all domains in config file.
 
 
-Tool Options
-============
-
+Options
+=======
 
 dns-tool
 --------
@@ -326,7 +326,7 @@ dns-tool
 Handles key generation, zone signing and key rolls.
 
 While there are many options, majority are more for testing or special needs. 
-The primary options are :
+The most common / frequently used options are :
 
 *test
 *print_keys
@@ -365,7 +365,7 @@ Full list of options::
 
 Notes:
 
-* Bump all serials is not usually needed as its auotmatic.
+* Bump all serials is not usually needed since its auotmatic.
   And doing this implies *--sign* so that signed zones stay consistent.
 
 * Supported KSK key algorithm algos default is ED25519.  
@@ -392,10 +392,9 @@ Notes:
 * dns_restart
 
   Uses the config variable *dns_restart_cmd*. 
+  For example for nsd, set this to::
 
-  For example for nsd, set this to:
-
-  dns_restart_cmd = "/usr/bin/systemctl restart nsd"  
+    dns_restart_cmd = "/usr/bin/systemctl restart nsd"  
 
 
 dns-serial-bump
@@ -437,11 +436,12 @@ For nsd this would be of the form:
         include-pattern: "tosecondary"      # notify all secondary servers 
 
 
+===
 FAQ
 ===
 
 Why is name not dnssec_tools?
------------------------------
+=============================
 
 This is a good question. I did give some thought to this and ended up with the more generic name.
 

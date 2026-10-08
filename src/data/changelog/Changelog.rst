@@ -6,14 +6,20 @@ Tags
 
 .. code-block:: text
 
-	2.0.0 (2023-01-22) -> 5.3.1 (2026-09-09)
-	114 commits.
+	2.0.0 (2023-01-22) -> 5.3.2 (2026-10-08)
+	115 commits.
 
 Commits
 =======
 
 
-* 2026-09-09  : **5.3.1**
+* 2026-10-08  : **5.3.2**
+
+.. code-block:: text
+
+              - 5.3.2 Documentation available on `readthedocs <https://dns-tools.readthedocs.io>`
+
+* 2026-09-09  : **5.3.1, origin/master**
 
 .. code-block:: text
 
@@ -24,7 +30,7 @@ Commits
                   - pyconcurrent -> python-pyconcurrent
                   - lockmgr -> python-lockmgr
 
-* 2026-09-05  : **5.3.0, origin/master**
+* 2026-09-05  : **5.3.0**
 
 .. code-block:: text
 
