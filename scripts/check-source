@@ -9,15 +9,16 @@
 # - pycodestyle
 # - mypy
 
+export PYTHONPATH=$(/usr/bin/realpath ../src)
 mod_dir="src/dns_tools"
-echo 'Check module'
-PYTHONPATH=./src pylint $mod_dir/*y $mod_dir/*/*py
-PYTHONPATH=./src pycodestyle --max-line-length=110 $mod_dir/*y $mod_dir/*/*py
 
+echo 'Check module'
+pylint $mod_dir/*y $mod_dir/*/*py
+pycodestyle --max-line-length=110 $mod_dir/*y $mod_dir/*/*py
 mypy --check-untyped-defs --follow-untyped-imports $mod_dir
 
 echo ''
 echo 'Check tests'
-mypy --check-untyped-defs --follow-untyped-imports tests/
+mypy --check-untyped-defs --follow-untyped-imports src/tests/
 
 

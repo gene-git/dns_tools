@@ -6,20 +6,27 @@ Tags
 
 .. code-block:: text
 
-	2.0.0 (2023-01-22) -> 5.3.3 (2026-10-08)
-	116 commits.
+	2.0.0 (2023-01-22) -> 5.4.0 (2026-10-26)
+	117 commits.
 
 Commits
 =======
 
 
-* 2026-10-08  : **5.3.3**
+* 2026-10-26  : **5.4.0**
+
+.. code-block:: text
+
+              - **5.4.0**
+                * Update to use lockmgr 2.1.0 new API
+
+* 2026-10-08  : **5.3.3, origin/master**
 
 .. code-block:: text
 
               - 5.3.3 Readme update
 
-* 2026-10-08  : **5.3.2, origin/master**
+* 2026-10-08  : **5.3.2**
 
 .. code-block:: text
 

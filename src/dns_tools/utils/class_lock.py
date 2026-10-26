@@ -14,23 +14,22 @@ class DnsLock:
         lockdir = f'/tmp/.dns-tool-{euid}/'
         os.makedirs(lockdir, exist_ok=True)
         lockfile = f'{lockdir}/lock'
-        self.lockmgr = LockMgr(lockfile)
 
-    def acquire_lock(self):
-        """ get lock """
+        # very generous timeout
+        timeout = 5.0 * 60.0
+        self.lockmgr = LockMgr(lockfile, timeout=timeout)
+
+    def acquire_lock(self) -> bool:
+        """
+        Get the lock
+        """
         print('Acquiring lock')
-        tries = 1
-        max_tries = 5
-        gotit = self.lockmgr.acquired
-        while not gotit and tries < max_tries:
-            gotit = self.lockmgr.acquire_lock(wait=True, timeout=60)
-            if gotit:
-                return gotit
-            tries += 1
-        if not gotit:
-            print('Failed to acquire lock (another dns-tool is holding it)')
-        return self.lockmgr.acquired
+        if self.lockmgr.acquire():
+            return True
+
+        print('Failed to acquire lock (another dns-tool is holding it)')
+        return False
 
     def release_lock(self):
-        """ get lock """
-        self.lockmgr.release_lock()
+        """ release the lock """
+        self.lockmgr.release()

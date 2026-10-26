@@ -1,11 +1,11 @@
 Recent Changes
 ==============
 
-**5.3.3**
+**5.4.0**
 
-* Readme update
+* Update to use lockmgr 2.1.0 new API
 
-**5.3.2**
+**Older**
 
 * Documentation available on `readthedocs <https://dns-tools.readthedocs.io>`
 
