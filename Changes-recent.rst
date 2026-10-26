@@ -1,9 +1,10 @@
 Recent Changes
 ==============
 
-**5.4.0**
+**5.4.1**
 
 * Update to use lockmgr 2.1.0 new API
+* Update package dependency for lockmgr
 
 **Older**
 
